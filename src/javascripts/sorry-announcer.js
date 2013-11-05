@@ -5,6 +5,10 @@ $(document).ready(function() {
 	//var status_page_url = 'http://status.sorryapp.com';
 	var status_page_url = 'fixtures/apologies.json'; // Point at fixtures during testing.
 
+	// Reference the dismissed items, if none in local storage then assume new array.
+	// TODO: What is local storage is not available?
+	var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || new Array();
+
 	// Set the HTML template for the notices we're going to add.
 	// Also include a link to the status page in here.
 	// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
@@ -17,20 +21,25 @@ $(document).ready(function() {
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
-				// Get a reference to the template we're going to use.
-				// Wrap it in a jQuery object so we can filter the contents.
-				var $template = $(template)
+				// Only work with this if it's not been dismissed before.
+				// We can do this by hunting through the dismissed list.
+				// TODO: Logic of this IF is a little messy, maybe move to helper?
+				if($.inArray(String(apology.id), dismissed) < 0) {
+					// Get a reference to the template we're going to use.
+					// Wrap it in a jQuery object so we can filter the contents.
+					var $template = $(template)
 
-				// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
-				$template.attr('id', 'apology-' + apology.id);
-				// Swap out the content in the template.
-				$template.find('.alert-text').text(apology.description);
+					// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
+					$template.attr('id', 'apology-' + apology.id);
+					// Swap out the content in the template.
+					$template.find('.alert-text').text(apology.description);
 
-				// Append the template to the DOM.
-				// We put this at the begining of the <body> tag so it's at the top of the DOM.
-				$('body').prepend($template);
+					// Append the template to the DOM.
+					// We put this at the begining of the <body> tag so it's at the top of the DOM.
+					$('body').prepend($template);
 
-				// TODO: Show / Animate the alert as it'll be hidden by default.
+					// TODO: Show / Animate the alert as it'll be hidden by default.
+				};
 			});
 		}
 
@@ -38,10 +47,19 @@ $(document).ready(function() {
 	});
 
 	// Bind the close event on any of the alerts which are added.
-	$('body').on('click', '.alert-status .close', function(e) {
+	$('body').on('click', '.alert-status .close', function() {
+		// Target the parent element of the close button.
+		var target = $(this).parent();
+		// Get the native numeric ID from the element.
+		var id = target.attr('id').split('-')[1];
+		// Remember the ID which we are dismissing by putting it in the array
+		dismissed.push(id);
+		// Put that array in a serialized form in to local storage.
+		// TODO: This should be conditional, only if local storage is available to use.
+		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(dismissed));
+
 		// Remove the parent from the DOM.
 		// TODO: This should be animated.
-		// TODO: Remember which item within the DOM we're removing.
-		$(this).parent().remove();
+		target.remove();
 	});
 });
