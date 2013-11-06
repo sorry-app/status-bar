@@ -1,9 +1,9 @@
 // Wait for jQuery to be ready.
 $(document).ready(function() {
 	// Set the configurable variables.
-	// TODO: This should come from a config variable somewhere.
-	//var status_page_url = 'http://status.sorryapp.com';
-	var status_page_url = 'fixtures/apologies.json'; // Point at fixtures during testing.
+	// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
+	// TODO: Should we support multiple pages here in future?
+	var page_id = 'my-status-page';
 
 	// Reference the dismissed items, if none in local storage then assume new array.
 	// TODO: What is local storage is not available?
@@ -12,12 +12,14 @@ $(document).ready(function() {
 	// Set the HTML template for the notices we're going to add.
 	// Also include a link to the status page in here.
 	// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-	var template = '<div class="alert alert-status alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span class="alert-text"></span> <a class="alert-link" href="' + status_page_url + '">' + status_page_url + '</a></div>';
+	var template = '<div class="alert alert-status alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span class="alert-text"></span> <a class="alert-link"></a></div>';
 
 	// Make a JSON request to acquire any apologies to display.
 	$.ajax({
+		type: "GET",
+	    crossDomain: true, 
 		dataType: "json",
-		url: status_page_url,
+		url: 'http://lvh.me:3000/api/1/pages/' + page_id + '/apologies', // API endpoing for the page.
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
@@ -33,6 +35,8 @@ $(document).ready(function() {
 					$template.attr('id', 'apology-' + apology.id);
 					// Swap out the content in the template.
 					$template.find('.alert-text').text(apology.description);
+					// Update the link to the apology
+					$template.find('.alert-link').attr('href', apology.link).text(apology.link);
 
 					// Append the template to the DOM.
 					// We put this at the begining of the <body> tag so it's at the top of the DOM.
