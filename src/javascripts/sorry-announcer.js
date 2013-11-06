@@ -1,9 +1,15 @@
 // Wait for jQuery to be ready.
+// TODO: Turn this in to a bootstap style jQuery plugin, rather than vanilla code.
 $(document).ready(function() {
+	// Validate we have all the required elements for the plugin.
+	// We need a data attribute of the page ID before we can continue.
+	if (!$("body").attr('data-apology-announcements')) throw new Error('You must set a data attribute on the body tag for apology-announcements which contains the ID of your Sorry status page.')
+
 	// Set the configurable variables.
 	// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
+	// We pull this from a data attirbute in the HTML, on the body tag.
 	// TODO: Should we support multiple pages here in future?
-	var page_id = 'my-status-page';
+	var page_id = $('body').data('apology-announcements');
 
 	// Reference the dismissed items, if none in local storage then assume new array.
 	// TODO: What is local storage is not available?
