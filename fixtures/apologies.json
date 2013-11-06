@@ -1,10 +1,35 @@
 {
-	"response": [{
-		"id": 1,
-		"description": "This is an apoligy which can be dismissed at any time."
-	}, {
-		"id": 2,
-		"description": "This is a second apology which we display."
-	}],
-	"count": 2
+   "response":[
+      {
+         "id":2,
+         "description":"This is a second apology.",
+         "created_at":"2013-11-06T12:42:30.356Z",
+         "closed_at":"2013-11-06T12:42:38.978Z",
+         "state":"closed",
+         "link":"http://my-status-page.lvh.me:3000/",
+         "updates":[
+            {
+               "id":2,
+               "content":"And an update to it.",
+               "created_at":"2013-11-06T12:42:36.566Z"
+            }
+         ]
+      },
+      {
+         "id":1,
+         "description":"My new apology is here.",
+         "created_at":"2013-11-06T12:42:00.639Z",
+         "closed_at":"2013-11-06T12:42:22.685Z",
+         "state":"closed",
+         "link":"http://my-status-page.lvh.me:3000/",
+         "updates":[
+            {
+               "id":1,
+               "content":"This is another update.",
+               "created_at":"2013-11-06T12:42:19.837Z"
+            }
+         ]
+      }
+   ],
+   "count":2
 }
