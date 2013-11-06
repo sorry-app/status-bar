@@ -18,7 +18,7 @@ $(document).ready(function() {
 	// Set the HTML template for the notices we're going to add.
 	// Also include a link to the status page in here.
 	// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-	var template = '<div class="alert alert-status alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span class="alert-text"></span> <a class="alert-link"></a></div>';
+	var template = '<div class="alert alert-status alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span class="alert-text"></span> <a target="_blank" class="alert-link"></a></div>';
 
 	// Make a JSON request to acquire any apologies to display.
 	$.ajax({
