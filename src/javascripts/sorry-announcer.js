@@ -26,7 +26,7 @@ $(document).ready(function() {
 		type: "GET",
 	    crossDomain: true, 
 		dataType: "json",
-		url: 'http://lvh.me:3000/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
+		url: 'http://app.weboffins.com/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
@@ -58,7 +58,7 @@ $(document).ready(function() {
 	});
 
 	// Bind the close event on any of the alerts which are added.
-	$('body').on('click', '.sorry-announcement .close', function() {
+	$('body').on('click', '.sorry-announcement-close', function() {
 		// Target the parent element of the close button.
 		var target = $(this).parent();
 		// Get the native numeric ID from the element.
