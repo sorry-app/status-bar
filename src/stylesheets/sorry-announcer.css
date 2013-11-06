@@ -1,27 +1,27 @@
+/* 
+  CSS styles inspired by the 'alert' class from twitter bootstrap. 
+
+  As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
+*/
+
 .sorry-announcement {
-  padding: 15px;
-  margin-bottom: 20px;
+  background-color:#ff7b29;
+  color:#FFF;
+  padding: 15px 25px;
   border: 1px solid transparent;
-  border-radius: 4px;
   padding-right: 35px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
+  font-size:16px;
 }
 
-.sorry-announcement h4 {
-  margin-top: 0;
-  color: inherit;
+a.sorry-announcement-link {
+  color:#FFF;
+  opacity:0.75;
 }
 
-.asorry-announcement .sorry-announcement-link {
-  font-weight: bold;
-}
-
-.sorry-announcement > p,
-.sorry-announcement > ul {
-  margin-bottom: 0;
-}
-
-.sorry-announcement > p + p {
-  margin-top: 5px;
+a.sorry-announcement-link:hover,
+a.sorry-announcement-link:focus {
+  opacity:1;
 }
 
 .sorry-announcement .sorry-announcement-close {
@@ -36,18 +36,18 @@
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
-  color: #000000;
-  text-shadow: 0 1px 0 #ffffff;
-  opacity: 0.2;
+  color: #FFF;
+  text-shadow: 0 1px 0 #333333;
+  opacity: 0.5;
   filter: alpha(opacity=20);
 }
 
 .sorry-announcement .sorry-announcement-close:hover,
 .sorry-announcement .sorry-announcement-close:focus {
-  color: #000000;
+  color: #FFF;
   text-decoration: none;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.75;
   filter: alpha(opacity=50);
 }
 
