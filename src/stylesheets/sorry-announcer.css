@@ -1,0 +1,60 @@
+.sorry-announcement {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 35px;
+}
+
+.sorry-announcement h4 {
+  margin-top: 0;
+  color: inherit;
+}
+
+.asorry-announcement .sorry-announcement-link {
+  font-weight: bold;
+}
+
+.sorry-announcement > p,
+.sorry-announcement > ul {
+  margin-bottom: 0;
+}
+
+.sorry-announcement > p + p {
+  margin-top: 5px;
+}
+
+.sorry-announcement .sorry-announcement-close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+
+.sorry-announcement .sorry-announcement-close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.sorry-announcement .sorry-announcement-close:hover,
+.sorry-announcement .sorry-announcement-close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.sorry-announcement button.sorry-announcement-close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
