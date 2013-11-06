@@ -25,7 +25,7 @@ $(document).ready(function() {
 		type: "GET",
 	    crossDomain: true, 
 		dataType: "json",
-		url: 'http://lvh.me:3000/api/1/pages/' + page_id + '/apologies', // API endpoing for the page.
+		url: 'http://lvh.me:3000/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
