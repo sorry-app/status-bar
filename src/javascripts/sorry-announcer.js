@@ -3,7 +3,9 @@
 $(document).ready(function() {
 	// Validate we have all the required elements for the plugin.
 	// We need a data attribute of the page ID before we can continue.
-	if (!$("body").attr('data-sorry-announcement')) throw new Error('You must set a data attribute on the body tag for sorry-announcement which contains the ID of your Sorry status page.')
+	if (!$("body").attr('data-sorry-announcement')) throw new Error('You must set a data attribute on the body tag for sorry-announcement which contains the ID of your Sorry status page.');
+	// Ensure local storage is available for us to use.
+	if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Sorry Announcer cannot run.');
 
 	// Set the configurable variables.
 	// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
@@ -12,7 +14,6 @@ $(document).ready(function() {
 	var page_id = $('body').data('sorry-announcement');
 
 	// Reference the dismissed items, if none in local storage then assume new array.
-	// TODO: What is local storage is not available?
 	var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || new Array();
 
 	// Set the HTML template for the notices we're going to add.
@@ -65,7 +66,6 @@ $(document).ready(function() {
 		// Remember the ID which we are dismissing by putting it in the array
 		dismissed.push(id);
 		// Put that array in a serialized form in to local storage.
-		// TODO: This should be conditional, only if local storage is available to use.
 		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(dismissed));
 
 		// Remove the parent from the DOM.
