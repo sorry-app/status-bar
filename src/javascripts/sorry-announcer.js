@@ -14,7 +14,7 @@ $(document).ready(function() {
 	var page_id = $('body').data('sorry-announcement');
 
 	// Reference the dismissed items, if none in local storage then assume new array.
-	var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || new Array();
+	var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
 
 	// Set the HTML template for the notices we're going to add.
 	// Also include a link to the status page in here.
@@ -24,7 +24,7 @@ $(document).ready(function() {
 	// Make a JSON request to acquire any apologies to display.
 	$.ajax({
 		type: "GET",
-	    crossDomain: true, 
+		crossDomain: true, 
 		dataType: "json",
 		url: 'http://app.weboffins.com/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
 		success: function(data, textStatus, jqXHR) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
 				if($.inArray(String(apology.id), dismissed) < 0) {
 					// Get a reference to the template we're going to use.
 					// Wrap it in a jQuery object so we can filter the contents.
-					var $template = $(template)
+					var $template = $(template);
 
 					// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
 					$template.attr('id', 'sorry-announcement-' + apology.id);
@@ -50,7 +50,7 @@ $(document).ready(function() {
 					$('body').prepend($template);
 
 					// TODO: Show / Animate the alert as it'll be hidden by default.
-				};
+				}
 			});
 		}
 
