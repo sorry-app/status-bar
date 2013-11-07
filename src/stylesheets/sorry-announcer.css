@@ -4,14 +4,17 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
+
 .sorry-announcement {
   background-color:#ff7b29;
   color:#FFF;
   padding: 20px 30px; 
   border: 1px solid transparent;
   padding-right: 35px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size:16px;
+  font-weight:300;
 }
 
 a.sorry-announcement-link {
@@ -27,7 +30,7 @@ a.sorry-announcement-link:focus {
 
 .sorry-announcement .sorry-announcement-close {
   position: relative;
-  top: -4px;
+  top: -2px;
   right: -10px;
   color: inherit;
 }
