@@ -2,27 +2,15 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    // Default package configuration.
     pkg: grunt.file.readJSON('package.json'),
-    uglify: {
-      build: {
-        src: 'tmp/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
-        dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
-      }
-    },
+
+    // Javascript validation.
     jshint: {
       all: ['Gruntfile.js', 'src/**/*.js']
-    },
-    cssmin: {
-      minify: {
-        src: 'src/stylesheets/<%= pkg.name %>.css',
-        dest: 'dist/<%= pkg.name %>.min.css',
-      }
     },    
-    release: {
-      options: {
-        npmtag: false // Don't deploy to NPM as we don't want to release like that.
-      }
-    },
+
+    // Preprocessing of files before, replacing variables etc.
     preprocess : {
         // TODO: Could we somehow make src/dest cross env, rather than in all.
         dev : {
@@ -43,7 +31,30 @@ module.exports = function(grunt) {
                 }
             }          
         }
-    }    
+    },
+
+    // Minify Javascript Assets.
+    uglify: {
+      build: {
+        src: 'tmp/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
+        dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
+      }
+    },
+
+    // Minify Stylesheet Assets.
+    cssmin: {
+      minify: {
+        src: 'src/stylesheets/<%= pkg.name %>.css',
+        dest: 'dist/<%= pkg.name %>.min.css',
+      }
+    },
+
+    // Release & Deployment Tasks.
+    release: {
+      options: {
+        npmtag: false // Don't deploy to NPM as we don't want to release like that.
+      }
+    } 
   });
 
   // Load the plugin that provides the "uglify" task.
