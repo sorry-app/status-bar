@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Default package configuration.
     pkg: grunt.file.readJSON('package.json'),
+    aws: grunt.file.readJSON('aws.json'),
 
     // Javascript validation.
     jshint: {
@@ -31,7 +32,32 @@ module.exports = function(grunt) {
       options: {
         npmtag: false // Don't deploy to NPM as we don't want to release like that.
       }
-    } 
+    },
+
+    // Deployment.
+    s3: {
+        options: {
+          key: '<%= aws.key %>',
+          secret: '<%= aws.secret %>',
+          bucket: 'code.sorryapp.com',
+          region: 'eu-west-1',
+          access: 'public-read',
+        },
+        dev: {
+          upload: [
+            {
+              src: 'dist/<%= pkg.name %>.min.js',
+              dest: '<%= pkg.name %>/<%= pkg.version %>/<%= pkg.name %>.min.js',
+              options: { gzip: true }
+            },
+            {
+              src: 'dist/<%= pkg.name %>.min.css',
+              dest: '<%= pkg.name %>/<%= pkg.version %>/<%= pkg.name %>.min.css',
+              options: { gzip: true }
+            }
+          ]
+        }
+    }
   });
 
   // Load the plugin that provides the "uglify" task.
@@ -42,6 +68,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   // Release tasks to manage version number bump, tag etc.
   grunt.loadNpmTasks('grunt-release');
+  // AWS/S3 deployment tools.
+  grunt.loadNpmTasks('grunt-s3');
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'uglify', 'cssmin']);
