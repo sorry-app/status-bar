@@ -12,7 +12,6 @@
     "grunt-contrib-uglify": "~0.2.5",
     "grunt-contrib-jshint": "~0.7.1",
     "grunt-release": "~0.6.0",
-    "grunt-preprocess": "~3.0.1",
     "grunt-contrib-cssmin": "~0.7.0"
   }
 }

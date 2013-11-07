@@ -8,35 +8,12 @@ module.exports = function(grunt) {
     // Javascript validation.
     jshint: {
       all: ['Gruntfile.js', 'src/**/*.js']
-    },    
-
-    // Preprocessing of files before, replacing variables etc.
-    preprocess : {
-        // TODO: Could we somehow make src/dest cross env, rather than in all.
-        dev : {
-            src : 'src/javascripts/<%= pkg.name %>.js', // Take the source file.
-            dest: 'tmp/<%= pkg.name %>.js', // Put the processed version in the tmp.
-            options : {
-                context : {
-                    api_endpoint : 'http://localhost:3000',
-                }
-            }
-        },
-        prod : {
-            src : 'src/javascripts/<%= pkg.name %>.js', // Take the source file.
-            dest: 'tmp/<%= pkg.name %>.js', // Put the processed version in the tmp.
-            options : {
-                context : {
-                    api_endpoint : 'http://app.sorryapp.com',
-                }
-            }          
-        }
     },
 
     // Minify Javascript Assets.
     uglify: {
       build: {
-        src: 'tmp/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
+        src: 'src/javascripts/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
         dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
       }
     },
@@ -65,9 +42,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   // Release tasks to manage version number bump, tag etc.
   grunt.loadNpmTasks('grunt-release');
-  // Module for injecting and controlling environment based varisbls.
-  grunt.loadNpmTasks('grunt-preprocess');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'preprocess:dev', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'cssmin']);
 };
