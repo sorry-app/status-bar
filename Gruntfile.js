@@ -70,5 +70,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'preprocess:dev', 'uglify', 'cssmin']);
+  // Publication tasks - Used to publish a new version of the bundle.
+  grunt.registerTask('publish', ['jshint', 'preprocess:prod', 'uglify', 'cssmin', 'release']);
 
 };
