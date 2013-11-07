@@ -26,7 +26,7 @@ $(document).ready(function() {
 		type: "GET",
 		crossDomain: true, 
 		dataType: "json",
-		url: 'http://app.weboffins.com/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
+		url: '/* @echo api_endpoint */' + '/api/1/pages/' + page_id + '/apologies/current', // API endpoing for the page.
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
