@@ -17,10 +17,21 @@ module.exports = function(grunt) {
       all: ['Gruntfile.js', 'src/**/*.js']
     },
 
+    // Concatenate the JS assets.
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['src/javascripts/jquery.xdomainrequest.js', 'src/javascripts/<%= pkg.name %>.js'],
+        dest: 'tmp/concat-<%= pkg.name %>.js',
+      },
+    },
+
     // Minify Javascript Assets.
     uglify: {
       build: {
-        src: 'src/javascripts/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
+        src: 'tmp/concat-<%= pkg.name %>.js', // Take temporary pre-compiled asset.
         dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
       }
     },
@@ -78,7 +89,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-s3');
   // Watcher for rebuilding when files changes.
   grunt.loadNpmTasks('grunt-contrib-watch');
+  // Plugin for concatenating files.
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint','concat', 'uglify', 'cssmin']);
 };
