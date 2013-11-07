@@ -12,6 +12,12 @@ module.exports = function(grunt) {
     jshint: {
       all: ['Gruntfile.js', 'src/**/*.js']
     },
+    cssmin: {
+      minify: {
+        src: 'src/stylesheets/<%= pkg.name %>.css',
+        dest: 'dist/<%= pkg.name %>.min.css',
+      }
+    },    
     release: {
       options: {
         npmtag: false // Don't deploy to NPM as we don't want to release like that.
@@ -42,6 +48,8 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  // Load the plugin for minifys CSS.
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   // Load the plugin that validates the JS markup.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   // Release tasks to manage version number bump, tag etc.
@@ -50,6 +58,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-preprocess');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'preprocess:dev', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'preprocess:dev', 'uglify', 'cssmin']);
 
 };
