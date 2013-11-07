@@ -73,6 +73,4 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'uglify', 'cssmin']);
-  // Publishing task, which bumps the version, tags and deploys the build.
-  grunt.registerTask('publish', ['release', 's3']);
 };
