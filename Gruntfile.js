@@ -11,6 +11,11 @@ module.exports = function(grunt) {
     },
     jshint: {
       all: ['Gruntfile.js', 'src/**/*.js']
+    },
+    release: {
+      options: {
+        npmtag: false // Don't deploy to NPM as we don't want to release like that.
+      }
     }
   });
 
@@ -18,6 +23,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   // Load the plugin that validates the JS markup.
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  // Release tasks to manage version number bump, tag etc.
+  grunt.loadNpmTasks('grunt-release');
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'uglify']);
