@@ -1,0 +1,10 @@
+{
+  "name": "sorry-announcer",
+  "version": "0.1.0",
+  "description": "Add your Sorry status updates as an announcement bar to your app or website.",
+  "author": "Robert Rawlins",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/supporttime/sorry-announcer/issues"
+  }
+}
