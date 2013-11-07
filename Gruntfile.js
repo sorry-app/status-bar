@@ -6,6 +6,12 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     aws: grunt.file.readJSON('aws.json'),
 
+    // Watch and instant rebuild.
+    watch: {
+      files: ['index.html', 'src/**/*'],
+      tasks: ['default'],
+    },
+
     // Javascript validation.
     jshint: {
       all: ['Gruntfile.js', 'src/**/*.js']
@@ -70,6 +76,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
   // AWS/S3 deployment tools.
   grunt.loadNpmTasks('grunt-s3');
+  // Watcher for rebuilding when files changes.
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'uglify', 'cssmin']);
