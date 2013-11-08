@@ -10,21 +10,17 @@ Please note that all our JavaScript plugins require [jQuery](http://jquery.com/)
 
 ### Include the plugin
 
-To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. Be sure to include this just before the closing &lt;/ body&gt; tag at the footer of your site, and after jQuery has been included.
+To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. Be sure to include this just before the closing ```</ body>``` tag at the footer of your site, and after jQuery has been included.
 
-```HTML
-<script src="http://code.sorryapp.com/sorry-announcer/0.1.0/sorry-announcer.min.js"></script>
-```
+	<script src="http://code.sorryapp.com/sorry-announcer/0.1.0/sorry-announcer.min.js"></script>
 
 ### Link it to your status page.
 
 In order for the plugin to know where to source your status updates from we must add your pages SorryApp subdomain to the configuration.
 
-Configuration of this plugin is handled using the data API. In this case we need to add a data attribute to your pages &lt;body&gt; tag.
+Configuration of this plugin is handled using the data API. In this case we need to add a data attribute to your pages ```<body>``` tag.
 
-```HTML
-<body data-sorry-announcement="{{ your subdomain goes here }}">
-```
+	<body data-sorry-announcement="{{ your subdomain goes here }}">
 
 ### Style the plugin
 
@@ -32,23 +28,19 @@ Configuration of this plugin is handled using the data API. In this case we need
 
 We provide a default style for your widget direct from our CDN to get you up and running as quickly as possible. Simply include a link to this in the head of your site.
 
-```HTML
-<link rel="stylesheet" type="text/css" href="http://code.sorryapp.com/sorry-announcer/0.1.0/sorry-announcer.min.css" />
-```
+	<link rel="stylesheet" type="text/css" href="http://code.sorryapp.com/sorry-announcer/0.1.0/sorry-announcer.min.css" />
 
 #### Custom Styling
 
 If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
 
-```HTML
-<div class="sorry-announcement">
-	<button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button>
+	<div class="sorry-announcement">
+		<button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button>
 
-	<span class="sorry-announcement-text">{{ Your status message goes here }}</span> 
+		<span class="sorry-announcement-text">{{ Your status message goes here }}</span> 
 
-	<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
-</div>
-```
+		<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
+	</div>
 
 ## Contributing To The Plugin
 
@@ -116,4 +108,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright &copy; 2013 Support Time Limited. See [LICENSE](LICENSE) for details.
+Copyright & 2013 Support Time Limited. See [LICENSE](LICENSE) for details.
