@@ -6,7 +6,7 @@ Add your Sorry status updates as an announcement bar to your app or website with
 
 ### jQuery required
 
-Please note that all our JavaScript plugins require [jQuery](http://jquery.com/) to be included. This plugin has been tested with 1.10.1. It should work with both older and newer versions of jQuery, however they are currently untested.
+Please note that all our JavaScript plugins require [jQuery](http://jquery.com/). This plugin has been tested with 1.10.1. It should work with both older and newer versions of jQuery, however they are currently untested.
 
 ### Include the plugin
 
@@ -52,11 +52,11 @@ If you want to custom style your widget, you only need create your own CSS. To h
 
 ## Build &amp; Release
 
-### Install Grunt
-
 If you want to create your own custom build, or contribute to the project it’s important you know how our build and release process works.
 
 This project uses Grunt with convenient methods for working with the project. It's how we compile our code, run tests, and more. To use it, install the required dependencies as directed and then run some Grunt commands.
+
+### Install Grunt
 
 From the command line:
 
