@@ -72,16 +72,16 @@ When completed, you'll be able to run the various Grunt commands provided from t
 #### Build - `grunt`
 Run `grunt` to run tests locally and compile the CSS and JavaScript into `/dist`.
 
-#### Release a new version - `grunt release`
-
+#### Release a new version - `grunt release <:patch | :minor | :major>`
 grunt release bumps the [version number](#versioning) and creates a new git tag. You’ll need write access to the repository for this to work.
 
-#### Deploy the latest version. - `grunt s3`
+You can append the release command with patch, minor or major depending on the version number increment you wish to make.
 
+#### Deploy the latest version. - `grunt s3`
 We use AWS S3 to host the assets on code.sorryapp.com. Running this command will push the latest build to S3 into the directory /sorry-announcer/<% version number%>/sorry-accouner.js
 
 #### Watch - `grunt watch`
-This is a convenience method for watching just Less files and automatically building them whenever you save.
+This is a convenience method for watching all the core HTML, CSS and JS assets in the project, rebuilding if they change.
 
 ### Troubleshooting dependencies
 
