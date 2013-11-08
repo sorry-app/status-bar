@@ -50,7 +50,7 @@ If you want to custom style your widget, you only need create your own CSS. To h
 </div>
 ```
 
-## Build &amp; Release
+## Contributing To The Plugin
 
 If you want to create your own custom build, or contribute to the project it’s important you know how our build and release process works.
 
