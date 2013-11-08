@@ -116,4 +116,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright &copy; 2013 Support Time Limited. See LICENSE for details.
+Copyright &copy; 2013 Support Time Limited. See [LICENSE](LICENCE) for details.
