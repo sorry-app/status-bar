@@ -23,10 +23,13 @@
   box-sizing:border-box;
 }
 
+span.sorry-announcement-text {
+  margin-right:15px; /* Space it away from the link to the page. */
+}
+
 a.sorry-announcement-link {
   color:#FFF;
   opacity:0.90;
-  margin-left:15px;
 }
 
 a.sorry-announcement-link:hover,
