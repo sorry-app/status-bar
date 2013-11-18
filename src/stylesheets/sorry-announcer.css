@@ -4,7 +4,7 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400);
 
 .sorry-announcement {
   background-color:#ff7b29;
