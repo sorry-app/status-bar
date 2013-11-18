@@ -26,7 +26,7 @@ $(document).ready(function() {
 		type: "GET",
 		crossDomain: true, 
 		dataType: "json",
-		url: 'http://api.sorryapp.com/1/pages/' + page_id + '/apologies/current', // API endpoing for th∏e page.
+		url: '//api.sorryapp.com/1/pages/' + page_id + '/apologies/current', // API endpoing for th∏e page.
 		success: function(data, textStatus, jqXHR) {
 			// Loop over the apologies that we have been handed back.
 			$.each(data.response, function(index, apology) {
