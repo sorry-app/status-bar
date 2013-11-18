@@ -6,6 +6,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     aws: grunt.file.readJSON('aws.json'),
 
+    // Set the major version as a variable.
+    // This is used for deploying bleeding edge builds.
+
     // Watch and instant rebuild.
     watch: {
       files: ['index.html', 'src/**/*'],
@@ -40,7 +43,7 @@ module.exports = function(grunt) {
     cssmin: {
       minify: {
         src: 'src/stylesheets/<%= pkg.name %>.css',
-        dest: 'dist/<%= pkg.name %>.min.css',
+        dest: 'dist/<%= pkg.name %>.min.css %>',
       }
     },
 
@@ -70,6 +73,17 @@ module.exports = function(grunt) {
             {
               src: 'dist/<%= pkg.name %>.min.css',
               dest: '<%= pkg.name %>/<%= pkg.version %>/<%= pkg.name %>.min.css',
+              options: { gzip: true }
+            },
+            // Also deploy a bleeding edge version on the major number.
+            {
+              src: 'dist/<%= pkg.name %>.min.css',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.edge/<%= pkg.name %>.min.css',
+              options: { gzip: true }
+            },
+            {
+              src: 'dist/<%= pkg.name %>.min.js',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.edge/<%= pkg.name %>.min.js',
               options: { gzip: true }
             }
           ]

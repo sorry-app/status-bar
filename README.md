@@ -12,7 +12,7 @@ Please note that all our JavaScript plugins require [jQuery](http://jquery.com/)
 
 To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. Be sure to include this just before the closing ```</ body>``` tag at the footer of your site, and after jQuery has been included.
 
-	<script src="//code.sorryapp.com/sorry-announcer/0.1.1/sorry-announcer.min.js"></script>
+	<script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
 
 ### Link it to your status page.
 
@@ -28,7 +28,7 @@ Configuration of this plugin is handled using the data API. In this case we need
 
 We provide a default style for your widget direct from our CDN to get you up and running as quickly as possible. Simply include a link to this in the head of your site.
 
-	<link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.1/sorry-announcer.min.css" />
+	<link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.css" />
 
 #### Custom Styling
 
@@ -41,6 +41,17 @@ If you want to custom style your widget, you only need create your own CSS. To h
 
 		<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
 	</div>
+
+## Auto-Updating Edge Build.
+
+If you don't want to reference a static version number of the plugin, we also offer a major version edge build which will always be the latest minor/patch release of a major version.
+
+You can reference this by using the paths:
+
+	//code.sorryapp.com/sorry-announcer/0.edge/sorry-announcer.min.js
+	//code.sorryapp.com/sorry-announcer/0.edge/sorry-announcer.min.css
+
+Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in edge builds and auto-updates like this.
 
 ## Contributing To The Plugin
 
