@@ -42,16 +42,16 @@ If you want to custom style your widget, you only need create your own CSS. To h
 		<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
 	</div>
 
-## Auto-Updating Edge Build.
+## Always The Latest Version.
 
-If you don't want to reference a static version number of the plugin, we also offer a major version edge build which will always be the latest minor/patch release of a major version.
+If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
 
-You can reference this by using the paths:
+Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/sorry-announcer/0.edge/sorry-announcer.min.js
-	//code.sorryapp.com/sorry-announcer/0.edge/sorry-announcer.min.css
+	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.js
+	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.css
 
-Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in edge builds and auto-updates like this.
+Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
 ## Contributing To The Plugin
 

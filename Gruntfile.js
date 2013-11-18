@@ -78,12 +78,12 @@ module.exports = function(grunt) {
             // Also deploy a bleeding edge version on the major number.
             {
               src: 'dist/<%= pkg.name %>.min.css',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.edge/<%= pkg.name %>.min.css',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/<%= pkg.name %>.min.css',
               options: { gzip: true }
             },
             {
               src: 'dist/<%= pkg.name %>.min.js',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.edge/<%= pkg.name %>.min.js',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/<%= pkg.name %>.min.js',
               options: { gzip: true }
             }
           ]
