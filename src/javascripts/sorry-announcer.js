@@ -58,7 +58,10 @@ $(document).ready(function() {
 	});
 
 	// Bind the close event on any of the alerts which are added.
-	$('body').on('click', '.sorry-announcement-close', function() {
+	$('body').delegate('.sorry-announcement-close', 'click', function(e) {
+		// Prevent the default click behaviour.
+		e.preventDefault();
+
 		// Target the parent element of the close button.
 		var target = $(this).parent();
 		// Get the native numeric ID from the element.
