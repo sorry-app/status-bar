@@ -1,12 +1,12 @@
 # Sorry Status Announcer Plugin
 
-Add your Sorry status updates as an announcement bar to your app or website with this jQuery plugin.
+Add your [Sorry](http://www.sorryapp.com/) status updates as an announcement bar to your app or website with this jQuery plugin.
 
 #### jQuery required
 
 Please note that all our JavaScript plugins require [jQuery](http://jquery.com/).
 
-This plugin is officialy supported with jQuery `1.10.1` however it has been successfully tested back to jQuery `1.4.4`. Please ensure jQuery is installed before our plugin.
+This plugin is officialy supported with jQuery `1.10.1` however it has been successfully tested back to jQuery `1.4.4`.
 
 ## Installing The Plugin
 
@@ -26,19 +26,21 @@ Just before the closing ```</ body>``` tag, but after jQuery has been included.
 <script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
 ```
 
-### 3. Link it to your status page.
+### 3. Link it to your status page
 
-In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```body``` tag which includes your status pages sorryapp subdomain.
+In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```<body>``` tag which includes your pages sorryapp subdomain.
 
 ```html
 <body data-sorry-announcement="your subdomain goes here">
 ```
 
+#### Not sure what your subdomain is?
+
 If the address of your status page is ```http://mypage.sorryapp.com``` then ```mypage``` is what you need to use as the data attribute.
 
 If you have configured a custom domain, you must still use your underlying sorryapp subdomain.
 
-## Always The Latest Version.
+## Keep Up To Date
 
 If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
 
