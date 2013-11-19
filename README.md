@@ -12,9 +12,19 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 
 ### Include the plugin
 
-To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. Be sure to include this just before the closing ```</ body>``` tag at the footer of your site, and after jQuery has been included.
+To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. The plugin comprises of a single Javscript asset and single CSS asset.
 
-	<script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
+Include the CSS asset just before the closing ```</head>``` tag, below your own CSS assets.
+
+```html
+<link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.css" />
+```
+
+Include the Javascript just before the closing ```</ body>``` tag at the footer of your site, and after jQuery has been included.
+
+```html
+<script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
+```
 
 ### Link it to your status page.
 
@@ -22,27 +32,9 @@ In order for the plugin to know where to source your status updates from we must
 
 Configuration of this plugin is handled using the data API. In this case we need to add a data attribute to your pages ```<body>``` tag.
 
-	<body data-sorry-announcement="{{ your subdomain goes here }}">
-
-### Style the plugin
-
-#### Default Styling
-
-We provide a default style for your widget direct from our CDN to get you up and running as quickly as possible. Simply include a link to this in the head of your site.
-
-	<link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.css" />
-
-#### Custom Styling
-
-If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
-
-	<div class="sorry-announcement">
-		<button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button>
-
-		<span class="sorry-announcement-text">{{ Your status message goes here }}</span> 
-
-		<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
-	</div>
+```html
+<body data-sorry-announcement="{{ your subdomain goes here }}">
+```
 
 ## Always The Latest Version.
 
@@ -54,6 +46,20 @@ Instead of the sources above, use these paths for the latest versions:
 	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.css
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
+
+## Styling The Plugin
+
+If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
+
+```html
+<div class="sorry-announcement">
+	<button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button>
+
+	<span class="sorry-announcement-text">{{ Your status message goes here }}</span> 
+
+	<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
+</div>
+```
 
 ## Contributing To The Plugin
 
