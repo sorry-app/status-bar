@@ -34,6 +34,10 @@ In order for the plugin to know where to source your status updates from we must
 <body data-sorry-announcement="your subdomain goes here">
 ```
 
+If the address of your status page is ```http://mypage.sorryapp.com``` then ```mypage``` is what you need to use as the data attribute.
+
+If you have configured a custom domain, you must still use your underlying sorryapp subdomain when configuring widgets like this.
+
 ## Always The Latest Version.
 
 If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
