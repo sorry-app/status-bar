@@ -10,23 +10,25 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 
 ## Installing The Plugin
 
-### Include the plugin
-
 To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. The plugin comprises of a single Javscript asset and single CSS asset.
 
-Include the CSS asset just before the closing ```</head>``` tag, below your own CSS assets.
+### 1. Include the CSS
+
+Just before the closing ```</head>``` tag, after your own stylesheets.
 
 ```html
 <link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.css" />
 ```
 
-Include the Javascript just before the closing ```</ body>``` tag at the footer of your site, and after jQuery has been included.
+### 2. Include the Javascript 
+
+Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
 ```html
 <script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
 ```
 
-### Link it to your status page.
+### 3. Link it to your status page.
 
 In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```body``` tag which includes your status pages sorryapp subdomain.
 
