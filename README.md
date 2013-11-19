@@ -28,7 +28,7 @@ Include the Javascript just before the closing ```</ body>``` tag at the footer 
 
 ### Link it to your status page.
 
-In order for the plugin to know where to source your status updates from. We do this by adding a data attribute to your pages ```body``` tag which includes your status pages sorryapp subdomain.
+In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```body``` tag which includes your status pages sorryapp subdomain.
 
 ```html
 <body data-sorry-announcement="your subdomain goes here">
