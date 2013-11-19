@@ -10,8 +10,6 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 
 ## Installing The Plugin
 
-To save you installing the plugin locally, we provide a CDN based version hosted with AWS, which can be linked to directly. The plugin comprises of a single Javscript asset and single CSS asset.
-
 ### 1. Include the CSS
 
 Just before the closing ```</head>``` tag, after your own stylesheets.
