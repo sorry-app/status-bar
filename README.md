@@ -30,10 +30,8 @@ Include the Javascript just before the closing ```</ body>``` tag at the footer 
 
 In order for the plugin to know where to source your status updates from we must add your pages SorryApp subdomain to the configuration.
 
-Configuration of this plugin is handled using the data API. In this case we need to add a data attribute to your pages ```<body>``` tag.
-
 ```html
-<body data-sorry-announcement="{{ your subdomain goes here }}">
+<body data-sorry-announcement="your subdomain goes here">
 ```
 
 ## Always The Latest Version.
