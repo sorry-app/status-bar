@@ -2,11 +2,13 @@
 
 Add your Sorry status updates as an announcement bar to your app or website with this jQuery plugin.
 
+#### jQuery required
+
+Please note that all our JavaScript plugins require [jQuery](http://jquery.com/).
+
+This plugin is officialy supported with jQuery `1.10.1` however it has been successfully tested back to jQuery `1.4.4`. Please ensure jQuery is installed before our plugin.
+
 ## Installing The Plugin
-
-### jQuery required
-
-Please note that all our JavaScript plugins require [jQuery](http://jquery.com/). This plugin has been tested with 1.10.1. It should work with both older and newer versions of jQuery, however they are currently untested.
 
 ### Include the plugin
 
