@@ -49,12 +49,12 @@ Whilst minor/patch releases should not break backwards compatibility, it's still
 If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
 
 ```html
-<div class="sorry-announcement">
-	<button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button>
+<div class="sorry-status-bar">
+	<button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button>
 
-	<span class="sorry-announcement-text">{{ Your status message goes here }}</span> 
+	<span class="sorry-status-bar-text">{{ Your status message goes here }}</span> 
 
-	<a target="_blank" class="sorry-announcement-link">{{ The link to your page goes here }}</a>
+	<a target="_blank" class="sorry-status-bar-link">{{ The link to your page goes here }}</a>
 </div>
 ```
 
