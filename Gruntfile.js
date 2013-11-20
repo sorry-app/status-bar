@@ -50,7 +50,8 @@ module.exports = function(grunt) {
     // Release & Deployment Tasks.
     release: {
       options: {
-        npmtag: false // Don't deploy to NPM as we don't want to release like that.
+        npmtag: false, // Don't deploy to NPM as we don't want to release like that.
+        tagName: '<%= pkg.name %>-<%= version %>'
       }
     },
 

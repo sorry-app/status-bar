@@ -17,7 +17,7 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/2.0.0/status-bar.min.js"></script>
+<script src="//code.sorryapp.com/status-bar/1.0.0/status-bar.min.js"></script>
 ```
 
 ### 2. Link it to your status page
@@ -40,7 +40,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/status-bar/2.latest/status-bar.min.js
+	//code.sorryapp.com/status-bar/1.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
