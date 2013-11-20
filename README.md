@@ -1,6 +1,8 @@
-# Sorry Status Announcer Plugin
+# Sorry Status Bar Plugin
 
-Add your [Sorry](http://www.sorryapp.com/) status updates as an announcement bar to your app or website with this jQuery plugin.
+In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
+
+Once dropped into your website or application it'll broadcast your [Sorry](http://www.sorryapp.com) status updates direct to your users.
 
 #### jQuery required
 
@@ -15,7 +17,7 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
 ```html
-<script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
+<script src="//code.sorryapp.com/status-bar/0.1.4/status-bar.min.js"></script>
 ```
 
 ### 2. Link it to your status page
@@ -38,7 +40,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.js
+	//code.sorryapp.com/status-bar/0.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 

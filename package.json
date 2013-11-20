@@ -1,11 +1,11 @@
 {
-  "name": "sorry-announcer",
+  "name": "status-bar",
   "version": "1.0.0",
-  "description": "Add your Sorry status updates as an announcement bar to your app or website.",
+  "description": "In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. Once dropped into your website or application it'll broadcast your Sorry status updates direct to your users.",
   "author": "Robert Rawlins",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/supporttime/sorry-announcer/issues"
+    "url": "https://github.com/supporttime/status-bar/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

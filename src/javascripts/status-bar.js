@@ -27,7 +27,7 @@ $(document).ready(function() {
 	$("<link/>", {
 		rel: "stylesheet",
 		type: "text/css",
-		href: getScriptPath() + 'sorry-announcer.min.css'
+		href: getScriptPath() + 'status-bar.min.css'
 	}).appendTo("head");
 
 	// Set the configurable variables.
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	// Set the HTML template for the notices we're going to add.
 	// Also include a link to the status page in here.
 	// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-	var template = '<div class="sorry-announcement"><button type="button" class="sorry-announcement-close" aria-hidden="true">&times;</button><span class="sorry-announcement-text"></span> <a target="_blank" class="sorry-announcement-link"></a></div>';
+	var template = '<div class="sorry-status-bar"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text"></span> <a target="_blank" class="sorry-status-bar-link"></a></div>';
 
 	// Make a JSON request to acquire any apologies to display.
 	$.ajax({
@@ -62,11 +62,11 @@ $(document).ready(function() {
 					var $template = $(template);
 
 					// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
-					$template.attr('id', 'sorry-announcement-' + apology.id);
+					$template.attr('id', 'sorry-status-bar-' + apology.id);
 					// Swap out the content in the template.
-					$template.find('.sorry-announcement-text').text(apology.description);
+					$template.find('.sorry-status-bar-text').text(apology.description);
 					// Update the link to the apology
-					$template.find('.sorry-announcement-link').attr('href', apology.link).text(apology.link);
+					$template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
 
 					// Append the template to the DOM.
 					// We put this at the begining of the <body> tag so it's at the top of the DOM.
@@ -81,14 +81,14 @@ $(document).ready(function() {
 	});
 
 	// Bind the close event on any of the alerts which are added.
-	$('body').delegate('.sorry-announcement-close', 'click', function(e) {
+	$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
 		// Prevent the default click behaviour.
 		e.preventDefault();
 
 		// Target the parent element of the close button.
 		var target = $(this).parent();
 		// Get the native numeric ID from the element.
-		var id = target.attr('id').split('-')[2];
+		var id = target.attr('id').split('-')[3];
 		// Remember the ID which we are dismissing by putting it in the array
 		dismissed.push(id);
 		// Put that array in a serialized form in to local storage.
