@@ -10,15 +10,7 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 
 ## Installing The Plugin
 
-### 1. Include the CSS
-
-Just before the closing ```</head>``` tag, after your own stylesheets.
-
-```html
-<link rel="stylesheet" type="text/css" href="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.css" />
-```
-
-### 2. Include the Javascript 
+### 1. Include the Javascript 
 
 Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
@@ -26,7 +18,7 @@ Just before the closing ```</ body>``` tag, but after jQuery has been included.
 <script src="//code.sorryapp.com/sorry-announcer/0.1.4/sorry-announcer.min.js"></script>
 ```
 
-### 3. Link it to your status page
+### 2. Link it to your status page
 
 In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```<body>``` tag which includes your pages sorryapp subdomain.
 
@@ -47,7 +39,6 @@ If you want to always have the latest version of the plugin, we offer a source w
 Instead of the sources above, use these paths for the latest versions:
 
 	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.js
-	//code.sorryapp.com/sorry-announcer/0.latest/sorry-announcer.min.css
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 

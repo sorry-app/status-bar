@@ -7,6 +7,29 @@ $(document).ready(function() {
 	// Ensure local storage is available for us to use.
 	if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Sorry Announcer cannot run.');
 
+	// Function retrieves the absolute path of this asset without the file name.
+	// We use this to calculate the location of other assets which need to be dynamicly loaded
+	// such as the CSS and images.
+	// NOTE: This can only be used on setup, it is not reliable thereafter.
+	function getScriptPath() {
+		// Get a reference to all the script tags.
+		var scriptTags = $('script');
+
+		// We can always rely on the last script tag loaded to be this document.
+		// So we can now abstract the path from it.
+		// TODO: Can this be written more tidily with jQuery rather than native JS?
+		return scriptTags[scriptTags.length - 1].src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
+	}
+
+	// TODO: We probably only need to do this in the event that we have something to display. We may be able to reduce the overhead of including the CSS if it's not needed.
+	// Append the related CSS asset to the document.
+	// This saves the user having to include it themselves.
+	$("<link/>", {
+		rel: "stylesheet",
+		type: "text/css",
+		href: getScriptPath() + 'sorry-announcer.min.css'
+	}).appendTo("head");
+
 	// Set the configurable variables.
 	// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
 	// We pull this from a data attirbute in the HTML, on the body tag.
