@@ -3,9 +3,9 @@
 $(document).ready(function() {
 	// Validate we have all the required elements for the plugin.
 	// We need a data attribute of the page ID before we can continue.
-	if (!$("body").attr('data-sorry-announcement')) throw new Error('You must set a data attribute on the body tag for sorry-announcement which contains the ID of your Sorry status page.');
+	if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
 	// Ensure local storage is available for us to use.
-	if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Sorry Announcer cannot run.');
+	if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
 
 	// Function retrieves the absolute path of this asset without the file name.
 	// We use this to calculate the location of other assets which need to be dynamicly loaded
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
 	// We pull this from a data attirbute in the HTML, on the body tag.
 	// TODO: Should we support multiple pages here in future?
-	var page_id = $('body').data('sorry-announcement');
+	var page_id = $('body').data('sorry-subdomain');
 
 	// Reference the dismissed items, if none in local storage then assume new array.
 	var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];

@@ -17,7 +17,7 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/0.1.4/status-bar.min.js"></script>
+<script src="//code.sorryapp.com/status-bar/2.0.0/status-bar.min.js"></script>
 ```
 
 ### 2. Link it to your status page
@@ -25,7 +25,7 @@ Just before the closing ```</ body>``` tag, but after jQuery has been included.
 In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```<body>``` tag which includes your pages sorryapp subdomain.
 
 ```html
-<body data-sorry-announcement="your subdomain goes here">
+<body data-sorry-subdomain="">
 ```
 
 #### Not sure what your subdomain is?
@@ -40,7 +40,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/status-bar/0.latest/status-bar.min.js
+	//code.sorryapp.com/status-bar/2.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
