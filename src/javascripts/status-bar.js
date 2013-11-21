@@ -28,25 +28,19 @@
 		// Prevent the default click behaviour.
 		e.preventDefault();
 
-		// Get the target element.
-		var target = $(this).parent();
-
-		// Get the native numeric ID from the element.
-		var id = target.attr('id').split('-')[3];
-
 		// Get the previously discmissed items from local storage.
 		// TODO: Could this be a helper method?
 		var previously_dimissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids'))  || [];
 
 		// Remember the ID which we are dismissing by putting it in the array
-		previously_dimissed.push(id);
+		previously_dimissed.push(self.attributes.id);
 
 		// Put that array in a serialized form in to local storage.
 		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(previously_dimissed));
 
 		// Remove the parent from the DOM.
 		// TODO: This should be animated.
-		target.remove();
+		self.$elem.remove();
 	};
 
 	StatusNotice.prototype.buildFrag = function() {
@@ -64,9 +58,15 @@
 		// Reference self again.
 		var self = this;
 
+		// Get the frag we're going to create.
+		self.$elem = $(self.frag);
+
 		// Append the template to the DOM.
 		// We drop this in to the containing bar element.
-		self.parent.$elem.prepend(self.frag);
+		self.parent.$elem.prepend(self.$elem);
+
+		// Bind a click event for the dsmiss button.
+		self.$elem.on('click.dismiss.status-notice', '[data-dismiss="status-notice"]', $.proxy(this.dismiss, this));
 	};	
 
 	// Status Bar Class Definition. 
@@ -104,7 +104,7 @@
 				// Only work with this if it's not been dismissed before.
 				// We can do this by hunting through the dismissed list.
 				// TODO: Logic of this IF is a little messy, maybe move to helper?				
-				if($.inArray(String(apology.id), self.dismissed) < 0) {
+				if($.inArray(apology.id, self.dismissed) < 0) {
 					// Create a new status notice for the apology.
 					var notice = new StatusNotice(self, apology);
 
@@ -194,7 +194,5 @@
 			$statusBar.statusBar($statusBar.data());
 		});
 	});
-
-	$(document).on('click.statusBar.data-api', '[data-dismiss="status-notice"]', StatusNotice.prototype.dismiss);
 
 })(jQuery, window, document);
