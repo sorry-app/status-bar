@@ -182,7 +182,7 @@
 	// Instantiate the plugin on window load.
 	$(window).on('load', function () {
 		// Attach the plugin to the body tag.
-		$('body').each(function () {
+		$('[data-sorry-subdomain]').each(function () {
 			// Instantiate the plugin.
 			var $statusBar = $(this);
 
