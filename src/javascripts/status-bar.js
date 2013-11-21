@@ -1,151 +1,150 @@
 // Wrap this as a jQuery plugin.
-(function($, window, document, undefined) {
+(function($, window, document, undefined) { "use strict";
 
-	// Define the status bar class.
-	var StatusBar = {
-		// Constructor method.
-		init: function(options, elem) {
-			// Quick self refernce to the class.
-			var self = this;
-			// Reference the HTML element we're teathered too.
-			self.elem = elem;
-			self.$elem = $( elem );
+	// Status Bar Class Definition. 
 
-			// Validate we have all the required elements for the plugin.
-			// We need a data attribute of the page ID before we can continue.
-			if (typeof options.sorrySubdomain === 'undefined') throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
-			// Ensure local storage is available for us to use.
-			if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
+	var StatusBar = function (options, elem) {
+		// Quick self refernce to the class.
+		var self = this;
 
-			// Set a reference to the endpoing.
-			self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
+		// Reference the HTML element we're teathered too.
+		self.elem = elem;
+		self.$elem = $( elem );
 
-			// Set the HTML template for the notices we're going to add.
-			// Also include a link to the status page in here.
-			// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-			self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
-			// Keep a string where we'll keep the compiled templates.
-			self.frag = '';
+		// Validate we have all the required elements for the plugin.
+		// We need a data attribute of the page ID before we can continue.
+		if (typeof options.sorrySubdomain === 'undefined') throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
+		// Ensure local storage is available for us to use.
+		if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
 
-			// Reference the dismissed items, if none in local storage then assume new array.
-			self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
+		// Set a reference to the endpoing.
+		self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
 
-			// Load in the supporting css assets.
-			self.loadcss();
+		// Set the HTML template for the notices we're going to add.
+		// Also include a link to the status page in here.
+		// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
+		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
+		// Keep a string where we'll keep the compiled templates.
+		self.frag = '';
 
-			// Bind the close event on any of the alerts which are added.
-			$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
-				// Prevent the default click behaviour.
-				e.preventDefault();
+		// Reference the dismissed items, if none in local storage then assume new array.
+		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
 
-				// Target the parent element of the close button.
-				var target = $(this).parent();
+		// Load in the supporting css assets.
+		self.loadcss();
 
-				// Action the close method on the targer.
-				self.dismiss(target);
-			});
+		// Bind the close event on any of the alerts which are added.
+		$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
+			// Prevent the default click behaviour.
+			e.preventDefault();
 
-			// Run the plugin.
-			self.run();
-		},
+			// Target the parent element of the close button.
+			var target = $(this).parent();
 
-		getpath: function() {
-			// Reference self again.
-			var self = this;
+			// Action the close method on the targer.
+			self.dismiss(target);
+		});
 
-			// Get a reference to all the script tags.
-			var scriptTags = $('script');
+		// Run the plugin.
+		self.run();
+	};
 
-			// We can always rely on the last script tag loaded to be this document.
-			// So we can now abstract the path from it.
-			// TODO: Can this be written more tidily with jQuery rather than native JS?
-			return scriptTags[scriptTags.length - 1].src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
-		},
+	StatusBar.prototype.loadcss = function() {
+		// Reference self again.
+		var self = this;
 
-		loadcss: function() {
-			// Reference self again.
-			var self = this;
+		// TODO: We probably only need to do this in the event that we have something to display. We may be able to reduce the overhead of including the CSS if it's not needed.
+		// Append the related CSS asset to the document.
+		// This saves the user having to include it themselves.
+		$("<link/>", {
+			rel: "stylesheet",
+			type: "text/css",
+			href: self.getpath() + 'status-bar.min.css'
+		}).appendTo("head");
+	};
 
-			// TODO: We probably only need to do this in the event that we have something to display. We may be able to reduce the overhead of including the CSS if it's not needed.
-			// Append the related CSS asset to the document.
-			// This saves the user having to include it themselves.
-			$("<link/>", {
-				rel: "stylesheet",
-				type: "text/css",
-				href: self.getpath() + 'status-bar.min.css'
-			}).appendTo("head");
-		},
+	StatusBar.prototype.fetch = function() {
+		// Reference self again.
+		var self = this;
 
-		fetch: function() {
-			// Reference self again.
-			var self = this;
+		// Make a JSON request to acquire any apologies to display.
+		return $.ajax({
+			type: "GET",
+			crossDomain: true, 
+			dataType: "json",
+			url: self.endpoint
+		});
+	};
 
-			// Make a JSON request to acquire any apologies to display.
-			return $.ajax({
-				type: "GET",
-				crossDomain: true, 
-				dataType: "json",
-				url: self.endpoint
-			});
-		},
+	StatusBar.prototype.buildFrag = function(apologies) {
+		// Reference self again.
+		var self = this;
 
-		buildFrag: function(apologies) {
-			// Reference self again.
-			var self = this;
+		// Loop over the apologies that we have been handed back.
+		$.each( apologies, function(index, apology) {
+			// Only work with this if it's not been dismissed before.
+			// We can do this by hunting through the dismissed list.
+			if($.inArray(String(apology.id), self.dismissed) < 0) {
+				// Append the classes frag with the compfile template.
+				self.frag +=
+				self.template.replace( /{{apology}}/ig, apology.description ) // Swap the description.
+								.replace( /{{link}}/ig, apology.link ) // Swap the link.
+								.replace( /{{id}}/ig, apology.id ); // Swap the ID.
+			}
+		});
+	};
 
-			// Loop over the apologies that we have been handed back.
-			$.each( apologies, function(index, apology) {
-				// Only work with this if it's not been dismissed before.
-				// We can do this by hunting through the dismissed list.
-				if($.inArray(String(apology.id), self.dismissed) < 0) {
-					// Append the classes frag with the compfile template.
-					self.frag +=
-					self.template.replace( /{{apology}}/ig, apology.description ) // Swap the description.
-									.replace( /{{link}}/ig, apology.link ) // Swap the link.
-									.replace( /{{id}}/ig, apology.id ); // Swap the ID.
-				}
-			});
-		},
+	StatusBar.prototype.dismiss = function(target) {
+		// Reference self again.
+		var self = this;
 
-		dismiss: function(target) {
-			// Reference self again.
-			var self = this;
+		// Get the native numeric ID from the element.
+		var id = target.attr('id').split('-')[3];
+		// Remember the ID which we are dismissing by putting it in the array
+		self.dismissed.push(id);
+		// Put that array in a serialized form in to local storage.
+		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.dismissed));
 
-			// Get the native numeric ID from the element.
-			var id = target.attr('id').split('-')[3];
-			// Remember the ID which we are dismissing by putting it in the array
-			self.dismissed.push(id);
-			// Put that array in a serialized form in to local storage.
-			window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.dismissed));
+		// Remove the parent from the DOM.
+		// TODO: This should be animated.
+		target.remove();
+	};
 
-			// Remove the parent from the DOM.
-			// TODO: This should be animated.
-			target.remove();
-		},
+	StatusBar.prototype.display = function() {
+		// Reference self again.
+		var self = this;
 
-		display: function() {
-			// Reference self again.
-			var self = this;
+		// Append the template to the DOM.
+		// We put this at the begining of the <body> tag so it's at the top of the DOM.
+		self.$elem.prepend(self.frag);
+	};
 
-			// Append the template to the DOM.
-			// We put this at the begining of the <body> tag so it's at the top of the DOM.
-			self.$elem.prepend(self.frag);
-		},
+	StatusBar.prototype.run = function() {
+		// Reference self again.
+		var self = this;
 
-		run: function() {
-			// Reference self again.
-			var self = this;
+		// Run the core process.
+		// Fetch the apologies and wait for complete.
+		self.fetch().done(function(fetch) {
+			// Build the template fragmenet with the apologies.
+			self.buildFrag(fetch.response);
 
-			// Run the core process.
-			// Fetch the apologies and wait for complete.
-			self.fetch().done(function(fetch) {
-				// Build the template fragmenet with the apologies.
-				self.buildFrag(fetch.response);
+			// Display the results.
+			self.display();
+		});	
+	};
+	
+	StatusBar.prototype.getpath = function() {
+		// Reference self again.
+		var self = this;
 
-				// Display the results.
-				self.display();
-			});	
-		}
+		// Get a reference to all the script tags.
+		var scriptTags = $('script');
+
+		// We can always rely on the last script tag loaded to be this document.
+		// So we can now abstract the path from it.
+		// TODO: Can this be written more tidily with jQuery rather than native JS?
+		return scriptTags[scriptTags.length - 1].src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
 	};
 
 	// jQuery Plugin Definition.
@@ -159,10 +158,7 @@
 		// TODO: Do we want to restrict this to a single instance?
 		return this.each(function () {
 			// Create an instance of the status bar class.
-			var statusBar = Object.create( StatusBar );
-
-			// Initilize the class with the options provided.
-			statusBar.init( options, this );
+			var statusBar = new StatusBar(options, this);
 
 			// Bind the class to the data for the DOM element.
 			$.data( this, 'statusBar', statusBar );
