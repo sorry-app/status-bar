@@ -15,12 +15,6 @@
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size:16px;
   font-weight:300;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:10000;
-  box-sizing:border-box;
 }
 
 span.sorry-status-bar-text {
