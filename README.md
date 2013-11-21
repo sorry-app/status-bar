@@ -20,12 +20,12 @@ Just before the closing ```</ body>``` tag, but after jQuery has been included.
 <script src="//code.sorryapp.com/status-bar/1.0.0/status-bar.min.js"></script>
 ```
 
-### 2. Link it to your status page
+### 2. Choose where you want the bar to appear
 
-In order for the plugin to know where to source your status updates from we add a data attribute to your pages ```<body>``` tag which includes your pages sorryapp subdomain.
+In order for the plugin to know where to place your status bar, and where to source your status updates from you need to include a div on your page, with a data attribute which includes your sorryapp subdomain.
 
 ```html
-<body data-sorry-subdomain="">
+<div class="sorry-status-bar" data-status-bar-for=""></div>
 ```
 
 #### Not sure what your subdomain is?

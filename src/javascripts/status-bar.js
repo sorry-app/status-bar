@@ -14,7 +14,7 @@
 		self.parent = parent;
 
 		// Define the template for the class.
-		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" data-dismiss="status-notice" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
+		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}"><button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">&times;</button><span class="sorry-status-notice-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-notice-link">{{link}}</a></div>';
 		self.frag = ''; // Empty string to contain the compiled template.
 
 		// Build the frag for the element.
@@ -76,7 +76,7 @@
 		self.$elem = $(elem);
 
 		// Set a reference to the endpoing.
-		self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
+		self.endpoint = '//api.sorryapp.com/1/pages/' + options.statusBarFor + '/apologies/current';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
@@ -182,7 +182,7 @@
 	// Instantiate the plugin on window load.
 	$(window).on('load', function () {
 		// Attach the plugin to the body tag.
-		$('[data-sorry-subdomain]').each(function () {
+		$('[data-status-bar-for]').each(function () {
 			// Instantiate the plugin.
 			var $statusBar = $(this);
 

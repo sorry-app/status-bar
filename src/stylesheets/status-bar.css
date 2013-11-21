@@ -9,36 +9,45 @@
 .sorry-status-bar {
   background-color:#ff7b29;
   color:#FFF;
-  padding: 20px 30px; 
-  border: 1px solid transparent;
-  padding-right: 35px;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size:16px;
   font-weight:300;
 }
 
-span.sorry-status-bar-text {
+.sorry-status-notice {
+  padding:10px 30px;
+}
+
+.sorry-status-notice:first-child {
+  padding-top:20px;
+}
+
+.sorry-status-notice:last-child {
+  padding-bottom:20px;
+}
+
+span.sorry-status-notice-text {
   margin-right:15px; /* Space it away from the link to the page. */
 }
 
-a.sorry-status-bar-link {
+a.sorry-status-notice-link {
   color:#FFF;
   opacity:0.90;
 }
 
-a.sorry-status-bar-link:hover,
-a.sorry-status-bar-link:focus {
+a.sorry-status-notice-link:hover,
+a.sorry-status-notice-link:focus {
   opacity:1;
 }
 
-.sorry-status-bar .sorry-status-bar-close {
+.sorry-status-notice .sorry-status-notice-close {
   position: relative;
   top: -2px;
   right: -10px;
   color: inherit;
 }
 
-.sorry-status-bar .sorry-status-bar-close {
+.sorry-status-notice .sorry-status-notice-close {
   float: right;
   font-size: 21px;
   font-weight: bold;
@@ -49,8 +58,8 @@ a.sorry-status-bar-link:focus {
   filter: alpha(opacity=20);
 }
 
-.sorry-status-bar .sorry-status-bar-close:hover,
-.sorry-status-bar .sorry-status-bar-close:focus {
+.sorry-status-notice .sorry-status-notice-close:hover,
+.sorry-status-notice .sorry-status-notice-close:focus {
   color: #FFF;
   text-decoration: none;
   cursor: pointer;
@@ -58,7 +67,7 @@ a.sorry-status-bar-link:focus {
   filter: alpha(opacity=50);
 }
 
-.sorry-status-bar button.sorry-status-bar-close {
+.sorry-status-notice button.sorry-status-notice-close {
   padding: 0;
   cursor: pointer;
   background: transparent;
