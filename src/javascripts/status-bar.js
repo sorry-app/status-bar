@@ -7,14 +7,13 @@
 		init: function(options, elem) {
 			// Quick self refernce to the class.
 			var self = this;
-
 			// Reference the HTML element we're teathered too.
 			self.elem = elem;
 			self.$elem = $( elem );
 
 			// Validate we have all the required elements for the plugin.
 			// We need a data attribute of the page ID before we can continue.
-			if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
+			if (typeof options.sorrySubdomain === 'undefined') throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
 			// Ensure local storage is available for us to use.
 			if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
 
