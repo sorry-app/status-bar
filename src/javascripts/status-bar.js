@@ -1,6 +1,6 @@
-// Wait for jQuery to be ready.
-// TODO: Turn this in to a bootstap style jQuery plugin, rather than vanilla code.
-$(document).ready(function() {
+// Wrap this as a jQuery plugin.
+(function($, window, document, undefined) {
+
 	// Validate we have all the required elements for the plugin.
 	// We need a data attribute of the page ID before we can continue.
 	if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
@@ -98,4 +98,5 @@ $(document).ready(function() {
 		// TODO: This should be animated.
 		target.remove();
 	});
-});
+
+})(jQuery, window, document);
