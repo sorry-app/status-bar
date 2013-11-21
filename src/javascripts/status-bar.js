@@ -7,7 +7,26 @@
 		init: function(options) {
 			// Quick self refernce to the class.
 			var self = this;
-			
+
+			// Set a reference to the endpoing.
+			self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
+
+			// Set the HTML template for the notices we're going to add.
+			// Also include a link to the status page in here.
+			// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
+			self.template = $('<div class="sorry-status-bar"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text"></span> <a target="_blank" class="sorry-status-bar-link"></a></div>');
+
+			// Reference the dismissed items, if none in local storage then assume new array.
+			self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
+
+			// Run the plugin.
+			self.run();
+		},
+
+		run: function() {
+			// Reference self again.
+			var self = this;
+
 			// Validate we have all the required elements for the plugin.
 			// We need a data attribute of the page ID before we can continue.
 			if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
@@ -37,47 +56,29 @@
 				href: getScriptPath() + 'status-bar.min.css'
 			}).appendTo("head");
 
-			// Set the configurable variables.
-			// The page ID is used in the API calls that we make, and any chanels for PUSH subscription.
-			// We pull this from a data attirbute in the HTML, on the body tag.
-			// TODO: Should we support multiple pages here in future?
-			var page_id = $('body').data('sorry-subdomain');
-
-			// Reference the dismissed items, if none in local storage then assume new array.
-			var dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
-
-			// Set the HTML template for the notices we're going to add.
-			// Also include a link to the status page in here.
-			// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-			var template = '<div class="sorry-status-bar"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text"></span> <a target="_blank" class="sorry-status-bar-link"></a></div>';
-
 			// Make a JSON request to acquire any apologies to display.
 			$.ajax({
 				type: "GET",
 				crossDomain: true, 
 				dataType: "json",
-				url: '//api.sorryapp.com/1/pages/' + page_id + '/apologies/current', // API endpoing for th∏e page.
+				url: self.endpoint, // API endpoing for th∏e page.
 				success: function(data, textStatus, jqXHR) {
 					// Loop over the apologies that we have been handed back.
 					$.each(data.response, function(index, apology) {
 						// Only work with this if it's not been dismissed before.
 						// We can do this by hunting through the dismissed list.
 						// TODO: Logic of this IF is a little messy, maybe move to helper?
-						if($.inArray(String(apology.id), dismissed) < 0) {
-							// Get a reference to the template we're going to use.
-							// Wrap it in a jQuery object so we can filter the contents.
-							var $template = $(template);
-
+						if($.inArray(String(apology.id), self.dismissed) < 0) {
 							// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
-							$template.attr('id', 'sorry-status-bar-' + apology.id);
+							self.template.attr('id', 'sorry-status-bar-' + apology.id);
 							// Swap out the content in the template.
-							$template.find('.sorry-status-bar-text').text(apology.description);
+							self.template.find('.sorry-status-bar-text').text(apology.description);
 							// Update the link to the apology
-							$template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
+							self.template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
 
 							// Append the template to the DOM.
 							// We put this at the begining of the <body> tag so it's at the top of the DOM.
-							$('body').prepend($template);
+							$('body').prepend(self.template);
 
 							// TODO: Show / Animate the alert as it'll be hidden by default.
 						}
