@@ -28,15 +28,11 @@
 		// Prevent the default click behaviour.
 		e.preventDefault();
 
-		// Get the previously discmissed items from local storage.
-		// TODO: Could this be a helper method?
-		var previously_dimissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids'))  || [];
-
 		// Remember the ID which we are dismissing by putting it in the array
-		previously_dimissed.push(self.attributes.id);
+		self.parent.dismissed.push(self.attributes.id);
 
 		// Put that array in a serialized form in to local storage.
-		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(previously_dimissed));
+		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.parent.dismissed));
 
 		// Remove the parent from the DOM.
 		// TODO: This should be animated.
