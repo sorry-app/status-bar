@@ -12,6 +12,12 @@
 			self.elem = elem;
 			self.$elem = $( elem );
 
+			// Validate we have all the required elements for the plugin.
+			// We need a data attribute of the page ID before we can continue.
+			if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
+			// Ensure local storage is available for us to use.
+			if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
+
 			// Set a reference to the endpoing.
 			self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
 
@@ -25,6 +31,18 @@
 
 			// Load in the supporting css assets.
 			self.loadcss();
+
+			// Bind the close event on any of the alerts which are added.
+			$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
+				// Prevent the default click behaviour.
+				e.preventDefault();
+
+				// Target the parent element of the close button.
+				var target = $(this).parent();
+
+				// Action the close method on the targer.
+				self.dismiss(target);
+			});
 
 			// Run the plugin.
 			self.run();
@@ -90,6 +108,22 @@
 			});
 		},
 
+		dismiss: function(target) {
+			// Reference self again.
+			var self = this;
+
+			// Get the native numeric ID from the element.
+			var id = target.attr('id').split('-')[3];
+			// Remember the ID which we are dismissing by putting it in the array
+			self.dismissed.push(id);
+			// Put that array in a serialized form in to local storage.
+			window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.dismissed));
+
+			// Remove the parent from the DOM.
+			// TODO: This should be animated.
+			target.remove();
+		},
+
 		display: function() {
 			// Reference self again.
 			var self = this;
@@ -103,35 +137,9 @@
 			// Reference self again.
 			var self = this;
 
-			// Validate we have all the required elements for the plugin.
-			// We need a data attribute of the page ID before we can continue.
-			if (!$("body").attr('data-sorry-subdomain')) throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
-			// Ensure local storage is available for us to use.
-			if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
-
-
-			// Bind the close event on any of the alerts which are added.
-			$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
-				// Prevent the default click behaviour.
-				e.preventDefault();
-
-				// Target the parent element of the close button.
-				var target = $(this).parent();
-				// Get the native numeric ID from the element.
-				var id = target.attr('id').split('-')[3];
-				// Remember the ID which we are dismissing by putting it in the array
-				dismissed.push(id);
-				// Put that array in a serialized form in to local storage.
-				window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(dismissed));
-
-				// Remove the parent from the DOM.
-				// TODO: This should be animated.
-				target.remove();
-			});
-
 			// Run the core process.
 			// Fetch the apologies and wait for complete.
-			self.fetch().done(function( fetch ) {
+			self.fetch().done(function(fetch) {
 				// Build the template fragmenet with the apologies.
 				self.buildFrag(fetch.response);
 
