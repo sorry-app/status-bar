@@ -4,9 +4,13 @@
 	// Define the status bar class.
 	var StatusBar = {
 		// Constructor method.
-		init: function(options) {
+		init: function(options, elem) {
 			// Quick self refernce to the class.
 			var self = this;
+
+			// Reference the HTML element we're teathered too.
+			self.elem = elem;
+			self.$elem = $( elem );
 
 			// Set a reference to the endpoing.
 			self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
@@ -21,6 +25,48 @@
 
 			// Run the plugin.
 			self.run();
+		},
+
+		fetch: function() {
+			// Reference self again.
+			var self = this;
+
+			// Make a JSON request to acquire any apologies to display.
+			return $.ajax({
+				type: "GET",
+				crossDomain: true, 
+				dataType: "json",
+				url: self.endpoint
+			});
+		},
+
+		buildFrag: function(apologies) {
+			// Reference self again.
+			var self = this;
+
+			// Loop over the apologies that we have been handed back.
+			$.each( apologies, function(index, apology) {
+				// Only work with this if it's not been dismissed before.
+				// We can do this by hunting through the dismissed list.
+				// TODO: Logic of this IF is a little messy, maybe move to helper?
+				if($.inArray(String(apology.id), self.dismissed) < 0) {
+					// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
+					self.template.attr('id', 'sorry-status-bar-' + apology.id);
+					// Swap out the content in the template.
+					self.template.find('.sorry-status-bar-text').text(apology.description);
+					// Update the link to the apology
+					self.template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
+				}
+			});
+		},
+
+		display: function() {
+			// Reference self again.
+			var self = this;
+
+			// Append the template to the DOM.
+			// We put this at the begining of the <body> tag so it's at the top of the DOM.
+			self.$elem.prepend(self.template);
 		},
 
 		run: function() {
@@ -56,38 +102,6 @@
 				href: getScriptPath() + 'status-bar.min.css'
 			}).appendTo("head");
 
-			// Make a JSON request to acquire any apologies to display.
-			$.ajax({
-				type: "GET",
-				crossDomain: true, 
-				dataType: "json",
-				url: self.endpoint, // API endpoing for th∏e page.
-				success: function(data, textStatus, jqXHR) {
-					// Loop over the apologies that we have been handed back.
-					$.each(data.response, function(index, apology) {
-						// Only work with this if it's not been dismissed before.
-						// We can do this by hunting through the dismissed list.
-						// TODO: Logic of this IF is a little messy, maybe move to helper?
-						if($.inArray(String(apology.id), self.dismissed) < 0) {
-							// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
-							self.template.attr('id', 'sorry-status-bar-' + apology.id);
-							// Swap out the content in the template.
-							self.template.find('.sorry-status-bar-text').text(apology.description);
-							// Update the link to the apology
-							self.template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
-
-							// Append the template to the DOM.
-							// We put this at the begining of the <body> tag so it's at the top of the DOM.
-							$('body').prepend(self.template);
-
-							// TODO: Show / Animate the alert as it'll be hidden by default.
-						}
-					});
-				}
-
-				// TODO: Error softly when things go wrong.
-			});
-
 			// Bind the close event on any of the alerts which are added.
 			$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
 				// Prevent the default click behaviour.
@@ -106,6 +120,16 @@
 				// TODO: This should be animated.
 				target.remove();
 			});
+
+			// Run the core process.
+			// Fetch the apologies and wait for complete.
+			self.fetch().done(function( fetch ) {
+				// Build the template fragmenet with the apologies.
+				self.buildFrag(fetch.response);
+
+				// Display the results.
+				self.display();
+			});	
 		}
 	};
 
