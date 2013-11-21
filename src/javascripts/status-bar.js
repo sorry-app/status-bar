@@ -24,7 +24,9 @@
 			// Set the HTML template for the notices we're going to add.
 			// Also include a link to the status page in here.
 			// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-			self.template = $('<div class="sorry-status-bar"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text"></span> <a target="_blank" class="sorry-status-bar-link"></a></div>');
+			self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
+			// Keep a string where we'll keep the compiled templates.
+			self.frag = '';
 
 			// Reference the dismissed items, if none in local storage then assume new array.
 			self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
@@ -96,14 +98,12 @@
 			$.each( apologies, function(index, apology) {
 				// Only work with this if it's not been dismissed before.
 				// We can do this by hunting through the dismissed list.
-				// TODO: Logic of this IF is a little messy, maybe move to helper?
 				if($.inArray(String(apology.id), self.dismissed) < 0) {
-					// Assign an ID to the DOM element - we reference this later on to remember when dismissed.
-					self.template.attr('id', 'sorry-status-bar-' + apology.id);
-					// Swap out the content in the template.
-					self.template.find('.sorry-status-bar-text').text(apology.description);
-					// Update the link to the apology
-					self.template.find('.sorry-status-bar-link').attr('href', apology.link).text(apology.link);
+					// Append the classes frag with the compfile template.
+					self.frag +=
+					self.template.replace( /{{apology}}/ig, apology.description ) // Swap the description.
+									.replace( /{{link}}/ig, apology.link ) // Swap the link.
+									.replace( /{{id}}/ig, apology.id ); // Swap the ID.
 				}
 			});
 		},
@@ -130,7 +130,7 @@
 
 			// Append the template to the DOM.
 			// We put this at the begining of the <body> tag so it's at the top of the DOM.
-			self.$elem.prepend(self.template);
+			self.$elem.prepend(self.frag);
 		},
 
 		run: function() {
