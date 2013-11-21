@@ -3,7 +3,25 @@
 
 	// Status Notice.
 
-	var StatusNotice = function () {};	
+	var StatusNotice = function (parent, id, description, link) {
+		// Quick self refernce to the class.
+		var self = this;
+
+		// Set the properties.
+		self.id = id;
+		self.description = description;
+		self.link = link;
+
+		// Set the related objects.
+		self.parent = parent;
+
+		// Define the template for the class.
+		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" data-dismiss="status-notice" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
+		self.frag = ''; // Empty string to contain the compiled template.
+
+		// Build the frag for the element.
+		self.buildFrag();
+	};	
 
 	StatusNotice.prototype.dismiss = function(e) {
 		// Reference self again.
@@ -31,6 +49,26 @@
 		// Remove the parent from the DOM.
 		// TODO: This should be animated.
 		target.remove();
+	};
+
+	StatusNotice.prototype.buildFrag = function() {
+		// Reference self again.
+		var self = this;
+
+		// Append the classes frag with the compfile template.
+		self.frag +=
+		self.template.replace( /{{apology}}/ig, self.description ) // Swap the description.
+						.replace( /{{link}}/ig, self.link ) // Swap the link.
+						.replace( /{{id}}/ig, self.id ); // Swap the ID.
+	};
+
+	StatusNotice.prototype.display = function() {
+		// Reference self again.
+		var self = this;
+
+		// Append the template to the DOM.
+		// We drop this in to the containing bar element.
+		self.parent.$elem.prepend(self.frag);
 	};	
 
 	// Status Bar Class Definition. 
@@ -41,23 +79,10 @@
 
 		// Reference the HTML element we're teathered too.
 		self.elem = elem;
-		self.$elem = $( elem );
-
-		// Validate we have all the required elements for the plugin.
-		// We need a data attribute of the page ID before we can continue.
-		if (typeof options.sorrySubdomain === 'undefined') throw new Error('You must set a data attribute on the body tag for sorry-subdomain which contains the subdomain of your Sorry status page.');
-		// Ensure local storage is available for us to use.
-		if(typeof(Storage) == "undefined") throw new Error('Local storage is not supported or enabled in the browser, Status Bar cannot run.');
+		self.$elem = $(elem);
 
 		// Set a reference to the endpoing.
 		self.endpoint = '//api.sorryapp.com/1/pages/' + options.sorrySubdomain + '/apologies/current';
-
-		// Set the HTML template for the notices we're going to add.
-		// Also include a link to the status page in here.
-		// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" data-dismiss="status-notice" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
-		// Keep a string where we'll keep the compiled templates.
-		self.frag = '';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
@@ -69,6 +94,42 @@
 		self.run();
 	};
 
+	StatusBar.prototype.run = function() {
+		// Reference self again.
+		var self = this;
+
+		// Run the core process.
+		// Fetch the apologies and wait for complete.
+		self.fetch().done(function(response) {
+			// Loop over the reaponse object.
+			$.each( response.response, function(index, apology) {
+				// Only work with this if it's not been dismissed before.
+				// We can do this by hunting through the dismissed list.
+				// TODO: Logic of this IF is a little messy, maybe move to helper?				
+				if($.inArray(String(apology.id), self.dismissed) < 0) {
+					// Create a new status notice for the apology.
+					var notice = new StatusNotice(self, apology.id, apology.description, apology.link);
+
+					// Display the notice.
+					notice.display();
+				}
+			});
+		});	
+	};	
+
+	StatusBar.prototype.fetch = function() {
+		// Reference self again.
+		var self = this;
+
+		// Make a JSON request to acquire any apologies to display.
+		return $.ajax({
+			type: "GET",
+			crossDomain: true, 
+			dataType: "json",
+			url: self.endpoint
+		});
+	};
+	
 	StatusBar.prototype.loadcss = function() {
 		// Reference self again.
 		var self = this;
@@ -83,61 +144,6 @@
 		}).appendTo("head");
 	};
 
-	StatusBar.prototype.fetch = function() {
-		// Reference self again.
-		var self = this;
-
-		// Make a JSON request to acquire any apologies to display.
-		return $.ajax({
-			type: "GET",
-			crossDomain: true, 
-			dataType: "json",
-			url: self.endpoint
-		});
-	};
-
-	StatusBar.prototype.buildFrag = function(apologies) {
-		// Reference self again.
-		var self = this;
-
-		// Loop over the apologies that we have been handed back.
-		$.each( apologies, function(index, apology) {
-			// Only work with this if it's not been dismissed before.
-			// We can do this by hunting through the dismissed list.
-			if($.inArray(String(apology.id), self.dismissed) < 0) {
-				// Append the classes frag with the compfile template.
-				self.frag +=
-				self.template.replace( /{{apology}}/ig, apology.description ) // Swap the description.
-								.replace( /{{link}}/ig, apology.link ) // Swap the link.
-								.replace( /{{id}}/ig, apology.id ); // Swap the ID.
-			}
-		});
-	};
-
-	StatusBar.prototype.display = function() {
-		// Reference self again.
-		var self = this;
-
-		// Append the template to the DOM.
-		// We put this at the begining of the <body> tag so it's at the top of the DOM.
-		self.$elem.prepend(self.frag);
-	};
-
-	StatusBar.prototype.run = function() {
-		// Reference self again.
-		var self = this;
-
-		// Run the core process.
-		// Fetch the apologies and wait for complete.
-		self.fetch().done(function(fetch) {
-			// Build the template fragmenet with the apologies.
-			self.buildFrag(fetch.response);
-
-			// Display the results.
-			self.display();
-		});	
-	};
-	
 	StatusBar.prototype.getpath = function() {
 		// Reference self again.
 		var self = this;
