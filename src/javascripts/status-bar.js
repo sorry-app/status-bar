@@ -1,6 +1,38 @@
 // Wrap this as a jQuery plugin.
 (function($, window, document, undefined) { "use strict";
 
+	// Status Notice.
+
+	var StatusNotice = function () {};	
+
+	StatusNotice.prototype.dismiss = function(e) {
+		// Reference self again.
+		var self = this;
+
+		// Prevent the default click behaviour.
+		e.preventDefault();
+
+		// Get the target element.
+		var target = $(this).parent();
+
+		// Get the native numeric ID from the element.
+		var id = target.attr('id').split('-')[3];
+
+		// Get the previously discmissed items from local storage.
+		// TODO: Could this be a helper method?
+		var previously_dimissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids'))  || [];
+
+		// Remember the ID which we are dismissing by putting it in the array
+		previously_dimissed.push(id);
+
+		// Put that array in a serialized form in to local storage.
+		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(previously_dimissed));
+
+		// Remove the parent from the DOM.
+		// TODO: This should be animated.
+		target.remove();
+	};	
+
 	// Status Bar Class Definition. 
 
 	var StatusBar = function (options, elem) {
@@ -23,7 +55,7 @@
 		// Set the HTML template for the notices we're going to add.
 		// Also include a link to the status page in here.
 		// This is based on a Bootstrap alert. http://getbootstrap.com/components/#alerts
-		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
+		self.template = '<div class="sorry-status-bar" id="sorry-status-bar-{{id}}"><button type="button" class="sorry-status-bar-close" data-dismiss="status-notice" aria-hidden="true">&times;</button><span class="sorry-status-bar-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-bar-link">{{link}}</a></div>';
 		// Keep a string where we'll keep the compiled templates.
 		self.frag = '';
 
@@ -32,18 +64,6 @@
 
 		// Load in the supporting css assets.
 		self.loadcss();
-
-		// Bind the close event on any of the alerts which are added.
-		$('body').delegate('.sorry-status-bar-close', 'click', function(e) {
-			// Prevent the default click behaviour.
-			e.preventDefault();
-
-			// Target the parent element of the close button.
-			var target = $(this).parent();
-
-			// Action the close method on the targer.
-			self.dismiss(target);
-		});
 
 		// Run the plugin.
 		self.run();
@@ -92,22 +112,6 @@
 								.replace( /{{id}}/ig, apology.id ); // Swap the ID.
 			}
 		});
-	};
-
-	StatusBar.prototype.dismiss = function(target) {
-		// Reference self again.
-		var self = this;
-
-		// Get the native numeric ID from the element.
-		var id = target.attr('id').split('-')[3];
-		// Remember the ID which we are dismissing by putting it in the array
-		self.dismissed.push(id);
-		// Put that array in a serialized form in to local storage.
-		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.dismissed));
-
-		// Remove the parent from the DOM.
-		// TODO: This should be animated.
-		target.remove();
 	};
 
 	StatusBar.prototype.display = function() {
@@ -186,5 +190,7 @@
 			$statusBar.statusBar($statusBar.data());
 		});
 	});
+
+	$(document).on('click.statusBar.data-api', '[data-dismiss="status-notice"]', StatusNotice.prototype.dismiss);
 
 })(jQuery, window, document);
