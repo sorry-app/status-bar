@@ -3,14 +3,12 @@
 
 	// Status Notice.
 
-	var StatusNotice = function (parent, id, description, link) {
+	var StatusNotice = function (parent, attributes) {
 		// Quick self refernce to the class.
 		var self = this;
 
 		// Set the properties.
-		self.id = id;
-		self.description = description;
-		self.link = link;
+		self.attributes = attributes;
 
 		// Set the related objects.
 		self.parent = parent;
@@ -57,9 +55,9 @@
 
 		// Append the classes frag with the compfile template.
 		self.frag +=
-		self.template.replace( /{{apology}}/ig, self.description ) // Swap the description.
-						.replace( /{{link}}/ig, self.link ) // Swap the link.
-						.replace( /{{id}}/ig, self.id ); // Swap the ID.
+		self.template.replace( /{{apology}}/ig, self.attributes.description ) // Swap the description.
+						.replace( /{{link}}/ig, self.attributes.link ) // Swap the link.
+						.replace( /{{id}}/ig, self.attributes.id ); // Swap the ID.
 	};
 
 	StatusNotice.prototype.display = function() {
@@ -108,7 +106,7 @@
 				// TODO: Logic of this IF is a little messy, maybe move to helper?				
 				if($.inArray(String(apology.id), self.dismissed) < 0) {
 					// Create a new status notice for the apology.
-					var notice = new StatusNotice(self, apology.id, apology.description, apology.link);
+					var notice = new StatusNotice(self, apology);
 
 					// Display the notice.
 					notice.display();
