@@ -20,6 +20,14 @@ module.exports = function(grunt) {
       all: ['Gruntfile.js', 'src/**/*.js']
     },
 
+    // qUnit test framework.
+    qunit: {
+      options: {
+        inject: 'tests/vendor/phantom.js' // Used for running the tests headlessly.
+      },
+      files: ['tests/*.html']
+    },    
+
     // Concatenate the JS assets.
     concat: {
       options: {
@@ -53,7 +61,7 @@ module.exports = function(grunt) {
         npmtag: false, // Don't deploy to NPM as we don't want to release like that.
         tagName: 'status-bar-<%= version %>' // TODO: We can't use a variable for the package name.
       }
-    },
+    },    
 
     // Deployment.
     s3: {
@@ -106,7 +114,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   // Plugin for concatenating files.
   grunt.loadNpmTasks('grunt-contrib-concat');
+  // qUnit test runner.
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint','concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify', 'cssmin']);
+  // Test tasks.
+  grunt.registerTask('test', ['jshint', 'qunit']);
 };
