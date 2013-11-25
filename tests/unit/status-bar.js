@@ -34,12 +34,15 @@ $(function () {
 		});
 
 	// Tests for the basic utility methods.
-	module("utility methods");
+	module("utility methods", {
+		setup: function() {
+			// prepare something for all following tests
+			// Ask the plugin to provide the path
+			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
+		}
+	});
 
 		test("should return path of the JS script", function() {
-			// Ask the plugin to provide the path
-			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
-
 			// Ask the status bar for it's path.
 			var path = status_bar.getpath();
 
@@ -49,9 +52,6 @@ $(function () {
 		});
 
 		test("should load the approriate CSS asset in to the DOM.", function () {
-			// Create an instance of the status bar for us to test.
-			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
-
 			// Count the number of CSS includes already on the page.
 			var existing_css_includes = $("link").length;
 
