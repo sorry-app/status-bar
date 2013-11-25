@@ -1,7 +1,7 @@
 $(function () {
 
 	// Module for the status bar plugin.
-	module("status-bar");
+	module("status-bar plugin");
 
 		test("should provide no conflict", function () {
 			// See if it response to noConflict call.
@@ -36,7 +36,23 @@ $(function () {
 			var path = status_bar.getpath();
 
 			// Assert that the path is absolute related to current location as epected.
+			// NOTE: This will fail if the project is moved to a new home - could do with being better written.
 			equal(path, 'file:///Users/robertrawlins/Projects/status-bar/tests/unit/', 'path was as expected.');
+		});
+
+		test("should load the approriate CSS asset in to the DOM.", function () {
+			// Create an instance of the status bar for us to test.
+			var status_bar = $('<div></div>').statusBar('payme').data('statusBar');
+
+			// Count the number of CSS includes already on the page.
+			var existing_css_includes = $("link").length;
+
+			// Ask the plugin to add the elements to the DOM.
+			// NOTE this will load a CSS asset which cannot be found, due to the path not being right.
+			status_bar.loadcss()
+
+			// Assert the includes have incremented by one.
+			equal($("link").length - existing_css_includes, 1, 'The CSS was not appened to the document.');
 		});
 
 });
