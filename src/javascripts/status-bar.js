@@ -80,7 +80,12 @@
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
+	};
 
+	StatusBar.prototype.init = function() {
+		// Reference self again.
+		var self = this;
+		
 		// Load in the supporting css assets.
 		self.loadcss();
 
@@ -188,6 +193,9 @@
 
 			// Bind it to the element.
 			$statusBar.statusBar($statusBar.data());
+
+			// Initialize the plugin.
+			$statusBar.init();
 		});
 	});
 
