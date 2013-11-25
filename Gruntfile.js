@@ -94,7 +94,18 @@ module.exports = function(grunt) {
               src: 'dist/<%= pkg.name %>.min.js',
               dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/<%= pkg.name %>.min.js',
               options: { gzip: true }
-            }
+            },
+            // And also a bleeding edge minor release.
+            {
+              src: 'dist/<%= pkg.name %>.min.css',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/<%= pkg.name %>.min.css',
+              options: { gzip: true }
+            },
+            {
+              src: 'dist/<%= pkg.name %>.min.js',
+              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/<%= pkg.name %>.min.js',
+              options: { gzip: true }
+            }            
           ]
         }
     }
