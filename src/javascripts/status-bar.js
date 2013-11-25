@@ -195,7 +195,7 @@
 			$statusBar.statusBar($statusBar.data());
 
 			// Initialize the plugin.
-			$statusBar.init();
+			$statusBar.data('statusBar').init();
 		});
 	});
 
