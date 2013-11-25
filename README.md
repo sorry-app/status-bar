@@ -17,7 +17,7 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 Just before the closing ```</ body>``` tag, but after jQuery has been included.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/2.0.0/status-bar.min.js"></script>
+<script src="//code.sorryapp.com/status-bar/2.0.latest/status-bar.min.js"></script>
 ```
 
 ### 2. Choose where you want the bar to appear
