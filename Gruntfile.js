@@ -6,6 +6,11 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     aws: grunt.file.readJSON('aws.json'),
 
+    // Define a banner to added to the compiled assets.
+    banner: "/* <%= pkg.name %> v<%= pkg.version %> | " +
+            "(c) 2013 <%= pkg.author %>. | " +
+            "http://www.apache.org/licenses/LICENSE-2.0.html */",
+
     // Set the major version as a variable.
     // This is used for deploying bleeding edge builds.
 
@@ -44,11 +49,17 @@ module.exports = function(grunt) {
       build: {
         src: 'tmp/concat-<%= pkg.name %>.js', // Take temporary pre-compiled asset.
         dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
+      },
+      options: {
+        banner: '<%= banner %>'
       }
     },
 
     // Minify Stylesheet Assets.
     cssmin: {
+      options: {
+        banner: '<%= banner %>'
+      },
       minify: {
         src: 'src/stylesheets/<%= pkg.name %>.css',
         dest: 'dist/<%= pkg.name %>.min.css',
