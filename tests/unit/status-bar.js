@@ -25,4 +25,18 @@ $(function () {
 			ok($(document.body).statusBar('payme')[0] == document.body, 'document.body returned');
 		});
 
+	// Tests for the basic utility methods.
+	module("utility methods");
+
+		test("should return path of the JS script", function() {
+			// Ask the plugin to provide the path
+			var status_bar = $('<div></div>').statusBar('payme').data('statusBar');
+
+			// Ask the status bar for it's path.
+			var path = status_bar.getpath();
+
+			// Assert that the path is absolute related to current location as epected.
+			equal(path, 'file:///Users/robertrawlins/Projects/status-bar/tests/unit/', 'path was as expected.');
+		});
+
 });
