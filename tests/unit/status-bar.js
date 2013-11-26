@@ -48,7 +48,7 @@ $(function () {
 
 			// Assert that the path is absolute related to current location as epected.
 			// NOTE: This will fail if the project is moved to a new home - could do with being better written.
-			equal(path, 'file:///Users/robertrawlins/Projects/status-bar/tests/unit/', 'path was as expected.');
+			equal(path, 'file:///Users/robertrawlins/Projects/status-bar/dist/', 'path was as expected.');
 		});
 
 		test("should load the approriate CSS asset in to the DOM.", function () {
