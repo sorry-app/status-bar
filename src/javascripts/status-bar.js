@@ -136,6 +136,7 @@
 		// TODO: We probably only need to do this in the event that we have something to display. We may be able to reduce the overhead of including the CSS if it's not needed.
 		// Append the related CSS asset to the document.
 		// This saves the user having to include it themselves.
+		// We get the path from the JS and match the CSS by convention.
 		$("<link/>", {
 			rel: "stylesheet",
 			type: "text/css",
@@ -147,13 +148,14 @@
 		// Reference self again.
 		var self = this;
 
-		// Get a reference to all the script tags.
-		var scriptTags = $('script');
+		// Get a reference to the script tag which looks like this
+		// one. JS doesn't provide an easy way to do this, so we'll use a jQuery
+		// selector to find a script with a source which looks like this.
+		var scripttag = $('script[src$="status-bar.min.js"]')[0];
 
-		// We can always rely on the last script tag loaded to be this document.
-		// So we can now abstract the path from it.
-		// TODO: Can this be written more tidily with jQuery rather than native JS?
-		return scriptTags[scriptTags.length - 1].src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
+		// Now we have our scripts, we can get the full source and strip
+		// out the path directory, which we can use to find matching CSS.
+		return scripttag.src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
 	};
 
 	// jQuery Plugin Definition.

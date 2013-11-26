@@ -140,5 +140,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify', 'cssmin', 'qunit']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
+
+  // Test task(s).
+  grunt.registerTask('test', ['jshint', 'qunit']);
 };
