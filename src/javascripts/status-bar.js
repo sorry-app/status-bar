@@ -133,15 +133,23 @@
 		// Reference self again.
 		var self = this;
 
-		// TODO: We probably only need to do this in the event that we have something to display. We may be able to reduce the overhead of including the CSS if it's not needed.
-		// Append the related CSS asset to the document.
-		// This saves the user having to include it themselves.
-		// We get the path from the JS and match the CSS by convention.
-		$("<link/>", {
+		// Compile a CSS script tag using the path given by this JS script.
+		var style_include_tag = $("<link/>", {
 			rel: "stylesheet",
 			type: "text/css",
 			href: self.getpath() + 'status-bar.min.css'
-		}).appendTo("head");
+		});
+
+		// Determine the destination for the stylesheet to be injected.
+		// If no stylesheets already in place we inject into the head.
+		// If stylesheets do exist we place ours before any of theres.
+		if ( $('link').length ) {
+			// We have link tags. So the destination is before these.
+			$($('link')[0]).before(style_include_tag);
+		} else {
+			// We don't have any link tags, so append it to the head.
+			style_include_tag.appendTo($('head'));
+		}
 	};
 
 	StatusBar.prototype.getpath = function() {
