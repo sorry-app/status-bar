@@ -74,6 +74,16 @@ module.exports = function(grunt) {
       }
     },    
 
+    // Local demo / development site.
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          keepalive: true
+        }
+      }
+    },
+
     // Deployment.
     s3: {
         options: {
@@ -138,6 +148,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   // qUnit test runner.
   grunt.loadNpmTasks('grunt-contrib-qunit');
+  // Connect to the test / demo page.
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
