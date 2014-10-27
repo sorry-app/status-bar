@@ -33,14 +33,14 @@ $(function () {
 			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test/apologies/current', 'The correct API endpoint was assigned.');
 		});
 
-	// Tests for the basic utility methods.
-	module("utility methods", {
-		setup: function() {
-			// prepare something for all following tests
-			// Ask the plugin to provide the path
-			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
-		}
-	});
+		// Tests for the basic utility methods.
+		module("utility methods", {
+			setup: function() {
+				// prepare something for all following tests
+				// Ask the plugin to provide the path
+				status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
+			}
+		});
 
 		test("should return path of the JS script", function() {
 			// Ask the status bar for it's path.
