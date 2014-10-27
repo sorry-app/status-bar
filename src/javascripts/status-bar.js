@@ -169,7 +169,7 @@
 	// jQuery Plugin Definition.
 
 	// Preload the DOM elements.
-	$.fn.preload = function() {
+	$.fn.setup = function() {
 		// Loop over all pages assigned on the including script tag.
 		// TODO: Can we shorthand this somehow?
 		// TODO: Can we abstract this out into a seperate metho?
@@ -212,7 +212,7 @@
 	// Instantiate the plugin on window load.
 	$(window).on('load', function () {
 		// Preload the statusbar DOM elements.
-		$.fn.preload();
+		$.fn.setup();
 
 		// Attach the plugin to the body tag.
 		$('[data-status-bar-for]').each(function () {
