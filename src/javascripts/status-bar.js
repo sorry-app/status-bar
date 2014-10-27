@@ -168,6 +168,21 @@
 
 	// jQuery Plugin Definition.
 
+	// Preload the DOM elements.
+	$.fn.preload = function() {
+		// Loop over all pages assigned on the including script tag.
+		// TODO: Can we shorthand this somehow?
+		// TODO: Can we abstract this out into a seperate metho?
+		$($('script[src$="status-bar.min.js"]')[0].getAttribute("data-for").split(",")).each(function() {
+			// Check to see if a status bar locator is present.
+			if($('[data-status-bar-for="' + this + '"]').length === 0)
+				// We don't have a container / locator for our status bar
+				// so we need to inject one into the DOM near the opening
+				// body tag.
+				$('body').prepend('<div class="sorry-status-bar" data-status-bar-for="' + this + '"></div>');
+		});
+	};
+
 	// Reference the noflict version.
 	var old = $.fn.statusBar;
 
@@ -196,17 +211,8 @@
 
 	// Instantiate the plugin on window load.
 	$(window).on('load', function () {
-		// Loop over all pages assigned on the including script tag.
-		// TODO: Can we shorthand this somehow?
-		// TODO: Can we abstract this out into a seperate metho?
-		$($('script[src$="status-bar.min.js"]')[0].getAttribute("data-for").split(",")).each(function() {
-			// Check to see if a status bar locator is present.
-			if($('[data-status-bar-for="' + this + '"]').length === 0)
-				// We don't have a container / locator for our status bar
-				// so we need to inject one into the DOM near the opening
-				// body tag.
-				$('body').prepend('<div class="sorry-status-bar" data-status-bar-for="' + this + '"></div>');
-		});
+		// Preload the statusbar DOM elements.
+		$.fn.preload();
 
 		// Attach the plugin to the body tag.
 		$('[data-status-bar-for]').each(function () {
