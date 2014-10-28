@@ -3,6 +3,17 @@ $(function () {
 	// Module for the status bar plugin.
 	module("status-bar plugin");
 
+		// Plugin Methods.
+
+		test("should inject the container html if not present", function() {
+			// Initialize the plugin
+			$.fn.statusBar.setup();
+
+			// Check that the DOM elements were added to the DOM as you'd expect.
+			// Check that the dom container element doesn't exist.
+			equal($("[data-status-bar-for]").length, 1, 'The HTML elements were not added to the dom.');			
+		});
+
 		test("should provide no conflict", function () {
 			// See if it response to noConflict call.
 			var status_bar = $.fn.statusBar.noConflict();
@@ -33,14 +44,14 @@ $(function () {
 			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test/apologies/current', 'The correct API endpoint was assigned.');
 		});
 
-		// Tests for the basic utility methods.
-		module("utility methods", {
-			setup: function() {
-				// prepare something for all following tests
-				// Ask the plugin to provide the path
-				status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
-			}
-		});
+	// Tests for the basic utility methods.
+	module("utility methods", {
+		setup: function() {
+			// prepare something for all following tests
+			// Ask the plugin to provide the path
+			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
+		}
+	});
 
 		test("should return path of the JS script", function() {
 			// Ask the status bar for it's path.
