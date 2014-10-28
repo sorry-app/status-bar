@@ -62,6 +62,14 @@ $(function () {
 			equal(path, 'file:///Users/robertrawlins/Sites/status-bar/dist/', 'path was as expected.');
 		});
 
+		test("should fetch the brand styles from the API.", function() {
+			// Ask the plugin to fetch the brand results.
+			var result = status_bar.fetch_branding();
+
+			// Assert that the brand element is an AJAX response object.
+			equal($.type(result.done), 'function', 'Result is not an AJAX response.');
+		});
+
 		test("should load the approriate CSS asset in to the DOM.", function () {
 			// Count the number of CSS includes already on the page.
 			var existing_css_includes = $("link").length;
