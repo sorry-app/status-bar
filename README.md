@@ -12,27 +12,17 @@ This plugin is officialy supported with jQuery `1.10.1` however it has been succ
 
 ## Installing The Plugin
 
-### 1. Include the Javascript 
+### Simply Include the Javascript 
 
-Just before the closing ```</ body>``` tag, but after jQuery has been included.
-
-```html
-<script src="//code.sorryapp.com/status-bar/2.0.latest/status-bar.min.js"></script>
-```
-
-### 2. Choose where you want the bar to appear
-
-In order for the plugin to know where to place your status bar, and where to source your status updates from you need to include a div on your page, with a data attribute which includes your sorryapp subdomain.
+Just before the closing ```</ body>``` tag, but after jQuery has been included. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
 ```html
-<div class="sorry-status-bar" data-status-bar-for=""></div>
+<script src="//code.sorryapp.com/status-bar/2.0.latest/status-bar.min.js" data-for="xxxxxxx"></script>
 ```
 
-#### Not sure what your subdomain is?
+#### Not sure what your Page ID is?
 
-If the address of your status page is ```http://mypage.sorryapp.com``` then ```mypage``` is what you need to use as the data attribute.
-
-If you have configured a custom domain, you must still use your underlying sorryapp subdomain.
+If the address of your status page is ```http://xxxxxx.sorryapp.com``` then ```xxxxxxx``` is what you need to use as the data attribute. This unique ID can also be found in the browsers address bar within the app. ```https://app.sorryapp.com/pages/xxxxx```
 
 ## Keep Up To Date
 
