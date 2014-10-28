@@ -75,8 +75,13 @@
 		self.elem = elem;
 		self.$elem = $(elem);
 
-		// Set a reference to the endpoing.
-		self.endpoint = '//api.sorryapp.com/1/pages/' + options.statusBarFor + '/apologies/current';
+		// Set a reference to the endpoint.
+		// Set a reference to the base endppint for the page.
+		self.endpoint = '//api.sorryapp.com/1/pages/' + options.statusBarFor;
+		// And the apologies andpoint.
+		self.apologies_endpoint = self.endpoint + '/apologies/current';
+		// And the branding endpoint.
+		self.branding_endpoint = self.endpoint + '/brand';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
@@ -89,6 +94,9 @@
 		// Load in the supporting css assets.
 		self.loadcss();
 
+		// Style the plugin.
+		self.set_style();
+
 		// Run the plugin.
 		self.run();
 	};
@@ -99,7 +107,7 @@
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
-		self.fetch().done(function(response) {
+		self.fetch_apologies().done(function(response) {
 			// Loop over the reaponse object.
 			$.each( response.response, function(index, apology) {
 				// Only work with this if it's not been dismissed before.
@@ -114,9 +122,24 @@
 				}
 			});
 		});	
-	};	
+	};
 
-	StatusBar.prototype.fetch = function() {
+	StatusBar.prototype.set_style = function() {
+		// Reference self again.
+		var self = this;	
+
+		// Run the core process.
+		// Fetch the apologies and wait for complete.
+		self.fetch_branding().done(function(response) {
+			// Abstract the bar colour from the response.
+			var bar_color = response.response.color_state_warning;
+
+			// Set the bar colour using the CSS.
+			self.$elem.css('background-color', bar_color);
+		});
+	};
+
+	StatusBar.prototype.fetch_apologies = function() {
 		// Reference self again.
 		var self = this;
 
@@ -125,9 +148,22 @@
 			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
-			url: self.endpoint
+			url: self.apologies_endpoint
 		});
 	};
+
+	StatusBar.prototype.fetch_branding = function() {
+		// Reference self again.
+		var self = this;
+
+		// Make a JSON request to acquire any apologies to display.
+		return $.ajax({
+			type: "GET",
+			crossDomain: true, 
+			dataType: "json",
+			url: self.branding_endpoint
+		});
+	};	
 	
 	StatusBar.prototype.loadcss = function() {
 		// Reference self again.
