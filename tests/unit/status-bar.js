@@ -41,7 +41,7 @@ $(function () {
 			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'});
 
 			// Assert that an endpoint was created as planned.
-			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test/apologies/current', 'The correct API endpoint was assigned.');
+			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test', 'The correct API endpoint was assigned.');
 		});
 
 	// Tests for the basic utility methods.
