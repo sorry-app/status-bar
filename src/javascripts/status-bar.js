@@ -148,7 +148,8 @@
 			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
-			url: self.apologies_endpoint
+			url: self.apologies_endpoint,
+			headers: { 'X-Plugin-Ping': 'status-bar' }
 		});
 	};
 
@@ -161,7 +162,8 @@
 			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
-			url: self.branding_endpoint
+			url: self.branding_endpoint,
+			headers: { 'X-Plugin-Ping': 'status-bar' }
 		});
 	};	
 	
