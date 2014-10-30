@@ -139,32 +139,31 @@
 		});
 	};
 
+	StatusBar.prototype.fetch = function(target_url) {
+		// Make a JSON request to acquire any apologies to display.
+		return $.ajax({
+			type: "GET",
+			crossDomain: true, 
+			dataType: "json",
+			url: target_url,
+			headers: { 'X-Plugin-Ping': 'status-bar' }
+		});
+	};
+
 	StatusBar.prototype.fetch_apologies = function() {
 		// Reference self again.
 		var self = this;
 
 		// Make a JSON request to acquire any apologies to display.
-		return $.ajax({
-			type: "GET",
-			crossDomain: true, 
-			dataType: "json",
-			url: self.apologies_endpoint,
-			headers: { 'X-Plugin-Ping': 'status-bar' }
-		});
+		return self.fetch(self.apologies_endpoint);
 	};
 
 	StatusBar.prototype.fetch_branding = function() {
 		// Reference self again.
 		var self = this;
-
+				
 		// Make a JSON request to acquire any apologies to display.
-		return $.ajax({
-			type: "GET",
-			crossDomain: true, 
-			dataType: "json",
-			url: self.branding_endpoint,
-			headers: { 'X-Plugin-Ping': 'status-bar' }
-		});
+		return self.fetch(self.branding_endpoint);
 	};	
 	
 	StatusBar.prototype.loadcss = function() {
