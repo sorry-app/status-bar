@@ -107,7 +107,7 @@
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
-		self.fetch_apologies().done(function(response) {
+		self.fetch(self.apologies_endpoint).done(function(response) {
 			// Loop over the reaponse object.
 			$.each( response.response, function(index, apology) {
 				// Only work with this if it's not been dismissed before.
@@ -130,7 +130,7 @@
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
-		self.fetch_branding().done(function(response) {
+		self.fetch(self.branding_endpoint).done(function(response) {
 			// Abstract the bar colour from the response.
 			var bar_color = response.response.color_state_warning;
 
@@ -149,22 +149,6 @@
 			headers: { 'X-Plugin-Ping': 'status-bar' }
 		});
 	};
-
-	StatusBar.prototype.fetch_apologies = function() {
-		// Reference self again.
-		var self = this;
-
-		// Make a JSON request to acquire any apologies to display.
-		return self.fetch(self.apologies_endpoint);
-	};
-
-	StatusBar.prototype.fetch_branding = function() {
-		// Reference self again.
-		var self = this;
-				
-		// Make a JSON request to acquire any apologies to display.
-		return self.fetch(self.branding_endpoint);
-	};	
 	
 	StatusBar.prototype.loadcss = function() {
 		// Reference self again.
