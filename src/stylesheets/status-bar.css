@@ -4,13 +4,13 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300);
 
 .sorry-status-bar {
   background-color:#CCCCCC;
   color:#FFF;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
-  font-size:16px;
+  font-size:15px;
   font-weight:300;
   position: absolute;
   top: 0;
@@ -36,11 +36,11 @@
 span.sorry-status-notice-state {
   background-color: #333;
   color: #FFF;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 6px;
   display: inline-block;
   padding: 2px 5px;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-top:-1px;
 }
 
