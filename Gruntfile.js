@@ -1,3 +1,4 @@
+/*jshint multistr: true */
 module.exports = function(grunt) {
 
   // Project configuration.

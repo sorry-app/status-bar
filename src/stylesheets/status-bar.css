@@ -34,8 +34,8 @@
 }
 
 span.sorry-status-notice-state {
-  background-color: #FFF;
-  color: #333;
+  background-color: #333;
+  color: #FFF;
   font-size: 14px;
   border-radius: 6px;
   display: inline-block;
@@ -50,7 +50,7 @@ span.sorry-status-notice-text {
 }
 
 a.sorry-status-notice-link {
-  color:#FFF;
+  color:#333;
   opacity:0.90;
 }
 
@@ -71,7 +71,7 @@ a.sorry-status-notice-link:focus {
   font-size: 21px;
   font-weight: bold;
   line-height: 26px;
-  color: #FFF;
+  color: #333;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
   opacity: 0.5;
   filter: alpha(opacity=20);

@@ -1,3 +1,4 @@
+/*jshint multistr: true */
 // Wrap this as a jQuery plugin.
 (function($, window, document, undefined) { "use strict";
 
@@ -126,16 +127,41 @@
 
 	StatusBar.prototype.set_style = function() {
 		// Reference self again.
-		var self = this;	
+		var self = this;
+
+		// Create a CSS template for the colour/branding.
+		var css_template = " \
+			.sorry-status-bar { \
+				background-color: {{background_color}};\
+			} \
+			span.sorry-status-notice-text { \
+				color: {{text_color}}; \
+			} \
+			a.sorry-status-notice-link, .sorry-status-notice .sorry-status-notice-close { \
+				color: {{link_color}}; \
+			} \
+			span.sorry-status-notice-state {\
+				background-color: {{state_warning_color}}; \
+			} \
+		";
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
 		self.fetch(self.branding_endpoint).done(function(response) {
 			// Abstract the bar colour from the response.
-			var bar_color = response.response.color_state_warning;
+			var background_color = response.response.color_header_background;
+			var text_color = response.response.color_header_text;
+			var link_color = response.response.color_header_links;
+			var state_warning_color = response.response.color_state_warning;
 
-			// Set the bar colour using the CSS.
-			self.$elem.css('background-color', bar_color);
+			// Compfile the style / brand CSS snippet.
+			var compiled = css_template.replace( /{{text_color}}/ig, text_color )
+				.replace( /{{background_color}}/ig, background_color )
+				.replace( /{{link_color}}/ig, link_color )
+				.replace( /{{state_warning_color}}/ig, state_warning_color );
+
+			// Append the inline styles to the document.
+			$('head').append('<style>' + compiled + '</style>');
 		});
 	};
 
