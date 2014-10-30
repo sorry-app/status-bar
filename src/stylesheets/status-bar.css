@@ -33,8 +33,20 @@
   padding-bottom:20px;
 }
 
+span.sorry-status-notice-state {
+  background-color: #FFF;
+  color: #333;
+  font-size: 14px;
+  border-radius: 6px;
+  display: inline-block;
+  padding: 2px 5px;
+  margin-right: 10px;
+  margin-top:-1px;
+}
+
 span.sorry-status-notice-text {
-  margin-right:15px; /* Space it away from the link to the page. */
+  margin-right: 15px; /* Space it away from the link to the page. */
+  line-height: 26px;
 }
 
 a.sorry-status-notice-link {
@@ -58,7 +70,7 @@ a.sorry-status-notice-link:focus {
   float: right;
   font-size: 21px;
   font-weight: bold;
-  line-height: 1;
+  line-height: 26px;
   color: #FFF;
   text-shadow: 0 1px 0 #333333;
   opacity: 0.5;
