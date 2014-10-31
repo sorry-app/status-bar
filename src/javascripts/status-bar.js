@@ -4,12 +4,13 @@
 
 	// Status Notice.
 
-	var StatusNotice = function (parent, attributes) {
+	var StatusNotice = function (parent, attributes, update) {
 		// Quick self refernce to the class.
 		var self = this;
 
 		// Set the properties.
 		self.attributes = attributes;
+		self.update = update;
 
 		// Set the related objects.
 		self.parent = parent;
@@ -30,10 +31,10 @@
 		e.preventDefault();
 
 		// Remember the ID which we are dismissing by putting it in the array
-		self.parent.dismissed.push(self.attributes.id);
+		self.parent.dismissed[self.attributes.id] = new Date();
 
 		// Put that array in a serialized form in to local storage.
-		window.localStorage.setItem('sorry_dismissed_status_ids', JSON.stringify(self.parent.dismissed));
+		window.localStorage.setItem('sorry-status-bar', JSON.stringify(self.parent.dismissed));
 
 		// Remove the parent from the DOM.
 		// TODO: This should be animated.
@@ -46,7 +47,7 @@
 
 		// Append the classes frag with the compfile template.
 		self.frag +=
-		self.template.replace( /{{apology}}/ig, self.attributes.description ) // Swap the description.
+		self.template.replace( /{{apology}}/ig, self.update.content ) // Swap the description.
 						.replace( /{{link}}/ig, self.attributes.link ) // Swap the link.
 						.replace( /{{id}}/ig, self.attributes.id ); // Swap the ID.
 	};
@@ -85,7 +86,7 @@
 		self.branding_endpoint = self.endpoint + '/brand';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
-		self.dismissed = JSON.parse(window.localStorage.getItem('sorry_dismissed_status_ids')) || [];
+		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
 	};
 
 	StatusBar.prototype.init = function() {
@@ -111,15 +112,31 @@
 		self.fetch(self.apologies_endpoint).done(function(response) {
 			// Loop over the reaponse object.
 			$.each( response.response, function(index, apology) {
-				// Only work with this if it's not been dismissed before.
-				// We can do this by hunting through the dismissed list.
-				// TODO: Logic of this IF is a little messy, maybe move to helper?				
-				if($.inArray(apology.id, self.dismissed) < 0) {
+				// Check to see if we've seen this update before?
+				if (self.dismissed.hasOwnProperty(apology.id)) {
+					// Find an update which we haven't yet displayed.
+					$.each(apology.updates.reverse(), function(index, update) {
+						// We've seen this apology before.
+						// Check to see if the updates was published since we last displayed one.
+						if(update.created_at > self.dismissed[apology.id]) {
+							// Create a new status notice for the apology.
+							var notice = new StatusNotice(self, apology, update);
+
+							// Display the notice.
+							notice.display();
+
+							// Break from the loop.
+							return false;
+						}
+					});
+				} else {
+					// We've not seen this apology before.
+					// Display the first update.
 					// Create a new status notice for the apology.
-					var notice = new StatusNotice(self, apology);
+					var notice = new StatusNotice(self, apology, apology.updates[0]);
 
 					// Display the notice.
-					notice.display();
+					notice.display();						
 				}
 			});
 		});	
