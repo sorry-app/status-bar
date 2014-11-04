@@ -8,7 +8,7 @@ Once dropped into your website or application it'll broadcast your [Sorry](http:
 
 Please note that all our JavaScript plugins require [jQuery](http://jquery.com/).
 
-This plugin is officialy supported with jQuery `1.10.1` however it has been successfully tested back to jQuery `1.4.4`.
+This plugin is officialy supported with jQuery `1.10.1` however may work on older versions.
 
 ## Installing The Plugin
 
