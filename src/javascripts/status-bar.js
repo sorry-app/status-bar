@@ -268,7 +268,7 @@
 		// Loop over all pages assigned on the including script tag.
 		// TODO: Can we shorthand this somehow?
 		// TODO: Can we abstract this out into a seperate metho?
-		$($('script[src$="status-bar.min.js?v=1"]')[0].getAttribute("data-for").split(",")).each(function() {
+		$($('script[src$="status-bar.min.js"]')[0].getAttribute("data-for").split(",")).each(function() {
 			// Check to see if a status bar locator is present.
 			if($('[data-status-bar-for="' + this + '"]').length === 0)
 				// We don't have a container / locator for our status bar
