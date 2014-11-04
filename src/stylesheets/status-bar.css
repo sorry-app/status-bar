@@ -4,7 +4,7 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,300);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:600,400,300);
 
 .sorry-status-bar {
   background-color:#CCCCCC;
@@ -12,24 +12,50 @@
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size:14px;
   font-weight:300;
-  padding: 10px 20px;
   line-height: 21px;
+}
+
+.sorry-status-notice {
+  padding: 5px 15px;
+}
+
+.sorry-status-notice:first-child {
+  padding-top:10px;
+}
+
+.sorry-status-notice:last-child {
+  padding-bottom:10px;
+}
+
+/* Clearfix. */
+.sorry-status-notice:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .sorry-status-notice-state {
   background-color: #333;
   color: #FFF;
   font-size: 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   display: inline-block;
-  padding: 2px 5px;
+  padding: 0px 7px;
+  line-height: 24px;
   margin-right: 10px;
-  margin-top:-1px;
 }
 
 .sorry-status-notice-text {
   margin-right: 15px; /* Space it away from the link to the page. */
   text-decoration: none;
+  width:80%;
+  float:left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sorry-status-notice-text:hover {
@@ -42,7 +68,7 @@
   font-size: 14px;
   color: #333;
   opacity: 0.5;
-  font-weight:400;
+  font-weight:600;
   filter: alpha(opacity=20);
 }
 

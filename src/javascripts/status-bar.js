@@ -16,7 +16,7 @@
 		self.parent = parent;
 
 		// Define the template for the class.
-		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}"><button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button><span class="sorry-status-notice-state">Ongoing</span> <a href="{{link}}" target="_blank" class="sorry-status-notice-text">{{apology}}</a></div>';
+		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}"><button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button> <a href="{{link}}" target="_blank" class="sorry-status-notice-text"><span class="sorry-status-notice-state">Ongoing</span> {{apology}}</a></div>';
 		self.frag = ''; // Empty string to contain the compiled template.
 
 		// Build the frag for the element.
