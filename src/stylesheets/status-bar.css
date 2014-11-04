@@ -4,7 +4,7 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,300);
 
 .sorry-status-bar {
   background-color:#CCCCCC;
@@ -53,26 +53,18 @@ a.sorry-status-notice-link:focus {
 }
 
 .sorry-status-notice .sorry-status-notice-close {
-  position: relative;
-  top: -2px;
-  right: -10px;
-  color: inherit;
-}
-
-.sorry-status-notice .sorry-status-notice-close {
   float: right;
-  font-size: 21px;
-  font-weight: bold;
+  font-size: 15px;
   line-height: 26px;
   color: #333;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
   opacity: 0.5;
+  font-weight:400;
   filter: alpha(opacity=20);
 }
 
 .sorry-status-notice .sorry-status-notice-close:hover,
 .sorry-status-notice .sorry-status-notice-close:focus {
-  color: #FFF;
+  color: #333;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;
