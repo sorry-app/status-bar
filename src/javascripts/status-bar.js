@@ -16,8 +16,7 @@
 		self.parent = parent;
 
 		// Define the template for the class.
-		self.template = '\
-		<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">\
+		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">\
 			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button>\
 			\
 			<div class="sorry-status-notice-content">\
