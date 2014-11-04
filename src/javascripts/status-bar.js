@@ -133,7 +133,7 @@
 					// We've not seen this apology before.
 					// Display the first update.
 					// Create a new status notice for the apology.
-					var notice = new StatusNotice(self, apology, apology.updates[0]);
+					var notice = new StatusNotice(self, apology, apology.updates.last());
 
 					// Display the notice.
 					notice.display();						
