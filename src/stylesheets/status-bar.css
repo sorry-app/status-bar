@@ -26,7 +26,7 @@
   padding-bottom:20px;
 }
 
-span.sorry-status-notice-state {
+.sorry-status-notice-state {
   background-color: #333;
   color: #FFF;
   font-size: 13px;
@@ -37,19 +37,14 @@ span.sorry-status-notice-state {
   margin-top:-1px;
 }
 
-span.sorry-status-notice-text {
+.sorry-status-notice-text {
   margin-right: 15px; /* Space it away from the link to the page. */
   line-height: 26px;
+  text-decoration: none;
 }
 
-a.sorry-status-notice-link {
-  color:#333;
-  opacity:0.90;
-}
-
-a.sorry-status-notice-link:hover,
-a.sorry-status-notice-link:focus {
-  opacity:1;
+.sorry-status-notice-text:hover {
+  text-decoration: underline;
 }
 
 .sorry-status-notice .sorry-status-notice-close {
@@ -64,7 +59,6 @@ a.sorry-status-notice-link:focus {
 
 .sorry-status-notice .sorry-status-notice-close:hover,
 .sorry-status-notice .sorry-status-notice-close:focus {
-  color: #333;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;

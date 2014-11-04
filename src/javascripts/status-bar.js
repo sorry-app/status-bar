@@ -16,7 +16,7 @@
 		self.parent = parent;
 
 		// Define the template for the class.
-		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}"><button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button><span class="sorry-status-notice-state">Ongoing</span> <span class="sorry-status-notice-text">{{apology}}</span> <a href="{{link}}" target="_blank" class="sorry-status-notice-link">{{link}}</a></div>';
+		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}"><button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button><span class="sorry-status-notice-state">Ongoing</span> <a href="{{link}}" target="_blank" class="sorry-status-notice-text">{{apology}}</a></div>';
 		self.frag = ''; // Empty string to contain the compiled template.
 
 		// Build the frag for the element.
@@ -151,10 +151,10 @@
 			.sorry-status-bar { \
 				background-color: {{background_color}};\
 			} \
-			span.sorry-status-notice-text { \
+			.sorry-status-notice-text { \
 				color: {{text_color}}; \
 			} \
-			a.sorry-status-notice-link, .sorry-status-notice .sorry-status-notice-close { \
+			.sorry-status-notice .sorry-status-notice-close { \
 				color: {{link_color}}; \
 			} \
 			span.sorry-status-notice-state {\
