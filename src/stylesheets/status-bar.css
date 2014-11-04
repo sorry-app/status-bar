@@ -37,32 +37,35 @@
   height: 0;
 }
 
-.sorry-status-notice-state {
+.sorry-status-notice-content {
+  float:left;
+  max-width:80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+  line-height: 24px;
+}
+
+.sorry-status-notice-label {
   background-color: #333;
   color: #FFF;
   font-size: 12px;
   border-radius: 4px;
   display: inline-block;
   padding: 0px 7px;
-  line-height: 24px;
   margin-right: 10px;
 }
 
-.sorry-status-notice-text {
-  margin-right: 15px; /* Space it away from the link to the page. */
+.sorry-status-notice-link {
   text-decoration: none;
-  width:80%;
-  float:left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.sorry-status-notice-text:hover {
+.sorry-status-notice-link:hover {
   text-decoration: underline;
 }
 
-.sorry-status-notice .sorry-status-notice-close {
+.sorry-status-notice-close {
   line-height: 24px;
   float: right;
   font-size: 14px;
@@ -72,15 +75,15 @@
   filter: alpha(opacity=20);
 }
 
-.sorry-status-notice .sorry-status-notice-close:hover,
-.sorry-status-notice .sorry-status-notice-close:focus {
+.sorry-status-notice-close:hover,
+.sorry-status-notice-close:focus {
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;
   filter: alpha(opacity=50);
 }
 
-.sorry-status-notice button.sorry-status-notice-close {
+button.sorry-status-notice-close {
   padding: 0;
   cursor: pointer;
   background: transparent;
