@@ -7,12 +7,15 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:600,400,300);
 
 .sorry-status-bar {
-  background-color:#CCCCCC;
-  color:#FFF;
+  background-color: #CCCCCC;
+  color: #FFF;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
-  font-size:14px;
-  font-weight:300;
-  line-height: 21px;
+  font-size: 14px;
+  font-weight: 300;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 .sorry-status-notice {

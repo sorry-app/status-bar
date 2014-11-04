@@ -157,10 +157,10 @@
 			.sorry-status-bar { \
 				background-color: {{background_color}};\
 			} \
-			.sorry-status-notice-content, .sorry-status-notice-link { \
+			.sorry-status-notice-content, .sorry-status-notice-link, .sorry-status-notice-link:hover { \
 				color: {{text_color}}; \
 			} \
-			.sorry-status-notice-close { \
+			.sorry-status-notice-close, .sorry-status-notice-close:hover { \
 				color: {{link_color}}; \
 			} \
 			.sorry-status-notice-label {\
