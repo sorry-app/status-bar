@@ -90,7 +90,7 @@ module.exports = function(grunt) {
         options: {
           key: '<%= aws.key %>',
           secret: '<%= aws.secret %>',
-          bucket: 'code.sorryapp.com',
+          bucket: 'sorry-assets-production',
           region: 'eu-west-1',
           access: 'public-read',
         },
