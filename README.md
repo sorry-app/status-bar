@@ -24,6 +24,14 @@ Just before the closing ```</ body>``` tag, but after jQuery has been included. 
 
 If the address of your status page is ```http://xxxxxx.sorryapp.com``` then ```xxxxxxx``` is what you need to use as the data attribute. This unique ID can also be found in the browsers address bar within the app. ```https://app.sorryapp.com/pages/xxxxx```
 
+#### Alternate location of your bar
+
+By default the plugin will add the bar to the top of your page. To choose a specific location instead of using the ```data-for``` attribute as above, include the following HTML snippet in your page where you wish the bar to be located.
+
+```html
+<div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
+```
+
 ## Keep Up To Date
 
 If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
