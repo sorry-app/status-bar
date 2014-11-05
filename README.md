@@ -17,7 +17,7 @@ This plugin is officialy supported with jQuery `1.10.1` however may work on olde
 Just before the closing ```</ body>``` tag, but after jQuery has been included. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/2.0.latest/status-bar.min.js" data-for="xxxxxxx"></script>
+<script src="//code.sorryapp.com/status-bar/3.0.latest/status-bar.min.js" data-for="xxxxxxx"></script>
 ```
 
 #### Not sure what your Page ID is?
