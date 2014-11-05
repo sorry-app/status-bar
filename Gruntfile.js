@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     // Release & Deployment Tasks.
     release: {
       options: {
-        npmtag: false, // Don't deploy to NPM as we don't want to release like that.
+        npm: false, // Don't deploy to NPM as we don't want to release like that.
         tagName: 'status-bar-<%= version %>' // TODO: We can't use a variable for the package name.
       }
     },    
