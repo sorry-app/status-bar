@@ -32,6 +32,10 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
 
+## Upgrading From Version 2.x
+
+To upgrade you'll need to **change the Javascript include** to match the [one described above](#simply-include-the-javascript), but you'll also want to **remove the existing HTML markup you have in place** for the status bar as this is now automatically added to the page by the plugin.
+
 ## Keep Up To Date
 
 If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
