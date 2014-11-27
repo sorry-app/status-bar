@@ -70,7 +70,7 @@
 		self.parent.$elem.prepend(self.$elem);
 
 		// Bind a click event for the dsmiss button.
-		self.$elem.on('click.dismiss.status-notice', '[data-dismiss="status-notice"]', $.proxy(this.dismiss, this));
+		self.$elem.find('[data-dismiss="status-notice"]').bind('click.dismiss.status-notice', $.proxy(this.dismiss, this));
 	};	
 
 	// Status Bar Class Definition. 
@@ -85,7 +85,9 @@
 
 		// Set a reference to the endpoint.
 		// Set a reference to the base endppint for the page.
-		self.endpoint = '//api.sorryapp.com/1/pages/' + options.statusBarFor;
+		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
+		//       The first is latter versions of jQuery, the second is earlier vertions.
+		self.endpoint = '//api.sorryapp.com/1/pages/' + (options.statusBarFor || options['status-bar-for']);
 		// And the apologies andpoint.
 		self.apologies_endpoint = self.endpoint + '/apologies/current';
 		// And the branding endpoint.
@@ -115,7 +117,7 @@
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
-		self.fetch(self.apologies_endpoint).done(function(response) {
+		self.fetch(self.apologies_endpoint, function(response) {
 			// Loop over the reaponse object.
 			$.each( response.response, function(index, apology) {
 				// Check to see if we've seen this update before?
@@ -170,7 +172,7 @@
 
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
-		self.fetch(self.branding_endpoint).done(function(response) {
+		self.fetch(self.branding_endpoint, function(response) {
 			// Abstract the bar colour from the response.
 			var background_color = response.response.color_header_background;
 			var text_color = response.response.color_header_text;
@@ -188,14 +190,15 @@
 		});
 	};
 
-	StatusBar.prototype.fetch = function(target_url) {
+	StatusBar.prototype.fetch = function(target_url, callback) {
 		// Make a JSON request to acquire any apologies to display.
 		return $.ajax({
 			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
 			url: target_url,
-			headers: { 'X-Plugin-Ping': 'status-bar' }
+			headers: { 'X-Plugin-Ping': 'status-bar' },
+			success: callback
 		});
 	};
 	
@@ -286,7 +289,7 @@
 	// Data-Api
 
 	// Instantiate the plugin on window load.
-	$(window).on('load', function () {
+	$(window).bind('load', function () {
 		// Preload the statusbar DOM elements.
 		$.fn.statusBar.setup();
 
