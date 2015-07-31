@@ -87,7 +87,7 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = '//s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']);
+		self.endpoint = '//' + (options.statusBarFor || options['status-bar-for']) + '.dev.sorryapp.com';
 		// And the apologies andpoint.
 		self.apologies_endpoint = self.endpoint + '/index.json';
 		// And the branding endpoint.
@@ -199,7 +199,7 @@
 	StatusBar.prototype.fetch = function(target_url, callback) {
 		// Make a JSON request to acquire any apologies to display.
 		return $.ajax({
-			type: "GET",
+			type: "HEAD",
 			crossDomain: true, 
 			dataType: "json",
 			url: target_url,
