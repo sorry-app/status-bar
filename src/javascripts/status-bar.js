@@ -87,11 +87,11 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = '//' + (options.statusBarFor || options['status-bar-for']) + '.dev.sorryapp.com';
+		self.endpoint = '//s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']) + '.sorryapp.com';
 		// And the apologies andpoint.
-		self.apologies_endpoint = self.endpoint + '/index.json';
+		self.apologies_endpoint = self.endpoint + '/api/v1.json';
 		// And the branding endpoint.
-		self.branding_endpoint = self.endpoint + '/index.json';
+		self.branding_endpoint = self.endpoint + '/api/v1.json';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
