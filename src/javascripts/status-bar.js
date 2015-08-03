@@ -199,7 +199,7 @@
 	StatusBar.prototype.fetch = function(target_url, callback) {
 		// Make a JSON request to acquire any apologies to display.
 		return $.ajax({
-			type: "HEAD",
+			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
 			url: target_url,
