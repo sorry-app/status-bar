@@ -87,11 +87,11 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = '//api.sorryapp.com/1/pages/' + (options.statusBarFor || options['status-bar-for']);
+		self.endpoint = 'https://s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']) + '.sorryapp.com';
 		// And the apologies andpoint.
-		self.apologies_endpoint = self.endpoint + '/apologies/current';
+		self.apologies_endpoint = self.endpoint + '/api/v1.json';
 		// And the branding endpoint.
-		self.branding_endpoint = self.endpoint + '/brand';
+		self.branding_endpoint = self.endpoint + '/api/v1.json';
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -118,8 +118,11 @@
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
 		self.fetch(self.apologies_endpoint, function(response) {
-			// Loop over the reaponse object.
-			$.each( response.response, function(index, apology) {
+			// Filter apologies to give us only open ones for display.
+			var $open_apologies = $.grep(response.apologies, function(a) { return a.state == 'open'; });
+
+			// Loop over the open apologies.
+			$.each($open_apologies, function(index, apology) {
 				// Check to see if we've seen this update before?
 				if (self.dismissed.hasOwnProperty(apology.id)) {
 					// Find an update which we haven't yet displayed.
@@ -173,11 +176,14 @@
 		// Run the core process.
 		// Fetch the apologies and wait for complete.
 		self.fetch(self.branding_endpoint, function(response) {
+			// Pull the branding from the response.
+			var brand = response.brand;
+
 			// Abstract the bar colour from the response.
-			var background_color = response.response.color_header_background;
-			var text_color = response.response.color_header_text;
-			var link_color = response.response.color_header_links;
-			var state_warning_color = response.response.color_state_warning;
+			var background_color = brand.color_header_background;
+			var text_color = brand.color_header_text;
+			var link_color = brand.color_header_links;
+			var state_warning_color = brand.color_state_warning;
 
 			// Compfile the style / brand CSS snippet.
 			var compiled = css_template.replace( /{{text_color}}/ig, text_color )
