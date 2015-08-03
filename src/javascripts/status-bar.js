@@ -87,7 +87,7 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = '//s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']) + '.sorryapp.com';
+		self.endpoint = 'https://s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']) + '.sorryapp.com';
 		// And the apologies andpoint.
 		self.apologies_endpoint = self.endpoint + '/api/v1.json';
 		// And the branding endpoint.
