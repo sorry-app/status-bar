@@ -12,7 +12,6 @@
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size: 14px;
   font-weight: 300;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
