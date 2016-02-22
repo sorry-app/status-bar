@@ -20,7 +20,9 @@
 			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button>\
 			\
 			<div class="sorry-status-notice-content">\
-				<span class="sorry-status-notice-label">Ongoing</span> <a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">{{apology}}</a>\
+				<span class="sorry-status-notice-label">Ongoing</span>\
+				<p class="sorry-status-notice-text">{{apology}}</p>\
+				<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>\
 			</div>\
 		</div>';
 		self.frag = ''; // Empty string to contain the compiled template.
