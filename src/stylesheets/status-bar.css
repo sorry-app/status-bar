@@ -76,7 +76,7 @@
   opacity: 1;
 }
 
-.sorry-status-notice-close {
+button.sorry-status-notice-close {
   position: absolute;
   right: 24px;
   top: 24px;
@@ -87,8 +87,8 @@
   filter: alpha(opacity=20);
 }
 
-.sorry-status-notice-close:hover,
-.sorry-status-notice-close:focus {
+button.sorry-status-notice-close:hover,
+button.sorry-status-notice-close:focus {
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;
