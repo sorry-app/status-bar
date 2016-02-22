@@ -4,29 +4,29 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:600,400,300);
-
 .sorry-status-bar {
   background-color: #CCCCCC;
   color: #FFF;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
-  font-size: 14px;
+  font-family: "sorry-status-bar-open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
+  font-size: 16px;
   font-weight: 300;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
+  width: 100%;
 }
 
 .sorry-status-notice {
-  padding: 5px 15px;
+  padding: 5px 24px;
+  position: relative; /* Contain the close icon. */
 }
 
 .sorry-status-notice:first-child {
-  padding-top:10px;
+  padding-top:24px;
 }
 
 .sorry-status-notice:last-child {
-  padding-bottom:10px;
+  padding-bottom:24px;
 }
 
 /* Clearfix. */
@@ -39,41 +39,51 @@
   height: 0;
 }
 
-.sorry-status-notice-content {
-  float:left;
-  max-width:80%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #333;
-  line-height: 24px;
+.sorry-status-notice-header {
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
-.sorry-status-notice-label {
-  background-color: #333;
-  color: #FFF;
-  font-size: 12px;
-  border-radius: 4px;
-  display: inline-block;
-  padding: 0px 7px;
-  margin-right: 10px;
+.sorry-status-notice-header .sorry-status-notice-icon {
+  margin-right: 5px;
+}
+
+.sorry-status-notice-content {
+  color: #333;
+  padding-right: 24px;
+}
+
+.sorry-status-notice-text {
+  margin-bottom: 16px;
 }
 
 .sorry-status-notice-link {
+  font-size: 14px;
+  display: inline-block;
   text-decoration: none;
+  border: 1px solid #2980b9;
+  color: #2980b9;
+  border-radius: 4px;
+  line-height: 31px;
+  padding: 0 10px;
+  opacity: 0.7;
 }
 
-.sorry-status-notice-link:hover {
-  text-decoration: underline;
+.sorry-status-notice-link:hover, .sorry-status-notice-link:visited, .sorry-status-notice-link:active {
+  text-decoration: none;
+  opacity: 1;
 }
 
 .sorry-status-notice-close {
-  line-height: 24px;
-  float: right;
-  font-size: 14px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  line-height: 31px;
+  font-size: 16px;
   color: #333;
-  opacity: 0.5;
-  font-weight:600;
+  opacity: 0.2;
   filter: alpha(opacity=20);
 }
 
@@ -82,7 +92,7 @@
   text-decoration: none;
   cursor: pointer;
   opacity: 0.75;
-  filter: alpha(opacity=50);
+  filter: alpha(opacity=75);
 }
 
 button.sorry-status-notice-close {
@@ -91,4 +101,34 @@ button.sorry-status-notice-close {
   background: transparent;
   border: 0;
   -webkit-appearance: none;
+}
+
+/* Larger screen styles. */
+@media (min-width: 972px) {
+  .sorry-status-notice-content {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 768px;
+    padding-right: -0;
+  }
+
+  .sorry-status-notice-header, .sorry-status-notice-text, .sorry-status-notice-link {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .sorry-status-notice-header, .sorry-status-notice-text {
+    vertical-align: middle;
+    margin-right: 14px;
+    line-height: 31px;
+  }
+
+  .sorry-status-notice-text {
+    max-width: 546px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+  }
 }

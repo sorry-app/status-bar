@@ -17,10 +17,12 @@
 
 		// Define the template for the class.
 		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">\
-			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button>\
+			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
 			\
 			<div class="sorry-status-notice-content">\
-				<span class="sorry-status-notice-label">Ongoing</span> <a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">{{apology}}</a>\
+				<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>\
+				<p class="sorry-status-notice-text">{{apology}}</p>\
+				<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>\
 			</div>\
 		</div>';
 		self.frag = ''; // Empty string to contain the compiled template.
@@ -162,14 +164,14 @@
 			.sorry-status-bar { \
 				background-color: {{background_color}};\
 			} \
-			.sorry-status-notice-content, .sorry-status-notice-link, .sorry-status-notice-link:hover { \
+			.sorry-status-notice-header, .sorry-status-notice-text {\
 				color: {{text_color}}; \
-			} \
-			.sorry-status-notice-close, .sorry-status-notice-close:hover { \
+			}\
+			.sorry-status-notice-link, .sorry-status-notice-link:hover { \
 				color: {{link_color}}; \
 			} \
-			.sorry-status-notice-label {\
-				background-color: {{state_warning_color}}; \
+			.sorry-status-notice-close, .sorry-status-notice-close:hover { \
+				color: {{text_color}}; \
 			} \
 		";
 

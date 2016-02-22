@@ -56,13 +56,23 @@ module.exports = function(grunt) {
       }
     },
 
+    // Copy unprocesed assets like fonts.
+    copy: {
+      main: {
+        files: [
+          // includes files within path and its sub-directories
+          {expand: true, cwd: 'src/fonts', src: ['**'], dest: 'dist/fonts'},
+        ],
+      },
+    },
+
     // Minify Stylesheet Assets.
     cssmin: {
       options: {
         banner: '<%= banner %>'
       },
       minify: {
-        src: 'src/stylesheets/<%= pkg.name %>.css',
+        src: ['src/stylesheets/<%= pkg.name %>.css', 'src/stylesheets/open-sans.css', 'src/stylesheets/font-awesome.css'],
         dest: 'dist/<%= pkg.name %>.min.css',
       }
     },
@@ -86,53 +96,29 @@ module.exports = function(grunt) {
     },
 
     // Deployment.
-    s3: {
-        options: {
-          key: '<%= aws.key %>',
-          secret: '<%= aws.secret %>',
-          bucket: 'sorry-assets-production',
-          region: 'eu-west-1',
-          access: 'public-read',
-        },
-        dev: {
-          upload: [
-            {
-              src: 'dist/<%= pkg.name %>.min.js',
-              dest: '<%= pkg.name %>/<%= pkg.version %>/<%= pkg.name %>.min.js',
-              options: { gzip: true }
-            },
-            {
-              src: 'dist/<%= pkg.name %>.min.css',
-              dest: '<%= pkg.name %>/<%= pkg.version %>/<%= pkg.name %>.min.css',
-              options: { gzip: true }
-            },
-            // Also deploy a bleeding edge version on the major number.
-            {
-              src: 'dist/<%= pkg.name %>.min.css',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/<%= pkg.name %>.min.css',
-              options: { gzip: true }
-            },
-            {
-              src: 'dist/<%= pkg.name %>.min.js',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/<%= pkg.name %>.min.js',
-              options: { gzip: true }
-            },
-            // And also a bleeding edge minor release.
-            {
-              src: 'dist/<%= pkg.name %>.min.css',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/<%= pkg.name %>.min.css',
-              options: { gzip: true }
-            },
-            {
-              src: 'dist/<%= pkg.name %>.min.js',
-              dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/<%= pkg.name %>.min.js',
-              options: { gzip: true }
-            }            
-          ]
-        }
+    aws_s3: {
+      options: {
+        accessKeyId: '<%= aws.key %>', // Use the variables
+        secretAccessKey: '<%= aws.secret %>', // You can also use env variables
+        region: 'eu-west-1',
+        bucket: 'sorry-assets-production',
+        access: 'public-read'
+      },
+      dev: {
+        files: [
+          // Upload this version of the plugin.
+          {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version %>/'},
+          // Also deploy a bleeding edge version on the major number.
+          {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/'},
+          // And also a bleeding edge minor release.
+          {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/'}
+        ]
+      }
     }
   });
 
+  // Copy unprocessed files lke fonts.
+  grunt.loadNpmTasks('grunt-contrib-copy');
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   // Load the plugin for minifys CSS.
@@ -142,7 +128,7 @@ module.exports = function(grunt) {
   // Release tasks to manage version number bump, tag etc.
   grunt.loadNpmTasks('grunt-release');
   // AWS/S3 deployment tools.
-  grunt.loadNpmTasks('grunt-s3');
+  grunt.loadNpmTasks('grunt-aws-s3');
   // Watcher for rebuilding when files changes.
   grunt.loadNpmTasks('grunt-contrib-watch');
   // Plugin for concatenating files.
@@ -153,7 +139,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin', 'copy']);
 
   // Test task(s).
   grunt.registerTask('test', ['jshint', 'qunit']);
