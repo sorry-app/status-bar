@@ -79,7 +79,7 @@
   position: absolute;
   right: 24px;
   top: 24px;
-  line-height: 34px;
+  line-height: 31px;
   font-size: 16px;
   color: #333;
   opacity: 0.2;
@@ -120,7 +120,7 @@ button.sorry-status-notice-close {
   .sorry-status-notice-header, .sorry-status-notice-text {
     vertical-align: middle;
     margin-right: 14px;
-    line-height: 34px;
+    line-height: 31px;
   }
 
   .sorry-status-notice-text {
