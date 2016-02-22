@@ -4,12 +4,10 @@
   As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
 */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans:600,400,300);
-
 .sorry-status-bar {
   background-color: #CCCCCC;
   color: #FFF;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
+  font-family: "sorry-status-bar-open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
   font-size: 16px;
   font-weight: 300;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */

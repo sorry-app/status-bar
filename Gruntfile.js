@@ -56,13 +56,23 @@ module.exports = function(grunt) {
       }
     },
 
+    // Copy unprocesed assets like fonts.
+    copy: {
+      main: {
+        files: [
+          // includes files within path and its sub-directories
+          {expand: true, cwd: 'src/fonts', src: ['**'], dest: 'dist/fonts'},
+        ],
+      },
+    },
+
     // Minify Stylesheet Assets.
     cssmin: {
       options: {
         banner: '<%= banner %>'
       },
       minify: {
-        src: 'src/stylesheets/<%= pkg.name %>.css',
+        src: ['src/stylesheets/<%= pkg.name %>.css', 'src/stylesheets/open-sans.css'],
         dest: 'dist/<%= pkg.name %>.min.css',
       }
     },
@@ -133,6 +143,8 @@ module.exports = function(grunt) {
     }
   });
 
+  // Copy unprocessed files lke fonts.
+  grunt.loadNpmTasks('grunt-contrib-copy');
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   // Load the plugin for minifys CSS.
@@ -153,7 +165,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin', 'copy']);
 
   // Test task(s).
   grunt.registerTask('test', ['jshint', 'qunit']);
