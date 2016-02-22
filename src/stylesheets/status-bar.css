@@ -10,7 +10,7 @@
   background-color: #CCCCCC;
   color: #FFF;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
@@ -18,15 +18,15 @@
 }
 
 .sorry-status-notice {
-  padding: 5px 15px;
+  padding: 5px 24px;
 }
 
 .sorry-status-notice:first-child {
-  padding-top:10px;
+  padding-top:24px;
 }
 
 .sorry-status-notice:last-child {
-  padding-bottom:10px;
+  padding-bottom:24px;
 }
 
 /* Clearfix. */
