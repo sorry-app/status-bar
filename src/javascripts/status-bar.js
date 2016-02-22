@@ -17,10 +17,10 @@
 
 		// Define the template for the class.
 		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">\
-			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="fa fa-times"></i></button>\
+			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
 			\
 			<div class="sorry-status-notice-content">\
-				<h4 class="sorry-status-notice-header"><i class="fa fa-bullhorn sorry-status-notice-icon"></i> Ongoing</h4>\
+				<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>\
 				<p class="sorry-status-notice-text">{{apology}}</p>\
 				<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>\
 			</div>\
