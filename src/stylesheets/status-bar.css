@@ -1,132 +1,195 @@
 /* 
-  CSS styles inspired by the 'alert' class from twitter bootstrap. 
+ *  CSS styles inspired by the 'alert' class from twitter bootstrap. 
+ *
+ *  As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
+ *
+ *  We try and adhere to the http://codeguide.co/ guidelines for code formatting
+ *  where possible.
+ */
 
-  As we didn't want to conclift with Bootstrap it's all granted it's own namespace.
-*/
+/*
+ * Status Bar
+ *
+ * This element wraps around the individual notices and groups
+ * them logicaly together.
+ */
 
 .sorry-status-bar {
-  background-color: #CCCCCC;
-  color: #FFF;
-  font-family: "sorry-status-bar-open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
-  font-size: 16px;
-  font-weight: 300;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
   width: 100%;
+
+  font-family: "sorry-status-bar-open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif; /* Switch to open sans if possible? */
+  font-size: 16px;
+  font-weight: 300;
+
+  background-color: #ccc;
+  color: #fff;
 }
+
+/*
+ * Status Notice
+ * 
+ * Each bar may contain multiple notices.
+ */
 
 .sorry-status-notice {
-  padding: 5px 24px;
   position: relative; /* Contain the close icon. */
-}
 
-.sorry-status-notice:first-child {
-  padding-top:24px;
+  padding: 5px 24px;
 }
-
-.sorry-status-notice:last-child {
-  padding-bottom:24px;
-}
-
-/* Clearfix. */
+.sorry-status-notice:first-child { padding-top: 24px; }
+.sorry-status-notice:last-child { padding-bottom: 24px; }
 .sorry-status-notice:after {
   visibility: hidden;
+  
   display: block;
-  font-size: 0;
-  content: " ";
   clear: both;
   height: 0;
+
+  font-size: 0;
+
+  content: " ";
 }
 
+/*
+ * Notice Header
+ *
+ * Contains the 'Ongoing' and the 'Bullhorn' Icon.
+ */
 .sorry-status-notice-header {
-  font-weight: 700;
-  font-size: 18px;
   margin-top: 0;
   margin-bottom: 16px;
-}
 
-.sorry-status-notice-header .sorry-status-notice-icon {
-  margin-right: 5px;
+  font-weight: 700;
+  font-size: 18px;
 }
+.sorry-status-notice-header 
+.sorry-status-notice-icon { margin-right: 5px; }
 
 .sorry-status-notice-content {
-  color: #333;
   padding-right: 24px;
+
+  color: #333;
 }
 
-.sorry-status-notice-text {
-  margin-bottom: 16px;
-}
+/*
+ * Notice Content
+ *
+ * This is the core text of the notice, pulled dynamicly
+ * from the status page, could be any length.
+*/
+
+.sorry-status-notice-text { margin-bottom: 16px; }
+
+/*
+ * Notice Link
+ *
+ * Each notice is acompanies by a link through to the status
+ * page should someone wish to read more.
+ */
 
 .sorry-status-notice-link {
-  font-size: 14px;
   display: inline-block;
-  text-decoration: none;
-  border: 1px solid #2980b9;
-  color: #2980b9;
-  border-radius: 4px;
-  line-height: 31px;
   padding: 0 10px;
-  opacity: 0.7;
-}
 
-.sorry-status-notice-link:hover, .sorry-status-notice-link:visited, .sorry-status-notice-link:active {
+  font-size: 14px;
+  text-decoration: none;
+  line-height: 31px;
+
+  border: 1px solid #2980b9;
+  border-radius: 4px;
+  color: #2980b9;
+
+  opacity: .7;
+}
+.sorry-status-notice-link:hover, 
+.sorry-status-notice-link:visited, 
+.sorry-status-notice-link:active {
   text-decoration: none;
   opacity: 1;
 }
+
+/*
+ * Close / Dismiss Button
+ *
+ * Each notice has a [x] icon which allows
+ * the user to dismiss the notice.
+ */
 
 button.sorry-status-notice-close {
   position: absolute;
   right: 24px;
   top: 24px;
+
   line-height: 31px;
   font-size: 16px;
+
   color: #333;
-  opacity: 0.2;
+
+  opacity: .2;
   filter: alpha(opacity=20);
 }
 
 button.sorry-status-notice-close:hover,
 button.sorry-status-notice-close:focus {
   text-decoration: none;
+
   cursor: pointer;
-  opacity: 0.75;
+  
+  opacity: .75;
   filter: alpha(opacity=75);
 }
 
 button.sorry-status-notice-close {
   padding: 0;
+
   cursor: pointer;
   background: transparent;
   border: 0;
+
   -webkit-appearance: none;
 }
 
-/* Larger screen styles. */
+/*
+ * Large Screen Styles
+ *
+ * When on bigger screens we want to drop the box look
+ * and go for an inline narrow bar with trimmed content.
+ *
+ * Usualy I'd not block media queries like this at the bottom
+ * of the stylesheet but as it's only small I feel it's fair.
+ */
 @media (min-width: 972px) {
   .sorry-status-notice-content {
-    text-align: center;
     margin: 0 auto;
     max-width: 768px;
-    padding-right: -0;
+
+    text-align: center;
   }
 
-  .sorry-status-notice-header, .sorry-status-notice-text, .sorry-status-notice-link {
+  .sorry-status-notice-header, 
+  .sorry-status-notice-text, 
+  .sorry-status-notice-link {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
+
     text-align: left;
   }
 
-  .sorry-status-notice-header, .sorry-status-notice-text {
-    vertical-align: middle;
+  .sorry-status-notice-header, 
+  .sorry-status-notice-text {
     margin-right: 14px;
+
+    vertical-align: middle;
     line-height: 31px;
   }
 
   .sorry-status-notice-text {
     max-width: 546px;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;    
