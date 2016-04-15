@@ -41,7 +41,21 @@ $(function () {
 			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'});
 
 			// Assert that an endpoint was created as planned.
-			equal(status_bar.data('statusBar').endpoint, 'https://s3-eu-west-1.amazonaws.com/test.sorryapp.com', 'The correct API endpoint was assigned.');
+			equal(status_bar.data('statusBar').endpoint, 'https://api.sorryapp.com/v1/pages/test', 'The correct API endpoint was assigned.');
+		});
+
+	// Test the core application run.
+	module("core methods", {
+		setup: function() {
+			// prepare something for all following tests
+			// Ask the plugin to provide the path
+			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
+		}
+	});	
+
+		test("should run without errors", function() {
+			// Request the run method on the status bar.
+			status_bar.run();
 		});
 
 	// Tests for the basic utility methods.
