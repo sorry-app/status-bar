@@ -41,7 +41,7 @@ $(function () {
 			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'});
 
 			// Assert that an endpoint was created as planned.
-			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test', 'The correct API endpoint was assigned.');
+			equal(status_bar.data('statusBar').endpoint, 'https://s3-eu-west-1.amazonaws.com/test.sorryapp.com', 'The correct API endpoint was assigned.');
 		});
 
 	// Tests for the basic utility methods.
@@ -60,14 +60,6 @@ $(function () {
 			// Assert that the path is absolute related to current location as epected.
 			// NOTE: This will fail if the project is moved to a new home - could do with being better written.
 			equal(path, 'file:///Users/robertrawlins/Sites/status-bar/dist/', 'path was as expected.');
-		});
-
-		test("should fetch the brand styles from the API.", function() {
-			// Ask the plugin to fetch the brand results.
-			var result = status_bar.fetch_branding();
-
-			// Assert that the brand element is an AJAX response object.
-			equal($.type(result.done), 'function', 'Result is not an AJAX response.');
 		});
 
 		test("should load the approriate CSS asset in to the DOM.", function () {
