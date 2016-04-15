@@ -89,7 +89,7 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = 'https://api.sorryapp.com/v1/pages/' + (options.statusBarFor || options['status-bar-for']);
+		self.endpoint = 'https://ro-api.sorryapp.com/v1/pages/' + (options.statusBarFor || options['status-bar-for']);
 
 		// And the apologies andpoint.
 		self.notices_endpoint = self.endpoint;
