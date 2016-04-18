@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
     // Define a banner to added to the compiled assets.
     banner: "/* <%= pkg.name %> v<%= pkg.version %> | " +
-            "(c) 2013 <%= pkg.author %>. | " +
+            "(c) <%= grunt.template.today('yyyy') %> <%= pkg.author %>. | " +
             "http://www.apache.org/licenses/LICENSE-2.0.html */",
 
     // Set the major version as a variable.
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['src/javascripts/jquery.xdomainrequest.js', 'src/javascripts/utils.js', 'src/javascripts/<%= pkg.name %>.js'],
+        src: ['src/javascripts/vendor/jquery.xdomainrequest.js', 'src/javascripts/sorry.js', 'src/javascripts/<%= pkg.name %>.js'],
         dest: 'tmp/concat-<%= pkg.name %>.js',
       },
     },

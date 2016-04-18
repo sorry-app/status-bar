@@ -2,10 +2,10 @@
   "name": "status-bar",
   "version": "4.0.0-1",
   "description": "In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. Once dropped into your website or application it'll broadcast your Sorry status updates direct to your users.",
-  "author": "Support Time Limited",
+  "author": "SorryApp Ltd",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/supporttime/status-bar/issues"
+    "url": "https://github.com/sorry-app/status-bar/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
