@@ -225,7 +225,7 @@
 				// We've not seen this notice before.
 				// Display the first update.
 				// Create a new status notice for the notice.
-				var notice_obj = new StatusNotice(self, notice, notice.updates.last());
+				var notice_obj = new StatusNotice(self, notice, notice.updates[notice.updates.length - 1]);
 
 				// Display the notice.
 				notice_obj.display();						
