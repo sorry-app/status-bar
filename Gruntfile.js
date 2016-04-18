@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['src/javascripts/vendor/jquery.xdomainrequest.js', 'src/javascripts/<%= pkg.name %>.js'],
+        src: ['src/javascripts/vendor/jquery.xdomainrequest.js', 'src/javascripts/sorry.js', 'src/javascripts/<%= pkg.name %>.js'],
         dest: 'tmp/concat-<%= pkg.name %>.js',
       },
     },
