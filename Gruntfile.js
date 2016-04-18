@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
     // Define a banner to added to the compiled assets.
     banner: "/* <%= pkg.name %> v<%= pkg.version %> | " +
-            "(c) 2013 <%= pkg.author %>. | " +
+            "(c) <%= grunt.template.today('yyyy') %> <%= pkg.author %>. | " +
             "http://www.apache.org/licenses/LICENSE-2.0.html */",
 
     // Set the major version as a variable.
