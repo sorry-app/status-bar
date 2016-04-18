@@ -37,7 +37,7 @@
 .sorry-status-notice {
   position: relative; /* Contain the close icon. */
 
-  padding: 5px 24px;
+  padding: 12px 24px;
 }
 .sorry-status-notice:first-child { padding-top: 24px; }
 .sorry-status-notice:last-child { padding-bottom: 24px; }
@@ -121,7 +121,6 @@
 button.sorry-status-notice-close {
   position: absolute;
   right: 24px;
-  top: 24px;
 
   line-height: 31px;
   font-size: 16px;
