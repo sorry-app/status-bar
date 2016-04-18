@@ -32,6 +32,34 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
 
+## Displaying as a Subscriber
+
+If you have personal details about your user, it's possible to configure the plugin to register them as a subscriber. The user will then be listed in your account and you'll be able to target status notices to them, instead of just posting generic site-wide notices.
+
+To do this you need to define their details like so, **before you include the status-bar.js**.
+
+```html
+<script>
+	window.SorryAPIOptions = {
+		subscriber: {
+			email: "robrawlins@gmail.com",
+			first_name: "Robert",
+			last_name: "Rawlins",
+			nickname: "Rob",
+			company: "Sorry™",
+			location_attributes: {
+				city: "Chichester",
+				state: "West Sussex",
+				coutry: "United Kingdom"
+			},
+			tag_list: "Founder,Developer,Technologist"
+		}
+	}
+</script>
+```
+
+Whenever the status-bar loads it'll now register the user as a subscriber, and filter any notices it get's in return to only list those which are applicable to this subscriber.
+
 ## Keep Up To Date
 
 If you want to always have the latest version of the plugin, we offer a source which will always give you the latest minor or patch version without you having to lift a finger. We don't offer an auto-updating source for major releases as these often break backwards compatibity.
