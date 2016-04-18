@@ -128,4 +128,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright & 2013 Support Time Limited. See [LICENSE](LICENSE) for details.
+Copyright & 2016 Support Time Limited. See [LICENSE](LICENSE) for details.
