@@ -1,8 +1,8 @@
-# Sorry Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
+# Sorry&#8482; Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
 
-Once dropped into your website or application it'll broadcast your [Sorry](http://www.sorryapp.com) status updates direct to your users.
+Once dropped into your website or application it'll broadcast your [Sorry&#8482;](http://www.sorryapp.com) status updates direct to your users.
 
 #### jQuery required
 
@@ -32,9 +32,33 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
 
-## Upgrading From Version 2.x
+## Displaying as a Subscriber
 
-To upgrade you'll need to **change the Javascript include** to match the [one described above](#simply-include-the-javascript), but you'll also want to **remove the existing HTML markup you have in place** for the status bar as this is now automatically added to the page by the plugin.
+If you have personal details about your user, it's possible to configure the plugin to register them as a subscriber. The user will then be listed in your account and you'll be able to target status notices to them, instead of just posting generic site-wide notices.
+
+To do this you need to define their details like so, **before you include the status-bar.js**.
+
+```html
+<script>
+	window.SorryAPIOptions = {
+		subscriber: {
+			email: "robrawlins@gmail.com",
+			first_name: "Robert",
+			last_name: "Rawlins",
+			nickname: "Rob",
+			company: "Sorry™",
+			location_attributes: {
+				city: "Chichester",
+				state: "West Sussex",
+				coutry: "United Kingdom"
+			},
+			tag_list: "Founder,Developer,Technologist"
+		}
+	}
+</script>
+```
+
+Whenever the status-bar loads it'll now register the user as a subscriber, and filter any notices it get's in return to only list those which are applicable to this subscriber.
 
 ## Keep Up To Date
 
@@ -42,7 +66,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/status-bar/2.latest/status-bar.min.js
+	//code.sorryapp.com/status-bar/3.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
@@ -51,11 +75,13 @@ Whilst minor/patch releases should not break backwards compatibility, it's still
 If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
 
 ```html
-<div class="sorry-status-notice" role="alert">
-	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">hide</button>
+<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">
+	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>
 
-	<div class="sorry-status-notice-content">
-		<span class="sorry-status-notice-label">Ongoing</span> <a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">{{ Your status message goes here }}</a>
+	<div class="sorry-status-notice-content">\
+		<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>
+		<p class="sorry-status-notice-text">{{notice}}</p>
+		<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>
 	</div>
 </div>
 ```
@@ -126,4 +152,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright & 2013 Support Time Limited. See [LICENSE](LICENSE) for details.
+Copyright & 2016 Support Time Limited. See [LICENSE](LICENSE) for details.
