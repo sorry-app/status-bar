@@ -52,7 +52,8 @@
 			crossDomain: true, 
 			dataType: "json",
 			url: target_url,
-			headers: { 'X-Plugin-Ping': 'status-bar' },
+			// Set headers using beforeSend as headers: isn't supported in older jQuery.
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
 			data: { 
 				include: 'brand,notices,notices.updates', // Get brand and notices in a sigle package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
