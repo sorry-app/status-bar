@@ -4,16 +4,45 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- Requires jQuery -->
-		<script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
-		<!-- Load in our library. -->
-		<script src="/dist/status-bar.min.js" data-for="f1ff551f"></script>
-
 		<!-- Bootstrap. -->
 		<link rel="stylesheet" href="index.css">
 	</head>
 	<body>
 		<!-- Link for clearing the local storage during dev and testing. -->
 		<a href="#" onclick="window.localStorage.clear();location.reload();">Forget Dismissed Messages</a>
+
+		<script>
+			/*
+			 * Set the SorryAPI setting as a structure
+			 * in the window which we can then inject as
+			 * part of the initialization.
+			 */
+			window.SorryAPIOptions = {
+				/*
+				 * Pass along a subscriber which will resgister
+				 * them on the page as a subscriber and also
+				 * filter the response from the API based on whether
+				 * notices are targetted at them or not.
+				 */
+				subscriber: {
+					email: "robrawlins@gmail.com",
+					first_name: "Robert",
+					last_name: "Rawlins",
+					nickname: "Rob",
+					company: "Sorry™",
+					location_attributes: {
+						city: "Chichester",
+						state: "West Sussex",
+						coutry: "United Kingdom"
+					},
+					tag_list: "Founder,Developer,Technologist"
+				}
+			}
+		</script>
+
+		<!-- Requires jQuery -->
+		<script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+		<!-- Load in our library. -->
+		<script src="/dist/status-bar.min.js" data-for="f1ff551f"></script>
 	</body>
 </html>
