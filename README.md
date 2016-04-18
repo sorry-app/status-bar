@@ -1,8 +1,8 @@
-# Sorry Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
+# Sorry&#8482; Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
 
-Once dropped into your website or application it'll broadcast your [Sorry](http://www.sorryapp.com) status updates direct to your users.
+Once dropped into your website or application it'll broadcast your [Sorry&#8482;](http://www.sorryapp.com) status updates direct to your users.
 
 #### jQuery required
 
