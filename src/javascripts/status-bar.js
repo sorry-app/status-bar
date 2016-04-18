@@ -1,7 +1,38 @@
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
 (function($, window, document, undefined) { "use strict";
-	
+
+	/*
+	 *
+	 * Raven.js error logging allows us to better track what errors
+	 * happen to ocurr once the file is included in the wild.
+	 *
+	 */
+
+	var configureRaven = function() {
+		// Create a noConflict in case already instantiated.
+		var SorryRaven = Raven.noConflict();
+
+		// Configure this instance to hit our Sentry accuont.
+		SorryRaven.config('https://fe8e83188d1d452d9f56e445a82102b6@app.getsentry.com/74508', {
+			whitelistUrls: [ /status\-bar\.min\.js/ ] // Only track errors in the status bar itself.
+		}).install();
+	};
+
+	if (typeof(Raven) === "undefined") {
+		// Raven does not exist, we should load it ourselves
+		// before we configure it to catch errors.
+		$.getScript( "https://cdn.ravenjs.com/2.3.0/raven.min.js", function( data, textStatus, jqxhr ) {
+			// Raven has now been loaded and we can configure
+			// it to be used to catch errors.
+			configureRaven();
+		});
+	} else {
+		// Raven is already loaded into the window, use it
+		// to configure and catch errors for the plugin.
+		configureRaven();
+	}
+
 	/*
 	 *
 	 * Status Notice.
