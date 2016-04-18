@@ -12,7 +12,7 @@
 	 *
 	 */
 
-	var SorryAPI = function(options) {
+	window.SorryAPI = function(options) {
 		// Quick self refernce to the class.
 		var self = this;
 
