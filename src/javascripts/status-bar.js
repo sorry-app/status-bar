@@ -21,7 +21,7 @@
 			\
 			<div class="sorry-status-notice-content">\
 				<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>\
-				<p class="sorry-status-notice-text">{{apology}}</p>\
+				<p class="sorry-status-notice-text">{{notice}}</p>\
 				<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>\
 			</div>\
 		</div>';
@@ -55,7 +55,7 @@
 
 		// Append the classes frag with the compfile template.
 		self.frag +=
-		self.template.replace( /{{apology}}/ig, self.update.content ) // Swap the description.
+		self.template.replace( /{{notice}}/ig, self.update.content ) // Swap the description.
 						.replace( /{{link}}/ig, self.attributes.link ) // Swap the link.
 						.replace( /{{id}}/ig, self.attributes.id ); // Swap the ID.
 	};
@@ -89,11 +89,12 @@
 		// Set a reference to the base endppint for the page.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = 'https://s3-eu-west-1.amazonaws.com/' + (options.statusBarFor || options['status-bar-for']) + '.sorryapp.com';
+		self.endpoint = 'https://ro-api.sorryapp.com/v1/pages/' + (options.statusBarFor || options['status-bar-for']);
+
 		// And the apologies andpoint.
-		self.apologies_endpoint = self.endpoint + '/api/v1.json';
+		self.notices_endpoint = self.endpoint;
 		// And the branding endpoint.
-		self.branding_endpoint = self.endpoint + '/api/v1.json';
+		self.branding_endpoint = self.endpoint;
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -118,38 +119,38 @@
 		var self = this;
 
 		// Run the core process.
-		// Fetch the apologies and wait for complete.
-		self.fetch(self.apologies_endpoint, function(response) {
-			// Filter apologies to give us only open ones for display.
-			var $open_apologies = $.grep(response.apologies, function(a) { return a.state == 'open'; });
+		// Fetch the notices and wait for complete.
+		self.fetch(self.notices_endpoint, function(response) {
+			// Filter notices to give us only open ones for display.
+			var $open_notices = $.grep(response.response.notices, function(a) { return a.state == 'open'; });
 
-			// Loop over the open apologies.
-			$.each($open_apologies, function(index, apology) {
+			// Loop over the open notices.
+			$.each($open_notices, function(index, notice) {
 				// Check to see if we've seen this update before?
-				if (self.dismissed.hasOwnProperty(apology.id)) {
+				if (self.dismissed.hasOwnProperty(notice.id)) {
 					// Find an update which we haven't yet displayed.
-					$.each(apology.updates.reverse(), function(index, update) {
-						// We've seen this apology before.
+					$.each(notice.updates.reverse(), function(index, update) {
+						// We've seen this notice before.
 						// Check to see if the updates was published since we last displayed one.
-						if(update.created_at > self.dismissed[apology.id]) {
-							// Create a new status notice for the apology.
-							var notice = new StatusNotice(self, apology, update);
+						if(update.created_at > self.dismissed[notice.id]) {
+							// Create a new status notice for the notice.
+							var notice_obj = new StatusNotice(self, notice, update);
 
 							// Display the notice.
-							notice.display();
+							notice_obj.display();
 
 							// Break from the loop.
 							return false;
 						}
 					});
 				} else {
-					// We've not seen this apology before.
+					// We've not seen this notice before.
 					// Display the first update.
-					// Create a new status notice for the apology.
-					var notice = new StatusNotice(self, apology, apology.updates.last());
+					// Create a new status notice for the notice.
+					var notice_obj = new StatusNotice(self, notice, notice.updates.last());
 
 					// Display the notice.
-					notice.display();						
+					notice_obj.display();						
 				}
 			});
 		});	
@@ -176,10 +177,10 @@
 		";
 
 		// Run the core process.
-		// Fetch the apologies and wait for complete.
+		// Fetch the notices and wait for complete.
 		self.fetch(self.branding_endpoint, function(response) {
 			// Pull the branding from the response.
-			var brand = response.brand;
+			var brand = response.response.brand;
 
 			// Abstract the bar colour from the response.
 			var background_color = brand.color_header_background;
@@ -199,13 +200,14 @@
 	};
 
 	StatusBar.prototype.fetch = function(target_url, callback) {
-		// Make a JSON request to acquire any apologies to display.
+		// Make a JSON request to acquire any notices to display.
 		return $.ajax({
 			type: "GET",
 			crossDomain: true, 
 			dataType: "json",
 			url: target_url,
 			headers: { 'X-Plugin-Ping': 'status-bar' },
+			data: { include: 'brand,notices,notices.updates' },
 			success: callback
 		});
 	};

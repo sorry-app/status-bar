@@ -41,7 +41,21 @@ $(function () {
 			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'});
 
 			// Assert that an endpoint was created as planned.
-			equal(status_bar.data('statusBar').endpoint, '//api.sorryapp.com/1/pages/test', 'The correct API endpoint was assigned.');
+			equal(status_bar.data('statusBar').endpoint, 'https://ro-api.sorryapp.com/v1/pages/test', 'The correct API endpoint was assigned.');
+		});
+
+	// Test the core application run.
+	module("core methods", {
+		setup: function() {
+			// prepare something for all following tests
+			// Ask the plugin to provide the path
+			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
+		}
+	});	
+
+		test("should run without errors", function() {
+			// Request the run method on the status bar.
+			status_bar.run();
 		});
 
 	// Tests for the basic utility methods.
@@ -60,14 +74,6 @@ $(function () {
 			// Assert that the path is absolute related to current location as epected.
 			// NOTE: This will fail if the project is moved to a new home - could do with being better written.
 			equal(path, 'file:///Users/robertrawlins/Sites/status-bar/dist/', 'path was as expected.');
-		});
-
-		test("should fetch the brand styles from the API.", function() {
-			// Ask the plugin to fetch the brand results.
-			var result = status_bar.fetch_branding();
-
-			// Assert that the brand element is an AJAX response object.
-			equal($.type(result.done), 'function', 'Result is not an AJAX response.');
 		});
 
 		test("should load the approriate CSS asset in to the DOM.", function () {
