@@ -2,7 +2,56 @@
 // Wrap this as a jQuery plugin.
 (function($, window, document, undefined) { "use strict";
 
-	// Status Notice.
+	/*
+	 *
+	 * Sorry API Client
+	 *
+	 * Allows basic REST based acess to the Sorry API to gather details
+	 * about the page such as it's brand settings and any notices which
+	 * happen to be list on the page.
+	 *
+	 */
+
+	var SorryAPI = function(options) {
+		// Quick self refernce to the class.
+		var self = this;		
+
+		// Set a reference to the endpoint.
+		self.endpoint = 'https://ro-api.sorryapp.com/v1';
+	};
+
+	// TODO: Add support for success/fail behaviour.
+	SorryAPI.prototype.fetchPage = function(page_id, callback) {
+		// Reference self again.
+		var self = this;
+
+		// Compile the target URL from the parameters.
+		var target_url = self.endpoint + '/pages/' + page_id;
+
+		// Make a JSON request to acquire any notices to display.
+		return $.ajax({
+			type: "GET",
+			crossDomain: true, 
+			dataType: "json",
+			url: target_url,
+			headers: { 'X-Plugin-Ping': 'status-bar' },
+			data: { include: 'brand,notices,notices.updates' },
+			success: callback
+		});
+	};
+
+	/*
+	 *
+	 * Status Notice.
+	 *
+	 * Each status bar may have several notices to display depending
+	 * on how many are open on the page, how many have been previously
+	 * seen or dismissed.
+	 *
+	 * This class is responsible for rendering each notices and
+	 * providing the behaviour to dismiss them.
+	 *
+	 */
 
 	var StatusNotice = function (parent, attributes, update) {
 		// Quick self refernce to the class.
@@ -75,7 +124,15 @@
 		self.$elem.find('[data-dismiss="status-notice"]').bind('click.dismiss.status-notice', $.proxy(this.dismiss, this));
 	};	
 
-	// Status Bar Class Definition. 
+	/*
+	 *
+	 * Status Notice.
+	 *
+	 * The status bar is the core class for the plugin
+	 * and is responsible for gathering the data from
+	 * the API and rending multiple notices.
+	 *
+	 */
 
 	var StatusBar = function (options, elem) {
 		// Quick self refernce to the class.
@@ -85,16 +142,11 @@
 		self.elem = elem;
 		self.$elem = $(elem);
 
-		// Set a reference to the endpoint.
-		// Set a reference to the base endppint for the page.
-		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
-		//       The first is latter versions of jQuery, the second is earlier vertions.
-		self.endpoint = 'https://ro-api.sorryapp.com/v1/pages/' + (options.statusBarFor || options['status-bar-for']);
+		// Store the options into the instance.
+		self.options = options;
 
-		// And the apologies andpoint.
-		self.notices_endpoint = self.endpoint;
-		// And the branding endpoint.
-		self.branding_endpoint = self.endpoint;
+		// Create an instance of the API.
+		self.api = new SorryAPI();
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -103,60 +155,64 @@
 	StatusBar.prototype.init = function() {
 		// Reference self again.
 		var self = this;
-		
-		// Load in the supporting css assets.
-		self.loadcss();
 
-		// Style the plugin.
-		self.set_style();
+		// Request the page data from the API.
+		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
+		//       The first is latter versions of jQuery, the second is earlier vertions.		
+		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), function(response) {
+			// We now have the page data from the API and
+			// can render the status notices.
 
-		// Run the plugin.
-		self.run();
+			// Load in the supporting css assets.
+			// TODO: Combine CSS import and styling?
+			self.loadcss();
+			// Style the plugin.
+			self.set_style(response.response.brand);
+
+			// Run the plugin.
+			self.render(response.response.notices);
+		});
 	};
 
-	StatusBar.prototype.run = function() {
+	StatusBar.prototype.render = function(notices) {
 		// Reference self again.
 		var self = this;
 
-		// Run the core process.
-		// Fetch the notices and wait for complete.
-		self.fetch(self.notices_endpoint, function(response) {
-			// Filter notices to give us only open ones for display.
-			var $open_notices = $.grep(response.response.notices, function(a) { return a.state == 'open'; });
+		// Filter notices to give us only open ones for display.
+		var $open_notices = $.grep(notices, function(a) { return a.state == 'open'; });
 
-			// Loop over the open notices.
-			$.each($open_notices, function(index, notice) {
-				// Check to see if we've seen this update before?
-				if (self.dismissed.hasOwnProperty(notice.id)) {
-					// Find an update which we haven't yet displayed.
-					$.each(notice.updates.reverse(), function(index, update) {
-						// We've seen this notice before.
-						// Check to see if the updates was published since we last displayed one.
-						if(update.created_at > self.dismissed[notice.id]) {
-							// Create a new status notice for the notice.
-							var notice_obj = new StatusNotice(self, notice, update);
+		// Loop over the open notices.
+		$.each($open_notices, function(index, notice) {
+			// Check to see if we've seen this update before?
+			if (self.dismissed.hasOwnProperty(notice.id)) {
+				// Find an update which we haven't yet displayed.
+				$.each(notice.updates.reverse(), function(index, update) {
+					// We've seen this notice before.
+					// Check to see if the updates was published since we last displayed one.
+					if(update.created_at > self.dismissed[notice.id]) {
+						// Create a new status notice for the notice.
+						var notice_obj = new StatusNotice(self, notice, update);
 
-							// Display the notice.
-							notice_obj.display();
+						// Display the notice.
+						notice_obj.display();
 
-							// Break from the loop.
-							return false;
-						}
-					});
-				} else {
-					// We've not seen this notice before.
-					// Display the first update.
-					// Create a new status notice for the notice.
-					var notice_obj = new StatusNotice(self, notice, notice.updates.last());
+						// Break from the loop.
+						return false;
+					}
+				});
+			} else {
+				// We've not seen this notice before.
+				// Display the first update.
+				// Create a new status notice for the notice.
+				var notice_obj = new StatusNotice(self, notice, notice.updates.last());
 
-					// Display the notice.
-					notice_obj.display();						
-				}
-			});
-		});	
+				// Display the notice.
+				notice_obj.display();						
+			}
+		});
 	};
 
-	StatusBar.prototype.set_style = function() {
+	StatusBar.prototype.set_style = function(brand) {
 		// Reference self again.
 		var self = this;
 
@@ -176,42 +232,22 @@
 			} \
 		";
 
-		// Run the core process.
-		// Fetch the notices and wait for complete.
-		self.fetch(self.branding_endpoint, function(response) {
-			// Pull the branding from the response.
-			var brand = response.response.brand;
+		// Abstract the bar colour from the response.
+		var background_color = brand.color_header_background;
+		var text_color = brand.color_header_text;
+		var link_color = brand.color_header_links;
+		var state_warning_color = brand.color_state_warning;
 
-			// Abstract the bar colour from the response.
-			var background_color = brand.color_header_background;
-			var text_color = brand.color_header_text;
-			var link_color = brand.color_header_links;
-			var state_warning_color = brand.color_state_warning;
+		// Compfile the style / brand CSS snippet.
+		var compiled = css_template.replace( /{{text_color}}/ig, text_color )
+			.replace( /{{background_color}}/ig, background_color )
+			.replace( /{{link_color}}/ig, link_color )
+			.replace( /{{state_warning_color}}/ig, state_warning_color );
 
-			// Compfile the style / brand CSS snippet.
-			var compiled = css_template.replace( /{{text_color}}/ig, text_color )
-				.replace( /{{background_color}}/ig, background_color )
-				.replace( /{{link_color}}/ig, link_color )
-				.replace( /{{state_warning_color}}/ig, state_warning_color );
-
-			// Append the inline styles to the document.
-			$('head').append('<style>' + compiled + '</style>');
-		});
+		// Append the inline styles to the document.
+		$('head').append('<style>' + compiled + '</style>');
 	};
 
-	StatusBar.prototype.fetch = function(target_url, callback) {
-		// Make a JSON request to acquire any notices to display.
-		return $.ajax({
-			type: "GET",
-			crossDomain: true, 
-			dataType: "json",
-			url: target_url,
-			headers: { 'X-Plugin-Ping': 'status-bar' },
-			data: { include: 'brand,notices,notices.updates' },
-			success: callback
-		});
-	};
-	
 	StatusBar.prototype.loadcss = function() {
 		// Reference self again.
 		var self = this;

@@ -36,28 +36,6 @@ $(function () {
 			ok($(document.body).statusBar({'statusBarFor':'test'})[0] == document.body, 'document.body returned');
 		});
 
-		test("should assign the right API endpoint", function() {
-			// Assert that the correct endpoint it picked up.
-			var status_bar = $('<div></div>').statusBar({'statusBarFor':'test'});
-
-			// Assert that an endpoint was created as planned.
-			equal(status_bar.data('statusBar').endpoint, 'https://ro-api.sorryapp.com/v1/pages/test', 'The correct API endpoint was assigned.');
-		});
-
-	// Test the core application run.
-	module("core methods", {
-		setup: function() {
-			// prepare something for all following tests
-			// Ask the plugin to provide the path
-			status_bar = $('<div></div>').statusBar({'statusBarFor':'test'}).data('statusBar');
-		}
-	});	
-
-		test("should run without errors", function() {
-			// Request the run method on the status bar.
-			status_bar.run();
-		});
-
 	// Tests for the basic utility methods.
 	module("utility methods", {
 		setup: function() {
