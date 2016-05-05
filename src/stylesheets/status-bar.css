@@ -54,12 +54,24 @@
 }
 
 /*
+ * Resets
+ *
+ * Reset any margins or paddings which may be applied
+ * to generic paragraphs and suchlike.
+ */
+.sorry-status-notice-header, 
+.sorry-status-notice-text, 
+.sorry-status-notice-link {
+  margin: 0;
+  padding: 0;
+}
+
+/*
  * Notice Header
  *
  * Contains the 'Ongoing' and the 'Bullhorn' Icon.
  */
 .sorry-status-notice-header {
-  margin-top: 0;
   margin-bottom: 16px;
 
   font-weight: 700;
@@ -163,6 +175,7 @@ button.sorry-status-notice-close {
 @media (min-width: 972px) {
   .sorry-status-notice-content {
     margin: 0 auto;
+    padding-right: 0;
     max-width: 768px;
 
     text-align: center;
@@ -172,7 +185,6 @@ button.sorry-status-notice-close {
   .sorry-status-notice-text, 
   .sorry-status-notice-link {
     display: inline-block;
-    margin-top: 0;
     margin-bottom: 0;
 
     text-align: left;

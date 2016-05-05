@@ -1,1 +1,19 @@
+/*
+ * Basic template styles to make the page look a little
+ * tidier for testing and development testing purposes.
+ */
 html, body { padding: 5px; }
+
+/*
+ * Disruptive Defaults
+ *
+ * Often peoples websites and apps will have CSS styles applied to
+ * various root level objects such as headings, paragraphs, buttons etc
+ * which we don't want to be inheritted by our status bar.
+ *
+ * Here we create some intentially disruptive styles which will break
+ * the status bar if we dont happen to get things right.
+ */
+h1, h2, h3, h4, h5, h6 { margin-left: 20px; font-weight: 600; font-size: 64px;}
+p { margin-bottom: 60px; color: pink; }
+a { text-decoration: underline; }
