@@ -22,7 +22,7 @@
 	if (typeof(Raven) === "undefined") {
 		// Raven does not exist, we should load it ourselves
 		// before we configure it to catch errors.
-		$.getScript( "https://cdn.ravenjs.com/2.3.0/raven.min.js", function( data, textStatus, jqxhr ) {
+		new LukesLazyLoader('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
 			// Raven has now been loaded and we can configure
 			// it to be used to catch errors.
 			configureRaven();
