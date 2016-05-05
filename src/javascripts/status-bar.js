@@ -158,12 +158,13 @@
 
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?
-			self.loadcss();
-			// Style the plugin.
-			self.set_style(response.response.brand);
+			self.loadcss(function() {
+				// Style the plugin.
+				self.set_style(response.response.brand);
 
-			// Run the plugin.
-			self.render(response.response.notices);
+				// Run the plugin.
+				self.render(response.response.notices);
+			});
 		});
 	};
 
@@ -241,27 +242,13 @@
 		$('head').append('<style>' + compiled + '</style>');
 	};
 
-	StatusBar.prototype.loadcss = function() {
+	StatusBar.prototype.loadcss = function(callback) {
 		// Reference self again.
 		var self = this;
 
-		// Compile a CSS script tag using the path given by this JS script.
-		var style_include_tag = $("<link/>", {
-			rel: "stylesheet",
-			type: "text/css",
-			href: self.getpath() + 'status-bar.min.css'
-		});
-
-		// Determine the destination for the stylesheet to be injected.
-		// If no stylesheets already in place we inject into the head.
-		// If stylesheets do exist we place ours before any of theres.
-		if ( $('link').length ) {
-			// We have link tags. So the destination is before these.
-			$($('link')[0]).before(style_include_tag);
-		} else {
-			// We don't have any link tags, so append it to the head.
-			style_include_tag.appendTo($('head'));
-		}
+		// Use lazyloader to import the CSS file and fire
+		// a callback once it's complete.
+		new LukesLazyLoader(self.getpath() + 'status-bar.min.css', callback);
 	};
 
 	StatusBar.prototype.getpath = function() {
