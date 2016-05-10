@@ -22,7 +22,7 @@
 	if (typeof(Raven) === "undefined") {
 		// Raven does not exist, we should load it ourselves
 		// before we configure it to catch errors.
-		new LukesLazyLoader('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
+		exports.loadJS('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
 			// Raven has now been loaded and we can configure
 			// it to be used to catch errors.
 			configureRaven();
@@ -139,7 +139,7 @@
 		self.options = options;
 
 		// Create an instance of the API.
-		self.api = new SorryAPI();
+		self.api = new exports.SorryAPI();
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -245,10 +245,22 @@
 	StatusBar.prototype.loadcss = function(callback) {
 		// Reference self again.
 		var self = this;
+		// We don't have any link tags, so append it to the head.
+		var before = $('head').children.last;
 
-		// Use lazyloader to import the CSS file and fire
-		// a callback once it's complete.
-		new LukesLazyLoader(self.getpath() + 'status-bar.min.css', callback);
+		// Determine the destination for the stylesheet to be injected.
+		// If no stylesheets already in place we inject into the head.
+		// If stylesheets do exist we place ours before any of theres.
+		if ( $('link').length ) {
+			// We have link tags. So the destination is before these.
+			before = $($('link')[0]);
+		}
+
+		// Load the stylesheet using vendor lib.
+		var stylesheet = exports.loadCSS((self.getpath() + 'status-bar.min.css'), before[0]);
+		
+		// Trigger callback when finally loaded.
+		onloadCSS(stylesheet, callback);
 	};
 
 	StatusBar.prototype.getpath = function() {

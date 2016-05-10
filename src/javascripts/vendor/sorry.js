@@ -1,6 +1,6 @@
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
-(function($, window, document, undefined) { "use strict";
+(function(w) { "use strict";
 
 	/*
 	 *
@@ -12,7 +12,7 @@
 	 *
 	 */
 
-	window.SorryAPI = function(options) {
+	var SorryAPI = function(options) {
 		// Quick self refernce to the class.
 		var self = this;
 
@@ -62,4 +62,12 @@
 		});
 	};
 
-})(jQuery, window, document);
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.SorryAPI = SorryAPI;
+	}
+	else {
+		w.SorryAPI = SorryAPI;
+	}
+
+})( typeof global !== "undefined" ? global : this );

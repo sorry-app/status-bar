@@ -40,7 +40,8 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['src/javascripts/vendor/jquery.xdomainrequest.js','src/javascripts/vendor/lazyloader.js', 'src/javascripts/sorry.js', 'src/javascripts/<%= pkg.name %>.js'],
+        src: ['src/javascripts/vendor/jquery.xdomainrequest.js', 'src/javascripts/vendor/loadCSS.js','src/javascripts/vendor/onloadCSS.js',
+          'src/javascripts/vendor/loadJS.js', 'src/javascripts/vendor/sorry.js', 'src/javascripts/<%= pkg.name %>.js'],
         dest: 'tmp/concat-<%= pkg.name %>.js',
       },
     },
@@ -52,7 +53,9 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
       },
       options: {
-        banner: '<%= banner %>'
+        banner: '<%= banner %>',
+        sourceMap: true, // Help with debugging errors.
+        wrap: true // Stop leaky globals vars.
       }
     },
 
