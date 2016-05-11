@@ -1,6 +1,17 @@
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
-(function($, window, document, undefined) { "use strict";
+(function(w) { "use strict";
+
+	/*
+	 * Load in an dependancies required by this plugin.
+	 *
+	 * These are pulled inline by the Browserify package ready for
+	 * distribution, and properly scopes and namespaced for safety.
+	 */
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var $ = require('jquery');
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var legacy_cors_support = require('jquery-ajax-transport-xdomainrequest');
 
 	/*
 	 *
@@ -12,7 +23,7 @@
 	 *
 	 */
 
-	window.SorryAPI = function(options) {
+	var SorryAPI = function(options) {
 		// Quick self refernce to the class.
 		var self = this;
 
@@ -62,4 +73,12 @@
 		});
 	};
 
-})(jQuery, window, document);
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.SorryAPI = SorryAPI;
+	}
+	else {
+		w.SorryAPI = SorryAPI;
+	}
+
+})( typeof global !== "undefined" ? global : this );

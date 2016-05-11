@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
     // Javascript validation.
     jshint: {
-      all: ['Gruntfile.js', 'src/**/*.js']
+      all: ['Gruntfile.js', 'src/javascripts/*.js']
     },
 
     // qUnit test framework.
@@ -32,27 +32,17 @@ module.exports = function(grunt) {
         inject: 'tests/vendor/phantom.js' // Used for running the tests headlessly.
       },
       files: ['tests/*.html']
-    },    
-
-    // Concatenate the JS assets.
-    concat: {
-      options: {
-        separator: ';',
-      },
-      dist: {
-        src: ['src/javascripts/vendor/jquery.xdomainrequest.js', 'src/javascripts/sorry.js', 'src/javascripts/<%= pkg.name %>.js'],
-        dest: 'tmp/concat-<%= pkg.name %>.js',
-      },
     },
 
     // Minify Javascript Assets.
     uglify: {
       build: {
-        src: 'tmp/concat-<%= pkg.name %>.js', // Take temporary pre-compiled asset.
+        src: 'dist/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
         dest: 'dist/<%= pkg.name %>.min.js' // Plop it in the distribution folder.
       },
       options: {
-        banner: '<%= banner %>'
+        banner: '<%= banner %>',
+        sourceMap: true // Help with debugging errors.
       }
     },
 
@@ -64,6 +54,19 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'src/fonts', src: ['**'], dest: 'dist/fonts'},
         ],
       },
+    },
+
+    // Bundle dependancies into a single package.
+    browserify: {
+      build: {
+        src: 'src/javascripts/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
+        dest: 'dist/<%= pkg.name %>.js', // Plop it in the distribution folder.
+        options: {
+          alias: {
+            'sorry-api': './src/javascripts/lib/sorry-api' // Not available as its own NPM yet.
+          }
+        }
+      }
     },
 
     // Minify Stylesheet Assets.
@@ -131,15 +134,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-aws-s3');
   // Watcher for rebuilding when files changes.
   grunt.loadNpmTasks('grunt-contrib-watch');
-  // Plugin for concatenating files.
-  grunt.loadNpmTasks('grunt-contrib-concat');
   // qUnit test runner.
   grunt.loadNpmTasks('grunt-contrib-qunit');
   // Connect to the test / demo page.
   grunt.loadNpmTasks('grunt-contrib-connect');
+  // Bundle dependany modules together for distribution.
+  grunt.loadNpmTasks('grunt-browserify');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin', 'copy']);
+  grunt.registerTask('default', ['jshint', 'browserify', 'uglify', 'cssmin', 'copy']);
 
   // Test task(s).
   grunt.registerTask('test', ['jshint', 'qunit']);

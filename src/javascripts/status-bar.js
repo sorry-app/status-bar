@@ -1,6 +1,22 @@
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
-(function($, window, document, undefined) { "use strict";
+(function(window, document, undefined) { "use strict";
+
+	/*
+	 * Load in an dependancies required by this plugin.
+	 *
+	 * These are pulled inline by the Browserify package ready for
+	 * distribution, and properly scopes and namespaced for safety.
+	 */
+	// Stripped back jQuery.
+	var $ = require('jquery');
+	// API Wrapper for the Status Page API.
+	var api = require('sorry-api');
+	// Utilities for Loading Notice Styles.
+	var loadCSS = require('fg-loadcss');
+	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
+	// Utilitity for loading external JS assets.
+	var loadJS = require('fg-loadjs');
 
 	/*
 	 *
@@ -22,7 +38,7 @@
 	if (typeof(Raven) === "undefined") {
 		// Raven does not exist, we should load it ourselves
 		// before we configure it to catch errors.
-		$.getScript( "https://cdn.ravenjs.com/2.3.0/raven.min.js", function( data, textStatus, jqxhr ) {
+		loadJS('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
 			// Raven has now been loaded and we can configure
 			// it to be used to catch errors.
 			configureRaven();
@@ -139,7 +155,7 @@
 		self.options = options;
 
 		// Create an instance of the API.
-		self.api = new SorryAPI();
+		self.api = new api.SorryAPI();
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -158,12 +174,13 @@
 
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?
-			self.loadcss();
-			// Style the plugin.
-			self.set_style(response.response.brand);
+			self.loadcss(function() {
+				// Style the plugin.
+				self.set_style(response.response.brand);
 
-			// Run the plugin.
-			self.render(response.response.notices);
+				// Run the plugin.
+				self.render(response.response.notices);
+			});
 		});
 	};
 
@@ -241,27 +258,25 @@
 		$('head').append('<style>' + compiled + '</style>');
 	};
 
-	StatusBar.prototype.loadcss = function() {
+	StatusBar.prototype.loadcss = function(callback) {
 		// Reference self again.
 		var self = this;
-
-		// Compile a CSS script tag using the path given by this JS script.
-		var style_include_tag = $("<link/>", {
-			rel: "stylesheet",
-			type: "text/css",
-			href: self.getpath() + 'status-bar.min.css'
-		});
+		// We don't have any link tags, so append it to the head.
+		var before = $('head').children.last;
 
 		// Determine the destination for the stylesheet to be injected.
 		// If no stylesheets already in place we inject into the head.
 		// If stylesheets do exist we place ours before any of theres.
 		if ( $('link').length ) {
 			// We have link tags. So the destination is before these.
-			$($('link')[0]).before(style_include_tag);
-		} else {
-			// We don't have any link tags, so append it to the head.
-			style_include_tag.appendTo($('head'));
+			before = $($('link')[0]);
 		}
+
+		// Load the stylesheet using vendor lib.
+		var stylesheet = loadCSS.loadCSS((self.getpath() + 'status-bar.min.css'), before[0]);
+		
+		// Trigger callback when finally loaded.
+		onloadCSS.onloadCSS(stylesheet, callback);
 	};
 
 	StatusBar.prototype.getpath = function() {
@@ -346,4 +361,4 @@
 		});
 	});
 
-})(jQuery, window, document);
+})(window, document);
