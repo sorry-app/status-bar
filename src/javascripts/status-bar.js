@@ -3,6 +3,22 @@
 (function($, window, document, undefined) { "use strict";
 
 	/*
+	 * Load in an dependancies required by this plugin.
+	 *
+	 * These are pulled inline by the Browserify package ready for
+	 * distribution, and properly scopes and namespaced for safety.
+	 */
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var legacy_cors_support = require('./vendor/jquery.xdomainrequest');
+	// API Wrapper for the Status Page API.
+	var api = require('./vendor/sorry');
+	// Utilities for Loading Notice Styles.
+	var loadCSS = require('./vendor/loadCSS');
+	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
+	// Utilitity for loading external JS assets.
+	var loadJS = require('./vendor/loadJS');
+
+	/*
 	 *
 	 * Raven.js error logging allows us to better track what errors
 	 * happen to ocurr once the file is included in the wild.
@@ -22,7 +38,7 @@
 	if (typeof(Raven) === "undefined") {
 		// Raven does not exist, we should load it ourselves
 		// before we configure it to catch errors.
-		exports.loadJS('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
+		loadJS('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
 			// Raven has now been loaded and we can configure
 			// it to be used to catch errors.
 			configureRaven();
@@ -139,7 +155,7 @@
 		self.options = options;
 
 		// Create an instance of the API.
-		self.api = new exports.SorryAPI();
+		self.api = new api.SorryAPI();
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -257,10 +273,10 @@
 		}
 
 		// Load the stylesheet using vendor lib.
-		var stylesheet = exports.loadCSS((self.getpath() + 'status-bar.min.css'), before[0]);
+		var stylesheet = loadCSS.loadCSS((self.getpath() + 'status-bar.min.css'), before[0]);
 		
 		// Trigger callback when finally loaded.
-		onloadCSS(stylesheet, callback);
+		onloadCSS.onloadCSS(stylesheet, callback);
 	};
 
 	StatusBar.prototype.getpath = function() {

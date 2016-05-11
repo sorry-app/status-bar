@@ -18,6 +18,15 @@
     "grunt-contrib-qunit": "~0.3.0",
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-copy": "^0.8.2",
-    "grunt-aws-s3": "^0.14.4"
+    "grunt-aws-s3": "^0.14.4",
+    "browserify": "^13.0.1",
+    "browserify-shim": "^3.8.12",
+    "grunt-browserify": "^5.0.0"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
   }
 }
