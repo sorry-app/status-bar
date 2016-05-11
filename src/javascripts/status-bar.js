@@ -9,7 +9,7 @@
 	 * distribution, and properly scopes and namespaced for safety.
 	 */
 	// Stripped back jQuery.
-	var $ = require('./vendor/jquery');
+	var $ = require('jquery');
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
 	var legacy_cors_support = require('./vendor/jquery.xdomainrequest');
 	// API Wrapper for the Status Page API.

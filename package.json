@@ -20,6 +20,7 @@
     "grunt-aws-s3": "^0.14.4",
     "browserify": "^13.0.1",
     "browserify-shim": "^3.8.12",
-    "grunt-browserify": "^5.0.0"
+    "grunt-browserify": "^5.0.0",
+    "jquery": "^2.2.3"
   }
 }

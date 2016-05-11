@@ -9,7 +9,7 @@
 	 * distribution, and properly scopes and namespaced for safety.
 	 */
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
-	var $ = require('./jquery');
+	var $ = require('jquery');
 
 	/*
 	 *
