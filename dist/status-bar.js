@@ -1,4 +1,113 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
+/*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
+(function(w){
+	"use strict";
+	/* exported loadCSS */
+	var loadCSS = function( href, before, media ){
+		// Arguments explained:
+		// `href` [REQUIRED] is the URL for your CSS file.
+		// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
+			// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.
+		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
+		var doc = w.document;
+		var ss = doc.createElement( "link" );
+		var ref;
+		if( before ){
+			ref = before;
+		}
+		else {
+			var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+			ref = refs[ refs.length - 1];
+		}
+
+		var sheets = doc.styleSheets;
+		ss.rel = "stylesheet";
+		ss.href = href;
+		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
+		ss.media = "only x";
+
+		// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
+		function ready( cb ){
+			if( doc.body ){
+				return cb();
+			}
+			setTimeout(function(){
+				ready( cb );
+			});
+		}
+		// Inject link
+			// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
+			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+		ready( function(){
+			ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		});
+		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
+		var onloadcssdefined = function( cb ){
+			var resolvedHref = ss.href;
+			var i = sheets.length;
+			while( i-- ){
+				if( sheets[ i ].href === resolvedHref ){
+					return cb();
+				}
+			}
+			setTimeout(function() {
+				onloadcssdefined( cb );
+			});
+		};
+
+		function loadCB(){
+			if( ss.addEventListener ){
+				ss.removeEventListener( "load", loadCB );
+			}
+			ss.media = media || "all";
+		}
+
+		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
+		if( ss.addEventListener ){
+			ss.addEventListener( "load", loadCB);
+		}
+		ss.onloadcssdefined = onloadcssdefined;
+		onloadcssdefined( loadCB );
+		return ss;
+	};
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(require,module,exports){
+(function (global){
+/*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
+(function( w ){
+	var loadJS = function( src, cb ){
+		"use strict";
+		var ref = w.document.getElementsByTagName( "script" )[ 0 ];
+		var script = w.document.createElement( "script" );
+		script.src = src;
+		script.async = true;
+		ref.parentNode.insertBefore( script, ref );
+		if (cb && typeof(cb) === "function") {
+			script.onload = cb;
+		}
+		return script;
+	};
+	// commonjs
+	if( typeof module !== "undefined" ){
+		module.exports = loadJS;
+	}
+	else {
+		w.loadJS = loadJS;
+	}
+}( typeof global !== "undefined" ? global : this ));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],3:[function(require,module,exports){
 /*!
  * jQuery-ajaxTransport-XDomainRequest - v1.0.4 - 2015-03-05
  * https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest
@@ -6,7 +115,7 @@
  * Licensed MIT (/blob/master/LICENSE.txt)
  */
 (function(a){if(typeof define==='function'&&define.amd){define(['jquery'],a)}else if(typeof exports==='object'){module.exports=a(require('jquery'))}else{a(jQuery)}}(function($){if($.support.cors||!$.ajaxTransport||!window.XDomainRequest){return $}var n=/^(https?:)?\/\//i;var o=/^get|post$/i;var p=new RegExp('^(\/\/|'+location.protocol+')','i');$.ajaxTransport('* text html xml json',function(j,k,l){if(!j.crossDomain||!j.async||!o.test(j.type)||!n.test(j.url)||!p.test(j.url)){return}var m=null;return{send:function(f,g){var h='';var i=(k.dataType||'').toLowerCase();m=new XDomainRequest();if(/^\d+$/.test(k.timeout)){m.timeout=k.timeout}m.ontimeout=function(){g(500,'timeout')};m.onload=function(){var a='Content-Length: '+m.responseText.length+'\r\nContent-Type: '+m.contentType;var b={code:200,message:'success'};var c={text:m.responseText};try{if(i==='html'||/text\/html/i.test(m.contentType)){c.html=m.responseText}else if(i==='json'||(i!=='text'&&/\/json/i.test(m.contentType))){try{c.json=$.parseJSON(m.responseText)}catch(e){b.code=500;b.message='parseerror'}}else if(i==='xml'||(i!=='text'&&/\/xml/i.test(m.contentType))){var d=new ActiveXObject('Microsoft.XMLDOM');d.async=false;try{d.loadXML(m.responseText)}catch(e){d=undefined}if(!d||!d.documentElement||d.getElementsByTagName('parsererror').length){b.code=500;b.message='parseerror';throw'Invalid XML: '+m.responseText;}c.xml=d}}catch(parseMessage){throw parseMessage;}finally{g(b.code,b.message,c,a)}};m.onprogress=function(){};m.onerror=function(){g(500,'error',{text:m.responseText})};if(k.data){h=($.type(k.data)==='string')?k.data:$.param(k.data)}m.open(j.type,j.url);m.send(h)},abort:function(){if(m){m.abort()}}}});return $}));
-},{"jquery":2}],2:[function(require,module,exports){
+},{"jquery":4}],4:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.3
  * http://jquery.com/
@@ -9850,7 +9959,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
 (function(window, document, undefined) { "use strict";
@@ -9868,10 +9977,10 @@ return jQuery;
 	// API Wrapper for the Status Page API.
 	var api = require('./vendor/sorry');
 	// Utilities for Loading Notice Styles.
-	var loadCSS = require('./vendor/loadCSS');
+	var loadCSS = require('fg-loadcss');
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
 	// Utilitity for loading external JS assets.
-	var loadJS = require('./vendor/loadJS');
+	var loadJS = require('fg-loadjs');
 
 	/*
 	 *
@@ -10217,114 +10326,7 @@ return jQuery;
 	});
 
 })(window, document);
-},{"./vendor/loadCSS":4,"./vendor/loadJS":5,"./vendor/onloadCSS":6,"./vendor/sorry":7,"jquery":2,"jquery-ajax-transport-xdomainrequest":1}],4:[function(require,module,exports){
-(function (global){
-/*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
-(function(w){
-	"use strict";
-	/* exported loadCSS */
-	var loadCSS = function( href, before, media ){
-		// Arguments explained:
-		// `href` [REQUIRED] is the URL for your CSS file.
-		// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
-			// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.
-		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
-		var doc = w.document;
-		var ss = doc.createElement( "link" );
-		var ref;
-		if( before ){
-			ref = before;
-		}
-		else {
-			var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
-			ref = refs[ refs.length - 1];
-		}
-
-		var sheets = doc.styleSheets;
-		ss.rel = "stylesheet";
-		ss.href = href;
-		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
-		ss.media = "only x";
-
-		// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
-		function ready( cb ){
-			if( doc.body ){
-				return cb();
-			}
-			setTimeout(function(){
-				ready( cb );
-			});
-		}
-		// Inject link
-			// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
-			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		ready( function(){
-			ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
-		});
-		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
-		var onloadcssdefined = function( cb ){
-			var resolvedHref = ss.href;
-			var i = sheets.length;
-			while( i-- ){
-				if( sheets[ i ].href === resolvedHref ){
-					return cb();
-				}
-			}
-			setTimeout(function() {
-				onloadcssdefined( cb );
-			});
-		};
-
-		function loadCB(){
-			if( ss.addEventListener ){
-				ss.removeEventListener( "load", loadCB );
-			}
-			ss.media = media || "all";
-		}
-
-		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
-		if( ss.addEventListener ){
-			ss.addEventListener( "load", loadCB);
-		}
-		ss.onloadcssdefined = onloadcssdefined;
-		onloadcssdefined( loadCB );
-		return ss;
-	};
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
-(function (global){
-/*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
-(function( w ){
-	var loadJS = function( src, cb ){
-		"use strict";
-		var ref = w.document.getElementsByTagName( "script" )[ 0 ];
-		var script = w.document.createElement( "script" );
-		script.src = src;
-		script.async = true;
-		ref.parentNode.insertBefore( script, ref );
-		if (cb && typeof(cb) === "function") {
-			script.onload = cb;
-		}
-		return script;
-	};
-	// commonjs
-	if( typeof module !== "undefined" ){
-		module.exports = loadJS;
-	}
-	else {
-		w.loadJS = loadJS;
-	}
-}( typeof global !== "undefined" ? global : this ));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+},{"./vendor/onloadCSS":6,"./vendor/sorry":7,"fg-loadcss":1,"fg-loadjs":2,"jquery":4,"jquery-ajax-transport-xdomainrequest":3}],6:[function(require,module,exports){
 (function (global){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
@@ -10453,4 +10455,4 @@ return jQuery;
 
 })( typeof global !== "undefined" ? global : this );
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":2}]},{},[3]);
+},{"jquery":4}]},{},[5]);

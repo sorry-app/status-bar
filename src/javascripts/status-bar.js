@@ -15,10 +15,10 @@
 	// API Wrapper for the Status Page API.
 	var api = require('./vendor/sorry');
 	// Utilities for Loading Notice Styles.
-	var loadCSS = require('./vendor/loadCSS');
+	var loadCSS = require('fg-loadcss');
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
 	// Utilitity for loading external JS assets.
-	var loadJS = require('./vendor/loadJS');
+	var loadJS = require('fg-loadjs');
 
 	/*
 	 *
