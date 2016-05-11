@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 /*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
 (function(w){
@@ -9972,10 +9972,8 @@ return jQuery;
 	 */
 	// Stripped back jQuery.
 	var $ = require('jquery');
-	// Cross-Domain AJAX Support for jQuery in IE 8/9.
-	var legacy_cors_support = require('jquery-ajax-transport-xdomainrequest');
 	// API Wrapper for the Status Page API.
-	var api = require('./vendor/sorry');
+	var api = require('sorry-api');
 	// Utilities for Loading Notice Styles.
 	var loadCSS = require('fg-loadcss');
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
@@ -10326,7 +10324,7 @@ return jQuery;
 	});
 
 })(window, document);
-},{"./vendor/onloadCSS":6,"./vendor/sorry":7,"fg-loadcss":1,"fg-loadjs":2,"jquery":4,"jquery-ajax-transport-xdomainrequest":3}],6:[function(require,module,exports){
+},{"./vendor/onloadCSS":6,"fg-loadcss":1,"fg-loadjs":2,"jquery":4,"sorry-api":"sorry-api"}],6:[function(require,module,exports){
 (function (global){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
@@ -10370,7 +10368,7 @@ return jQuery;
 	}
 }( typeof global !== "undefined" ? global : this ));	
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(require,module,exports){
+},{}],"sorry-api":[function(require,module,exports){
 (function (global){
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
@@ -10384,6 +10382,8 @@ return jQuery;
 	 */
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
 	var $ = require('jquery');
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var legacy_cors_support = require('jquery-ajax-transport-xdomainrequest');
 
 	/*
 	 *
@@ -10455,4 +10455,4 @@ return jQuery;
 
 })( typeof global !== "undefined" ? global : this );
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":4}]},{},[5]);
+},{"jquery":4,"jquery-ajax-transport-xdomainrequest":3}]},{},[5]);

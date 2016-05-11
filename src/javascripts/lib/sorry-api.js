@@ -10,6 +10,8 @@
 	 */
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
 	var $ = require('jquery');
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var legacy_cors_support = require('jquery-ajax-transport-xdomainrequest');
 
 	/*
 	 *

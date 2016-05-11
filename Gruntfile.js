@@ -60,7 +60,12 @@ module.exports = function(grunt) {
     browserify: {
       build: {
         src: 'src/javascripts/<%= pkg.name %>.js', // Take temporary pre-compiled asset.
-        dest: 'dist/<%= pkg.name %>.js' // Plop it in the distribution folder.
+        dest: 'dist/<%= pkg.name %>.js', // Plop it in the distribution folder.
+        options: {
+          alias: {
+            'sorry-api': './src/javascripts/lib/sorry-api' // Not available as its own NPM yet.
+          }
+        }
       }
     },
 
