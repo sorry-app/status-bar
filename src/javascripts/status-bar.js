@@ -11,7 +11,7 @@
 	// Stripped back jQuery.
 	var $ = require('jquery');
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
-	var legacy_cors_support = require('./vendor/jquery.xdomainrequest');
+	var legacy_cors_support = require('jquery-ajax-transport-xdomainrequest');
 	// API Wrapper for the Status Page API.
 	var api = require('./vendor/sorry');
 	// Utilities for Loading Notice Styles.
