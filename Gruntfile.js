@@ -129,8 +129,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-aws-s3');
   // Watcher for rebuilding when files changes.
   grunt.loadNpmTasks('grunt-contrib-watch');
-  // Plugin for concatenating files.
-  grunt.loadNpmTasks('grunt-contrib-concat');
   // qUnit test runner.
   grunt.loadNpmTasks('grunt-contrib-qunit');
   // Connect to the test / demo page.
