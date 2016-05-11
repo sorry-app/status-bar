@@ -1,6 +1,6 @@
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
-(function($, window, document, undefined) { "use strict";
+(function(window, document, undefined) { "use strict";
 
 	/*
 	 * Load in an dependancies required by this plugin.
@@ -8,6 +8,8 @@
 	 * These are pulled inline by the Browserify package ready for
 	 * distribution, and properly scopes and namespaced for safety.
 	 */
+	// Stripped back jQuery.
+	var $ = require('./vendor/jquery');
 	// Cross-Domain AJAX Support for jQuery in IE 8/9.
 	var legacy_cors_support = require('./vendor/jquery.xdomainrequest');
 	// API Wrapper for the Status Page API.
@@ -361,4 +363,4 @@
 		});
 	});
 
-})(jQuery, window, document);
+})(window, document);

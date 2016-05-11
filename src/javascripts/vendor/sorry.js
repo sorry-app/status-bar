@@ -3,6 +3,15 @@
 (function(w) { "use strict";
 
 	/*
+	 * Load in an dependancies required by this plugin.
+	 *
+	 * These are pulled inline by the Browserify package ready for
+	 * distribution, and properly scopes and namespaced for safety.
+	 */
+	// Cross-Domain AJAX Support for jQuery in IE 8/9.
+	var $ = require('./jquery');
+
+	/*
 	 *
 	 * Sorry API Client
 	 *
