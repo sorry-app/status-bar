@@ -22,8 +22,6 @@
     "browserify-shim": "^3.8.12",
     "grunt-browserify": "^5.0.0",
     "jquery": "^1.12.3",
-    "jquery-ajax-transport-xdomainrequest": "^1.0.4",
-    "fg-loadcss": "^1.2.0",
-    "fg-loadjs": "^0.2.3"
+    "jquery-ajax-transport-xdomainrequest": "^1.0.4"
   }
 }

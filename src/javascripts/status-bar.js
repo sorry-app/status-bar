@@ -12,11 +12,8 @@
 	var $ = require('jquery');
 	// API Wrapper for the Status Page API.
 	var api = require('sorry-api');
-	// Utilities for Loading Notice Styles.
-	var loadCSS = require('fg-loadcss');
+	// Patching for <link> onload event support.
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
-	// Utilitity for loading external JS assets.
-	var loadJS = require('fg-loadjs');
 
 	/*
 	 *
@@ -38,7 +35,7 @@
 	if (typeof(Raven) === "undefined") {
 		// Raven does not exist, we should load it ourselves
 		// before we configure it to catch errors.
-		loadJS('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
+		$.getScript('https://cdn.ravenjs.com/2.3.0/raven.min.js', function() {
 			// Raven has now been loaded and we can configure
 			// it to be used to catch errors.
 			configureRaven();
@@ -261,22 +258,27 @@
 	StatusBar.prototype.loadcss = function(callback) {
 		// Reference self again.
 		var self = this;
-		// We don't have any link tags, so append it to the head.
-		var before = $('head').children.last;
+
+		// Compile a CSS script tag using the path given by this JS script.
+		var style_include_tag = $("<link/>", {
+			rel: "stylesheet",
+			type: "text/css",
+			href: self.getpath() + 'status-bar.min.css'
+		});
+
+		// Trigger callback when finally loaded.
+		onloadCSS.onloadCSS(style_include_tag[0], callback);
 
 		// Determine the destination for the stylesheet to be injected.
 		// If no stylesheets already in place we inject into the head.
 		// If stylesheets do exist we place ours before any of theres.
 		if ( $('link').length ) {
 			// We have link tags. So the destination is before these.
-			before = $($('link')[0]);
+			$($('link')[0]).before(style_include_tag);
+		} else {
+			// We don't have any link tags, so append it to the head.
+			style_include_tag.appendTo($('head'));
 		}
-
-		// Load the stylesheet using vendor lib.
-		var stylesheet = loadCSS.loadCSS((self.getpath() + 'status-bar.min.css'), before[0]);
-		
-		// Trigger callback when finally loaded.
-		onloadCSS.onloadCSS(stylesheet, callback);
 	};
 
 	StatusBar.prototype.getpath = function() {
