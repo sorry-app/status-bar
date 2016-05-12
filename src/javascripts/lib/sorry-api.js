@@ -34,7 +34,7 @@
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: 'https://ro-api.sorryapp.com',
+		host: '//ro-api.sorryapp.com', // IMPORTANT: Must be schemless for cross-browser AJAX support.
 		version: 1
 	};
 

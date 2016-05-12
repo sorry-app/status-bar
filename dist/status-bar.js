@@ -10406,7 +10406,7 @@ return jQuery;
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: 'https://ro-api.sorryapp.com',
+		host: '//ro-api.sorryapp.com',
 		version: 1
 	};
 
