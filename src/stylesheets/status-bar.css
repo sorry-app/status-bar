@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* 
  *  CSS styles inspired by the 'alert' class from twitter bootstrap. 
  *
@@ -6,6 +8,78 @@
  *  We try and adhere to the http://codeguide.co/ guidelines for code formatting
  *  where possible.
  */
+
+/*
+ * OpenSans
+ *
+ * We use the OpenSans font to create consistant and readable content
+ * on all the notices.
+ */
+
+/* Light */
+@font-face {
+  font-family: 'sorry-status-bar-open-sans';
+  src:  url("./fonts/Light/OpenSans-Light.eot?v=1.1.0");
+  src:  url("./fonts/Light/OpenSans-Light.eot?#iefix&v=1.1.0") format("embedded-opentype"),
+        url("./fonts/Light/OpenSans-Light.woff2?v=1.1.0") format("woff2"),
+        url("./fonts/Light/OpenSans-Light.woff?v=1.1.0") format("woff"), 
+        url("./fonts/Light/OpenSans-Light.ttf?v=1.1.0") format("truetype"), 
+        url("./fonts/Light/OpenSans-Light.svg?v=1.1.0#Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'sorry-status-bar-open-sans';
+  src:  url("./fonts/Bold/OpenSans-Bold.eot?v=1.1.0");
+  src:  url("./fonts/Bold/OpenSans-Bold.eot?#iefix&v=1.1.0") format("embedded-opentype"), 
+        url("./fonts/Bold/OpenSans-Bold.woff2?v=1.1.0") format("woff2"),
+        url("./fonts/Bold/OpenSans-Bold.woff?v=1.1.0") format("woff"),
+        url("./fonts/Bold/OpenSans-Bold.ttf?v=1.1.0") format("truetype"),
+        url("./fonts/Bold/OpenSans-Bold.svg?v=1.1.0#Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/*
+ * Icons
+ *
+ * Built using Fontastic.me and derived from FontAwesome
+ * this is a simple icon set for use on the bar.
+ */
+
+@font-face {
+  font-family: "status-bar-icons";
+  src:  url("./fonts/Icons/status-bar-icons.eot");
+  src:  url("./fonts/Icons/status-bar-icons.eot?#iefix") format("embedded-opentype"),
+        url("./fonts/Icons/status-bar-icons.woff") format("woff"),
+        url("./fonts/Icons/status-bar-icons.ttf") format("truetype"),
+        url("./fonts/Icons/status-bar-icons.svg#status-bar-icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="sorry-status-notice-icon-"]:before,
+[class*=" sorry-status-notice-icon-"]:before {
+  font-family: "status-bar-icons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: middle;
+}
+
+.sorry-status-notice-icon-times-circle:before {
+  content: "\61";
+}
+.sorry-status-notice-icon-bullhorn:before {
+  content: "\62";
+}
 
 /*
  * Status Bar

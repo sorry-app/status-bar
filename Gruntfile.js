@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         banner: '<%= banner %>'
       },
       minify: {
-        src: ['src/stylesheets/<%= pkg.name %>.css', 'src/stylesheets/open-sans.css', 'src/stylesheets/font-awesome.css'],
+        src: 'src/stylesheets/<%= pkg.name %>.css',
         dest: 'dist/<%= pkg.name %>.min.css',
       }
     },
