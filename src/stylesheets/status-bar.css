@@ -178,11 +178,10 @@
 
 .sorry-status-notice-link {
   display: inline-block;
-  padding: 0 10px;
+  padding: 5px 10px;
 
   font-size: 14px;
   text-decoration: none;
-  line-height: 31px;
 
   border: 1px solid #2980b9;
   border-radius: 4px;
@@ -208,7 +207,6 @@ button.sorry-status-notice-close {
   position: absolute;
   right: 24px;
 
-  line-height: 31px;
   font-size: 16px;
 
   color: #333;
@@ -247,10 +245,15 @@ button.sorry-status-notice-close {
  * of the stylesheet but as it's only small I feel it's fair.
  */
 @media (min-width: 972px) {
+  .sorry-status-notice {
+    line-height: 34px;
+  }
+
   .sorry-status-notice-content {
     margin: 0 auto;
     padding-right: 0;
     max-width: 768px;
+    line-height: inherit;
 
     text-align: center;
   }
@@ -267,9 +270,9 @@ button.sorry-status-notice-close {
   .sorry-status-notice-header, 
   .sorry-status-notice-text {
     margin-right: 14px;
+    line-height: inherit;
 
     vertical-align: middle;
-    line-height: 31px;
   }
 
   .sorry-status-notice-text {
@@ -279,4 +282,8 @@ button.sorry-status-notice-close {
     overflow: hidden;
     text-overflow: ellipsis;    
   }
+
+  .sorry-status-notice-link { line-height: initial; }
+
+  .sorry-status-notice-close { line-height: inherit; }
 }
