@@ -11258,6 +11258,7 @@ return jQuery;
 				color: {{text_color}}; \
 			}\
 			.sorry-status-notice-link, .sorry-status-notice-link:hover { \
+				border-color: {{link_color}}; \
 				color: {{link_color}}; \
 			} \
 			.sorry-status-notice-close, .sorry-status-notice-close:hover { \
