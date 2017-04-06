@@ -117,6 +117,30 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/'}
         ]
       }
+    },
+
+    // Cloudfront cleanup.
+    invalidate_cloudfront: {
+      options: {
+        key: '<%= aws.key %>',
+        secret: '<%= aws.secret %>',
+        distribution: '<%= aws.distribution %>'
+      },
+      release: {
+        files: [{
+          expand: true,
+          cwd: './dist/',
+          src: ['**/*'],
+          filter: 'isFile',
+          dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/'
+        }, {
+          expand: true,
+          cwd: './dist/',
+          src: ['**/*'],
+          filter: 'isFile',
+          dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.<%= pkg.version.split(".")[1] %>.latest/'
+        }]
+      }
     }
   });
 
@@ -132,6 +156,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
   // AWS/S3 deployment tools.
   grunt.loadNpmTasks('grunt-aws-s3');
+  // Clean cloudfront up for the .latest builds.
+  grunt.loadNpmTasks('grunt-invalidate-cloudfront');
   // Watcher for rebuilding when files changes.
   grunt.loadNpmTasks('grunt-contrib-watch');
   // qUnit test runner.
@@ -146,4 +172,7 @@ module.exports = function(grunt) {
 
   // Test task(s).
   grunt.registerTask('test', ['jshint', 'qunit']);
+
+  // Publish task.
+  grunt.registerTask('publish', ['aws_s3', 'invalidate_cloudfront']);
 };
