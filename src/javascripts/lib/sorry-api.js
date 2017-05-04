@@ -50,7 +50,7 @@
 	};
 
 	// TODO: Add support for success/fail behaviour.
-	SorryAPI.prototype.fetchPage = function(page_id, filters, callback) {
+	SorryAPI.prototype.fetchPage = function(page_id, includes, filters, callback) {
 		// Reference self again.
 		var self = this;
 
@@ -67,7 +67,7 @@
 			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
 			// Request some additional parameters, and pass subscriber data.
 			data: { 
-				include: 'brand,notices,notices.updates,notices.components,notices.components.descendants,notices.components.ancestors', // Get brand and notices in a single package.
+				include: includes.join(','), // Get brand and notices in a single package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
 			},
 			// Handle the response after JSON returned.

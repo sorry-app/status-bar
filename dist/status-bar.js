@@ -43981,7 +43981,10 @@ module.exports = {
 		// Request the page data from the API.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.		
-		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), {
+		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), 
+			// Include additional resources in the request.
+			['brand', 'notices', 'notices.updates', 'notices.components',
+			'notices.components.descendants', 'notices.components.ancestors'], {
 			// Pass filters to the API.
 			// Only get current and future notices.
 			notice_timeline_state: ['present', 'future'],
@@ -44295,7 +44298,7 @@ module.exports = {
 	};
 
 	// TODO: Add support for success/fail behaviour.
-	SorryAPI.prototype.fetchPage = function(page_id, filters, callback) {
+	SorryAPI.prototype.fetchPage = function(page_id, includes, filters, callback) {
 		// Reference self again.
 		var self = this;
 
@@ -44312,7 +44315,7 @@ module.exports = {
 			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
 			// Request some additional parameters, and pass subscriber data.
 			data: { 
-				include: 'brand,notices,notices.updates,notices.components,notices.components.descendants,notices.components.ancestors', // Get brand and notices in a single package.
+				include: includes.join(','), // Get brand and notices in a single package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
 			},
 			// Handle the response after JSON returned.
