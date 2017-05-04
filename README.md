@@ -6,7 +6,7 @@ Once dropped into your website or application it'll broadcast your [Sorry&#8482;
 
 ## Installing The Plugin
 
-### Simply Include the Javascript 
+### Simply Include the JavaScript 
 
 Just before the closing ```</ body>``` tag. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
@@ -107,8 +107,8 @@ grunt release bumps the [version number](#versioning) and creates a new git tag.
 
 You can append the release command with patch, minor or major depending on the version number increment you wish to make.
 
-#### Deploy the latest version. - `grunt s3`
-We use AWS S3 to host the assets on code.sorryapp.com. Running this command will push the latest build to S3 into the directory /sorry-announcer/<% version number%>/sorry-accouner.js
+#### Deploy the latest version. - `grunt publish`
+We use AWS S3 to host the assets on code.sorryapp.com. Running this command will push the latest build to S3, creating various copies in the `/x.x.latest.js` names, and clear all the appropriate CloudFront distributions.
 
 #### Watch - `grunt watch`
 This is a convenience method for watching all the core HTML, CSS and JS assets in the project, rebuilding if they change.
