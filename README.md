@@ -8,7 +8,7 @@ Once dropped into your website or application it'll broadcast your [Sorry&#8482;
 
 ### Simply Include the Javascript 
 
-Just before the closing ```</ body>``` tag, but after jQuery has been included. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
+Just before the closing ```</ body>``` tag. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
 ```html
 <script src="//code.sorryapp.com/status-bar/4.latest/status-bar.min.js" data-for="xxxxxxx"></script>
