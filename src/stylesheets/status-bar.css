@@ -170,6 +170,17 @@
 .sorry-status-notice-text { margin-bottom: 16px; }
 
 /*
+ * Notice Schedule
+ *
+ * Soften the text a little, just to give a subtle distinct
+ * style outside of the usual content.
+ */
+.sorry-status-notice-schedule {
+  opacity: 0.8;
+  font-style: italic;
+} 
+
+/*
  * Notice Link
  *
  * Each notice is acompanies by a link through to the status
@@ -252,38 +263,33 @@ button.sorry-status-notice-close {
   .sorry-status-notice-content {
     margin: 0 auto;
     padding-right: 0;
-    max-width: 768px;
+    max-width: 90%;
     line-height: inherit;
 
     text-align: center;
   }
 
-  .sorry-status-notice-header, 
-  .sorry-status-notice-text, 
-  .sorry-status-notice-link {
+  .sorry-status-notice-details {
     display: inline-block;
-    margin-bottom: 0;
-
-    text-align: left;
-  }
-
-  .sorry-status-notice-header, 
-  .sorry-status-notice-text {
-    margin-right: 14px;
-    line-height: inherit;
-
-    vertical-align: middle;
-  }
-
-  .sorry-status-notice-text {
-    max-width: 546px;
-
+    max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    padding-right: 14px;
   }
 
-  .sorry-status-notice-link { line-height: initial; }
+  .sorry-status-notice-header,
+  .sorry-status-notice-schedule,
+  .sorry-status-notice-details { margin-right: 14px; }
+
+
+  .sorry-status-notice-details * { display: inline; }
+
+  .sorry-status-notice-link { 
+    line-height: initial;
+    max-width: 20%;
+  }
 
   .sorry-status-notice-close { line-height: inherit; }
 }

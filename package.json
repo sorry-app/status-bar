@@ -24,5 +24,9 @@
     "grunt-release": "~0.6.0",
     "jquery": "^1.12.3",
     "jquery-ajax-transport-xdomainrequest": "^1.0.4"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.8",
+    "handlebars-helpers": "^0.8.2"
   }
 }
