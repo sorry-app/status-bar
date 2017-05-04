@@ -26,6 +26,22 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
 
+## Filtering the Notices
+
+Sometimes you'll not want to display all open notices using the plugin, you'll want to limit it to perhaps only display 'planned' notices, or only those notices affecting a particular component of your service.
+
+We have two `data-attributes=""` which you can include on the `<script />` tag to set these filters.
+
+#### Filter by Notice Type
+
+`<script ... data-filter-type="planned/unplanned" />` will ensure only notices of a given type are displayed using the plugin. Display multiple types by passing them in this attribute as a comma separated list.
+
+#### Filter by Affected Component
+
+`<script ... data-filter-component="999" />` will ensure notices will only be displayed if they directly affect this particular component. If this components related parents, or one it's children are affected by a notice, the notice will also be displayed. Pass multiple components as a comma separated list.
+
+**To find the ID of a component, browse to the 'components' section in the Sorry&#8482; UI, choose to edit the given component and you'll find it's ID in the URL.**
+
 ## Displaying as a Subscriber
 
 If you have personal details about your user, it's possible to configure the plugin to register them as a subscriber. The user will then be listed in your account and you'll be able to target status notices to them, instead of just posting generic site-wide notices.
