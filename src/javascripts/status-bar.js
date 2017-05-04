@@ -219,8 +219,7 @@
 		//       The first is latter versions of jQuery, the second is earlier vertions.		
 		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), 
 			// Include additional resources in the request.
-			['brand', 'notices', 'notices.updates', 'notices.components',
-			'notices.components.descendants', 'notices.components.ancestors'], {
+			['brand', 'notices', 'notices.updates'], {
 			// Pass filters to the API.
 			// Only get current and future notices.
 			notice_timeline_state: ['present', 'future'],

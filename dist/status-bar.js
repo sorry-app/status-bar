@@ -43983,8 +43983,7 @@ module.exports = {
 		//       The first is latter versions of jQuery, the second is earlier vertions.		
 		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), 
 			// Include additional resources in the request.
-			['brand', 'notices', 'notices.updates', 'notices.components',
-			'notices.components.descendants', 'notices.components.ancestors'], {
+			['brand', 'notices', 'notices.updates'], {
 			// Pass filters to the API.
 			// Only get current and future notices.
 			notice_timeline_state: ['present', 'future'],
@@ -44304,6 +44303,14 @@ module.exports = {
 
 		// Compile the target URL from the parameters.
 		var target_url = self.endpoint_url() + '/pages/' + page_id;
+
+		// If component filter is provided we'll need some additional
+		// resources from the request, append these to the includes.
+		if(typeof(filters.notice_component) != 'undefined' && filters.notice_component) {
+			// Append the components and their families.
+			includes = includes.concat(['notices.components',
+				'notices.components.descendants', 'notices.components.ancestors']);
+		}
 
 		// Make a JSON request to acquire any notices to display.
 		return $.ajax({
