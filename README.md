@@ -69,13 +69,21 @@ Whilst minor/patch releases should not break backwards compatibility, it's still
 If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
 
 ```html
-<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">
-	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>
+<div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">
+	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">
+		<i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i>
+	</button>
 
-	<div class="sorry-status-notice-content">\
-		<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>
-		<p class="sorry-status-notice-text">{{notice}}</p>
-		<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>
+	<div class="sorry-status-notice-content">
+		<div class="sorry-status-notice-details">
+			<h4 class="sorry-status-notice-header">
+				<i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}
+			</h4>
+			<p class="sorry-status-notice-text">
+				<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time> {{update.content}}
+			</p>
+		</div>
+		<a class="sorry-status-notice-link" href="{{notice.link}}" target="_blank" title="{{text.links.more.title}}">{{text.links.more.text}} &#8594;</a>
 	</div>
 </div>
 ```
