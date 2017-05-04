@@ -14,6 +14,20 @@
 	var api = require('sorry-api');
 	// Patching for <link> onload event support.
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
+	// Use handlebars for templating.
+	var handlebars = require('handlebars');
+
+	/*
+	 * We include handlebars-helpers package in the bundle as it has
+	 * lot of useful resources, but it's also fairly chunky.
+	 *
+	 * So we're requiring and registering each helper on it's own as
+	 * we use them, rather than including all 100+
+	 */
+	// Smarter if statements.
+	handlebars.registerHelper(require('handlebars-helpers/lib/comparison'));
+	// Date/time formatting for planned notices.
+	handlebars.registerHelper(require('handlebars-helpers/lib/date'));
 
 	/*
 	 *
@@ -71,16 +85,30 @@
 		self.parent = parent;
 
 		// Define the template for the class.
-		self.template = '<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">\
+		self.template = '\
+		{{!-- A container for each notice, classed with its type, state, etc. --}}\
+		<div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">\
+			{{!-- The close button / icon to dismiss each notice. --}}\
 			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
 			\
+			{{!-- The details for each notice, and a read-more link. --}}\
 			<div class="sorry-status-notice-content">\
-				<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>\
-				<p class="sorry-status-notice-text">{{notice}}</p>\
-				<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>\
+				<div class="sorry-status-notice-details">\
+					{{!-- The state of the notice, translated text from "text.states" object. --}}\
+					<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}</h4>\
+					<p class="sorry-status-notice-text">\
+						{{!-- Optional scheduled date for scheduled notices --}}\
+						{{#is notice.state "scheduled"}}<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time>{{/is}}\
+						{{!-- The description of the update to be displayed. --}}\
+						{{update.content}}\
+					</p>\
+				</div>\
+				{{!-- A link to the status page, with text/title provided in the "text.links.more" object. --}}\
+				<a class="sorry-status-notice-link" href="{{notice.link}}" target="_blank" title="{{text.links.more.title}}">{{text.links.more.text}} &#8594;</a>\
 			</div>\
 		</div>';
-		self.frag = ''; // Empty string to contain the compiled template.
+		// Empty string to contain the compiled template.
+		self.frag = '';
 
 		// Build the frag for the element.
 		self.buildFrag();
@@ -108,11 +136,35 @@
 		// Reference self again.
 		var self = this;
 
-		// Append the classes frag with the compfile template.
-		self.frag +=
-		self.template.replace( /{{notice}}/ig, self.update.content ) // Swap the description.
-						.replace( /{{link}}/ig, self.attributes.link ) // Swap the link.
-						.replace( /{{id}}/ig, self.attributes.id ); // Swap the ID.
+		// Compile the template into handlebars.
+		var template = handlebars.compile(self.template);
+
+		// Render the template with the notice
+		// and the specific update for display.
+		self.frag += template({
+			// JSON Object of the notice and update as
+			// per the API response.
+			"notice": self.attributes,
+			"update": self.update,
+			// Include text translations to the template as
+			// we may allow users to override in future, or provide
+			// multiple lingual support.
+			//
+			// TODO: Make this configurable by the user.
+			"text": {
+				"states": {
+					"open": "Ongoing",
+					"scheduled": "Scheduled",
+					"underway": "Underway"
+				},
+				"links": {
+					"more": {
+						"title": "Visit our Status Page for more information.",
+						"text": "More"
+					}
+				}
+			}
+		});
 	};
 
 	StatusNotice.prototype.display = function() {
@@ -186,7 +238,8 @@
 		var self = this;
 
 		// Filter notices to give us only open ones for display.
-		var $open_notices = $.grep(notices, function(a) { return a.state == 'open'; });
+		// We use the timeline_state to determine future and present notices, excluding past ones.
+		var $open_notices = $.grep(notices, function(a) { return ['present', 'future'].includes(a.timeline_state); });
 
 		// Loop over the open notices.
 		$.each($open_notices, function(index, notice) {
@@ -228,7 +281,7 @@
 			.sorry-status-bar { \
 				background-color: {{background_color}};\
 			} \
-			.sorry-status-notice-header, .sorry-status-notice-text {\
+			.sorry-status-notice-header, .sorry-status-notice-text, .sorry-status-notice-schedule {\
 				color: {{text_color}}; \
 			}\
 			.sorry-status-notice-link, .sorry-status-notice-link:hover { \
