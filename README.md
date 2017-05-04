@@ -1,4 +1,4 @@
-# Sorry&#8482; Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
+# Sorry&#8482; Status Bar Plugin [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=4.0.2&x2=0)](http://badge.fury.io/for/gh/supporttime/status-bar)
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
 
@@ -11,7 +11,7 @@ Once dropped into your website or application it'll broadcast your [Sorry&#8482;
 Just before the closing ```</ body>``` tag, but after jQuery has been included. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/3.0.latest/status-bar.min.js" data-for="xxxxxxx"></script>
+<script src="//code.sorryapp.com/status-bar/4.latest/status-bar.min.js" data-for="xxxxxxx"></script>
 ```
 
 #### Not sure what your Page ID is?
