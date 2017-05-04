@@ -4,12 +4,6 @@ In an effort to help extend your voice beyond the status page, we’ve put toget
 
 Once dropped into your website or application it'll broadcast your [Sorry&#8482;](http://www.sorryapp.com) status updates direct to your users.
 
-#### jQuery required
-
-Please note that all our JavaScript plugins require [jQuery](http://jquery.com/).
-
-This plugin is officialy supported with jQuery `1.10.1` however may work on older versions.
-
 ## Installing The Plugin
 
 ### Simply Include the Javascript 
