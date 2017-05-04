@@ -239,10 +239,19 @@
 
 		// Filter notices to give us only open ones for display.
 		// We use the timeline_state to determine future and present notices, excluding past ones.
-		var $open_notices = $.grep(notices, function(a) { return ['present', 'future'].includes(a.timeline_state); });
+		var $notices = $.grep(notices, function(a) { return ['present', 'future'].includes(a.timeline_state); });
+
+		// See if we have any type filters to apply.
+		if(typeof(self.options.filterType) != 'undefined' && self.options.filterType) {
+			// We have some filters to apply to the type of notice.
+			$notices = $.grep($notices, function(a) {
+				// Find those who's type matches those in the options.
+				return self.options.filterType.split(',').includes(a.type);
+			});
+		}
 
 		// Loop over the open notices.
-		$.each($open_notices, function(index, notice) {
+		$.each($notices, function(index, notice) {
 			// Check to see if we've seen this update before?
 			if (self.dismissed.hasOwnProperty(notice.id)) {
 				// Find an update which we haven't yet displayed.
