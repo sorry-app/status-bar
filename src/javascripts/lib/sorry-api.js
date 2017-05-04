@@ -34,7 +34,7 @@
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: '//ro-api.sorryapp.com', // IMPORTANT: Must be schemless for cross-browser AJAX support.
+		host: '//ro-api.sorryapp.com', // IMPORTANT: Must be schemes for cross-browser AJAX support.
 		version: 1
 	};
 
@@ -45,7 +45,7 @@
 
 		// Compile the endpoint from the host and version
 		// number available in the options.
-		// TODO Cater for inproperly formatted hosts and version numbrs.
+		// TODO Cater for improperly formatted hosts and version numbers.
 		return self.options.host + '/v' + self.options.version;
 	};
 
@@ -66,7 +66,10 @@
 			// Set headers using beforeSend as headers: isn't supported in older jQuery.
 			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
 			data: { 
-				include: 'brand,notices,notices.updates', // Get brand and notices in a sigle package.
+				include: 'brand,notices,notices.updates,\
+					notices.components,\
+					notices.components.descendants,\
+					notices.components.ancestors', // Get brand and notices in a single package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
 			},
 			success: callback
