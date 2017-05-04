@@ -44014,6 +44014,53 @@ module.exports = {
 			});
 		}
 
+		// See if we want to apply the component filter.
+		if(typeof(self.options.filterComponents) != 'undefined' && self.options.filterComponents) {
+			/* 
+			 * Filter out those notices which are associated to the components provided
+			 * in the data attribute list.
+			 *
+			 * This might be a direct association, or it may be through a components
+			 * descendants or ancestors.
+			 *
+			 * We need to loop through the provided tree of associated components
+			 * to see if we find any matches.
+			 */
+			$notices = $.grep($notices, function(a) {
+				// Assume we didn't find any matches.
+				var found = false;
+
+				// Loop over the provided filter IDs.
+				$.each(self.options.filterComponents.toString().split(','), function(index, search_id) {
+					// Loop through the component, and it's associated family.
+					$.each(a.components, function(index, component) {
+						// Compile this components ancestors and children into the mix.
+						var component_family = [component].concat(component.descendants).concat(component.ancestors);
+
+						// Loop over the family of components.
+						$.each(component_family, function(index, family_component) {
+							// Return a match if the ID matches that being searched/
+							if(family_component.id.toString() == search_id) { 
+								// Mark a match as being found.
+								found = true; 
+								// Break the loop.
+								return false; 
+							}
+						});
+
+						// Break out the loop if found.
+						if (found) { return false; }
+					});
+
+					// Break out the loop if found.
+					if (found) { return false; }					
+				});
+
+				// Return true/false if match found.
+				return found;
+			});
+		}
+
 		// Loop over the open notices.
 		$.each($notices, function(index, notice) {
 			// Check to see if we've seen this update before?
@@ -44283,7 +44330,7 @@ module.exports = {
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: '//ro-api.sorryapp.com', // IMPORTANT: Must be schemes for cross-browser AJAX support.
+		host: '//ro-api.sorryapp.com', // IMPORTANT: Must be schemless for cross-browser AJAX support.
 		version: 1
 	};
 
@@ -44294,7 +44341,7 @@ module.exports = {
 
 		// Compile the endpoint from the host and version
 		// number available in the options.
-		// TODO Cater for improperly formatted hosts and version numbers.
+		// TODO Cater for inproperly formatted hosts and version numbrs.
 		return self.options.host + '/v' + self.options.version;
 	};
 
@@ -44315,10 +44362,7 @@ module.exports = {
 			// Set headers using beforeSend as headers: isn't supported in older jQuery.
 			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
 			data: { 
-				include: 'brand,notices,notices.updates,\
-					notices.components,\
-					notices.components.descendants,\
-					notices.components.ancestors', // Get brand and notices in a single package.
+				include: 'brand,notices,notices.updates,notices.components,notices.components.descendants,notices.components.ancestors', // Get brand and notices in a single package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
 			},
 			success: callback

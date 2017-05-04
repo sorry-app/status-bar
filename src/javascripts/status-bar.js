@@ -250,6 +250,53 @@
 			});
 		}
 
+		// See if we want to apply the component filter.
+		if(typeof(self.options.filterComponents) != 'undefined' && self.options.filterComponents) {
+			/* 
+			 * Filter out those notices which are associated to the components provided
+			 * in the data attribute list.
+			 *
+			 * This might be a direct association, or it may be through a components
+			 * descendants or ancestors.
+			 *
+			 * We need to loop through the provided tree of associated components
+			 * to see if we find any matches.
+			 */
+			$notices = $.grep($notices, function(a) {
+				// Assume we didn't find any matches.
+				var found = false;
+
+				// Loop over the provided filter IDs.
+				$.each(self.options.filterComponents.toString().split(','), function(index, search_id) {
+					// Loop through the component, and it's associated family.
+					$.each(a.components, function(index, component) {
+						// Compile this components ancestors and children into the mix.
+						var component_family = [component].concat(component.descendants).concat(component.ancestors);
+
+						// Loop over the family of components.
+						$.each(component_family, function(index, family_component) {
+							// Return a match if the ID matches that being searched/
+							if(family_component.id.toString() == search_id) { 
+								// Mark a match as being found.
+								found = true; 
+								// Break the loop.
+								return false; 
+							}
+						});
+
+						// Break out the loop if found.
+						if (found) { return false; }
+					});
+
+					// Break out the loop if found.
+					if (found) { return false; }					
+				});
+
+				// Return true/false if match found.
+				return found;
+			});
+		}
+
 		// Loop over the open notices.
 		$.each($notices, function(index, notice) {
 			// Check to see if we've seen this update before?
