@@ -141,6 +141,12 @@ This is a convenience method for watching all the core HTML, CSS and JS assets i
 
 Should you encounter problems with installing dependencies or running Grunt commands, uninstall all previous dependency versions (global and local). Then, rerun `npm install`.
 
+### Disable error logging
+
+We log all errors within the plugin to [Sentry](https://sentry.io) using [Raven-JS](https://docs.sentry.io/clients/javascript/) so we can keep an eye on the plugin when it's in the field. However during development we don't want these errors logged.
+
+We have a data attribute `<script ... data-environment="development" />` which when set will suppress errors being sent to Sentry, but they'll still be logged in the browsers developer console.
+
 ## Versioning
 
 For transparency and insight into our release cycle, and for striving to maintain backward compatibility, This project will be maintained under the Semantic Versioning guidelines as much as possible.
