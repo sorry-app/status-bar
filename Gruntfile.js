@@ -84,7 +84,7 @@ module.exports = function(grunt) {
     release: {
       options: {
         npm: false, // Don't deploy to NPM as we don't want to release like that.
-        tagName: 'status-bar-<%= version %>' // TODO: We can't use a variable for the package name.
+        tagName: '<%= version %>'
       }
     },    
 
