@@ -46616,7 +46616,17 @@ module.exports = {
 
 	// Configure this instance to hit our Sentry accuont.
 	raven.config('https://fe8e83188d1d452d9f56e445a82102b6@app.getsentry.com/74508', {
-		whitelistUrls: [ /status\-bar\.min\.js/ ] // Only track errors in the status bar itself.
+		// Only track errors in the status bar itself.
+		whitelistUrls: [ /status\-bar\.min\.js/ ],
+		// Suppress errors in development environment.
+		instrument: (function(){
+			// Check if the environment is set on the script tag.
+			// TODO: Is there a better way to determine this than finding the script tag?
+			var environment = $($('script[src$="status-bar.min.js"]')[0]).data('environment');
+
+			// See if the environment is set, and is development.
+			if(typeof(environment) != 'undefined' && environment == 'development') { return false; } else { return true; }
+		})()
 	}).install();
 
 	/*
@@ -46671,8 +46681,6 @@ module.exports = {
 
 		// Build the frag for the element.
 		self.buildFrag();
-
-		throw "Too big"; 
 	};	
 
 	StatusNotice.prototype.dismiss = function(e) {
