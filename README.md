@@ -1,4 +1,4 @@
-# Sorry&#8482; Status Bar Plugin [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=4.0.2&x2=0)](http://badge.fury.io/for/gh/supporttime/status-bar)
+# Sorry&#8482; Status Bar Plugin [![GitHub tag](https://img.shields.io/github/tag/sorry-app/status-bar.svg)]()
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
 
