@@ -1,23 +1,17 @@
-# Sorry&#8482; Status Bar Plugin [![GitHub version](https://badge.fury.io/gh/supporttime%2Fstatus-bar.svg)](http://badge.fury.io/for/gh/supporttime/status-bar)
+# Sorry&#8482; Status Bar Plugin [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=4.0.2&x2=0)](http://badge.fury.io/for/gh/supporttime/status-bar)
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
 
 Once dropped into your website or application it'll broadcast your [Sorry&#8482;](http://www.sorryapp.com) status updates direct to your users.
 
-#### jQuery required
-
-Please note that all our JavaScript plugins require [jQuery](http://jquery.com/).
-
-This plugin is officialy supported with jQuery `1.10.1` however may work on older versions.
-
 ## Installing The Plugin
 
-### Simply Include the Javascript 
+### Simply Include the JavaScript 
 
-Just before the closing ```</ body>``` tag, but after jQuery has been included. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
+Just before the closing ```</ body>``` tag. You can specify which pages you want updates to be sourced from by including your Page ID in the `data-for` attribute.
 
 ```html
-<script src="//code.sorryapp.com/status-bar/3.0.latest/status-bar.min.js" data-for="xxxxxxx"></script>
+<script src="//code.sorryapp.com/status-bar/4.latest/status-bar.min.js" data-for="xxxxxxx"></script>
 ```
 
 #### Not sure what your Page ID is?
@@ -31,6 +25,22 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 ```html
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
+
+## Filtering the Notices
+
+Sometimes you'll not want to display all open notices using the plugin, you'll want to limit it to perhaps only display 'planned' notices, or only those notices affecting a particular component of your service.
+
+We have two `data-attributes=""` which you can include on the `<script />` tag to set these filters.
+
+#### Filter by Notice Type
+
+`<script ... data-filter-type="planned/unplanned" />` will ensure only notices of a given type are displayed using the plugin. Display multiple types by passing them in this attribute as a comma separated list.
+
+#### Filter by Affected Component
+
+`<script ... data-filter-component="999" />` will ensure notices will only be displayed if they directly affect this particular component. If this components related parents, or one it's children are affected by a notice, the notice will also be displayed. Pass multiple components as a comma separated list.
+
+**To find the ID of a component, browse to the 'components' section in the Sorry&#8482; UI, choose to edit the given component and you'll find it's ID in the URL.**
 
 ## Displaying as a Subscriber
 
@@ -66,7 +76,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/status-bar/3.latest/status-bar.min.js
+	//code.sorryapp.com/status-bar/4.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
@@ -75,13 +85,21 @@ Whilst minor/patch releases should not break backwards compatibility, it's still
 If you want to custom style your widget, you only need create your own CSS. To help you understand how to style it the markup for the widget is based loosely on the [Twitter Bootstrap Alert](http://getbootstrap.com/components/#alerts), and looks like this:
 
 ```html
-<div class="sorry-status-notice" id="sorry-status-notice-{{id}}" role="alert">
-	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>
+<div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">
+	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">
+		<i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i>
+	</button>
 
-	<div class="sorry-status-notice-content">\
-		<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> Ongoing</h4>
-		<p class="sorry-status-notice-text">{{notice}}</p>
-		<a class="sorry-status-notice-link" href="{{link}}" target="_blank" title="Visit our Status Page for more information.">More &#8594;</a>
+	<div class="sorry-status-notice-content">
+		<div class="sorry-status-notice-details">
+			<h4 class="sorry-status-notice-header">
+				<i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}
+			</h4>
+			<p class="sorry-status-notice-text">
+				<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time> {{update.content}}
+			</p>
+		</div>
+		<a class="sorry-status-notice-link" href="{{notice.link}}" target="_blank" title="{{text.links.more.title}}">{{text.links.more.text}} &#8594;</a>
 	</div>
 </div>
 ```
@@ -113,8 +131,8 @@ grunt release bumps the [version number](#versioning) and creates a new git tag.
 
 You can append the release command with patch, minor or major depending on the version number increment you wish to make.
 
-#### Deploy the latest version. - `grunt s3`
-We use AWS S3 to host the assets on code.sorryapp.com. Running this command will push the latest build to S3 into the directory /sorry-announcer/<% version number%>/sorry-accouner.js
+#### Deploy the latest version. - `grunt publish`
+We use AWS S3 to host the assets on code.sorryapp.com. Running this command will push the latest build to S3, creating various copies in the `/x.x.latest.js` names, and clear all the appropriate CloudFront distributions.
 
 #### Watch - `grunt watch`
 This is a convenience method for watching all the core HTML, CSS and JS assets in the project, rebuilding if they change.
@@ -152,4 +170,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright & 2016 Support Time Limited. See [LICENSE](LICENSE) for details.
+Copyright & 2017 Sorry&#8482;. See [LICENSE](LICENSE) for details.

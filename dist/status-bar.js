@@ -43981,7 +43981,18 @@ module.exports = {
 		// Request the page data from the API.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.		
-		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), function(response) {
+		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), 
+			// Include additional resources in the request.
+			['brand', 'notices', 'notices.updates'], {
+			// Pass filters to the API.
+			// Only get current and future notices.
+			notice_timeline_state: ['present', 'future'],
+			// Filter by type from the data-filter-type attribute.
+			notice_type: self.options.filterType,
+			// Only show notices affecting components from the data-filter-components attribute.
+			notice_component: self.options.filterComponents
+		// Handle the callback when we have the response.
+		}, function(response) {
 			// We now have the page data from the API and
 			// can render the status notices.
 
@@ -44001,12 +44012,8 @@ module.exports = {
 		// Reference self again.
 		var self = this;
 
-		// Filter notices to give us only open ones for display.
-		// We use the timeline_state to determine future and present notices, excluding past ones.
-		var $open_notices = $.grep(notices, function(a) { return ['present', 'future'].includes(a.timeline_state); });
-
 		// Loop over the open notices.
-		$.each($open_notices, function(index, notice) {
+		$.each(notices, function(index, notice) {
 			// Check to see if we've seen this update before?
 			if (self.dismissed.hasOwnProperty(notice.id)) {
 				// Find an update which we haven't yet displayed.
@@ -44141,23 +44148,33 @@ module.exports = {
 
 	// Preload the DOM elements.
 	$.fn.statusBar.setup = function() {
+		// Get a reference to the script tag including the plugin.
+		var script_tag = $($('script[src$="status-bar.min.js"]')[0]);
 		// Determine any pages assigned to the script tag.
 		// Default to no pages if we don't find any.
-		var pages = $('script[src$="status-bar.min.js"]')[0].getAttribute("data-for");
+		var pages = script_tag.data("for") || "";
 
 		// Loop over all pages assigned on the including script tag.
-		// TODO: Can we shorthand this somehow?
-		// TODO: Can we abstract this out into a seperate metho?
-		if(pages) {
-			$(pages.split(",")).each(function() {
-				// Check to see if a status bar locator is present.
-				if($('[data-status-bar-for="' + this + '"]').length === 0)
-					// We don't have a container / locator for our status bar
-					// so we need to inject one into the DOM near the opening
-					// body tag.
-					$('body').prepend('<div class="sorry-status-bar" data-status-bar-for="' + this + '"></div>');
-			});
-		}
+		// TODO: Can we abstract this out into a separate method?
+		$(pages.split(",")).each(function() {
+			// Check to see if a status bar locator is present.
+			if($('[data-status-bar-for="' + this + '"]').length === 0) {
+				// We don't have a container / locator for our status bar
+				// so we need to inject one into the DOM near the opening
+				// body tag.
+				var div_tag = $('<div />', {
+					// Set the class on the new tag.
+					'class': 'sorry-status-bar',
+					// Copy the reference to the status page.
+					'data-status-bar-for': this,
+					// Copy the other data attributes.
+					// TODO: Can we dynamically copy all of them?
+					'data-filter-type': script_tag.data("filter-type"),
+					'data-filter-components': script_tag.data("filter-components"),
+				// Attach it to the body.
+				}).prependTo('body');
+			}
+		});
 	};
 
 	// Data-Api
@@ -44280,12 +44297,20 @@ module.exports = {
 	};
 
 	// TODO: Add support for success/fail behaviour.
-	SorryAPI.prototype.fetchPage = function(page_id, callback) {
+	SorryAPI.prototype.fetchPage = function(page_id, includes, filters, callback) {
 		// Reference self again.
 		var self = this;
 
 		// Compile the target URL from the parameters.
 		var target_url = self.endpoint_url() + '/pages/' + page_id;
+
+		// If component filter is provided we'll need some additional
+		// resources from the request, append these to the includes.
+		if(typeof(filters.notice_component) != 'undefined' && filters.notice_component) {
+			// Append the components and their families.
+			includes = includes.concat(['notices.components',
+				'notices.components.descendants', 'notices.components.ancestors']);
+		}
 
 		// Make a JSON request to acquire any notices to display.
 		return $.ajax({
@@ -44295,11 +44320,78 @@ module.exports = {
 			url: target_url,
 			// Set headers using beforeSend as headers: isn't supported in older jQuery.
 			beforeSend: function(xhr) { xhr.setRequestHeader('X-Plugin-Ping', 'status-bar'); },
+			// Request some additional parameters, and pass subscriber data.
 			data: { 
-				include: 'brand,notices,notices.updates', // Get brand and notices in a sigle package.
+				include: includes.join(','), // Get brand and notices in a single package.
 				subscriber: self.options.subscriber // Pass optional subscriber configured in the client.
 			},
-			success: callback
+			// Handle the response after JSON returned.
+			success: function(response) {
+				// Apply an specified filters to the result set.
+
+				// Filter notices to give us only open ones for display.
+				// We use the timeline_state to determine future and present notices, excluding past ones.
+				response.response.notices = $.grep(response.response.notices, function(a) { return filters.notice_timeline_state.includes(a.timeline_state); });
+
+				// See if we have any type filters to apply.
+				if(typeof(filters.notice_type) != 'undefined' && filters.notice_type) {
+					// We have some filters to apply to the type of notice.
+					response.response.notices = $.grep(response.response.notices, function(a) {
+						// Find those who's type matches those in the options.
+						return filters.notice_type.split(',').includes(a.type);
+					});
+				}
+
+				// See if we want to apply the component filter.
+				if(typeof(filters.notice_component) != 'undefined' && filters.notice_component) {
+					/* 
+					 * Filter out those notices which are associated to the components provided
+					 * in the data attribute list.
+					 *
+					 * This might be a direct association, or it may be through a components
+					 * descendants or ancestors.
+					 *
+					 * We need to loop through the provided tree of associated components
+					 * to see if we find any matches.
+					 */
+					response.response.notices = $.grep(response.response.notices, function(a) {
+						// Assume we didn't find any matches.
+						var found = false;
+
+						// Loop over the provided filter IDs.
+						$.each(filters.notice_component.toString().split(','), function(index, search_id) {
+							// Loop through the component, and it's associated family.
+							$.each(a.components, function(index, component) {
+								// Compile this components ancestors and children into the mix.
+								var component_family = [component].concat(component.descendants).concat(component.ancestors);
+
+								// Loop over the family of components.
+								$.each(component_family, function(index, family_component) {
+									// Return a match if the ID matches that being searched/
+									if(family_component.id.toString() == search_id) { 
+										// Mark a match as being found.
+										found = true; 
+										// Break the loop.
+										return false; 
+									}
+								});
+
+								// Break out the loop if found.
+								if (found) { return false; }
+							});
+
+							// Break out the loop if found.
+							if (found) { return false; }					
+						});
+
+						// Return true/false if match found.
+						return found;
+					});
+				}
+
+				// Run the callback with the filtered response.
+				callback(response);
+			}
 		});
 	};
 

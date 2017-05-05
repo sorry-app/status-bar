@@ -217,7 +217,18 @@
 		// Request the page data from the API.
 		// INFO: We pipe the status-bar-for value to support formats on various jQuery versions.
 		//       The first is latter versions of jQuery, the second is earlier vertions.		
-		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), function(response) {
+		self.api.fetchPage((self.options.statusBarFor || self.options['status-bar-for']), 
+			// Include additional resources in the request.
+			['brand', 'notices', 'notices.updates'], {
+			// Pass filters to the API.
+			// Only get current and future notices.
+			notice_timeline_state: ['present', 'future'],
+			// Filter by type from the data-filter-type attribute.
+			notice_type: self.options.filterType,
+			// Only show notices affecting components from the data-filter-components attribute.
+			notice_component: self.options.filterComponents
+		// Handle the callback when we have the response.
+		}, function(response) {
 			// We now have the page data from the API and
 			// can render the status notices.
 
@@ -237,12 +248,8 @@
 		// Reference self again.
 		var self = this;
 
-		// Filter notices to give us only open ones for display.
-		// We use the timeline_state to determine future and present notices, excluding past ones.
-		var $open_notices = $.grep(notices, function(a) { return ['present', 'future'].includes(a.timeline_state); });
-
 		// Loop over the open notices.
-		$.each($open_notices, function(index, notice) {
+		$.each(notices, function(index, notice) {
 			// Check to see if we've seen this update before?
 			if (self.dismissed.hasOwnProperty(notice.id)) {
 				// Find an update which we haven't yet displayed.
@@ -377,23 +384,33 @@
 
 	// Preload the DOM elements.
 	$.fn.statusBar.setup = function() {
+		// Get a reference to the script tag including the plugin.
+		var script_tag = $($('script[src$="status-bar.min.js"]')[0]);
 		// Determine any pages assigned to the script tag.
 		// Default to no pages if we don't find any.
-		var pages = $('script[src$="status-bar.min.js"]')[0].getAttribute("data-for");
+		var pages = script_tag.data("for") || "";
 
 		// Loop over all pages assigned on the including script tag.
-		// TODO: Can we shorthand this somehow?
-		// TODO: Can we abstract this out into a seperate metho?
-		if(pages) {
-			$(pages.split(",")).each(function() {
-				// Check to see if a status bar locator is present.
-				if($('[data-status-bar-for="' + this + '"]').length === 0)
-					// We don't have a container / locator for our status bar
-					// so we need to inject one into the DOM near the opening
-					// body tag.
-					$('body').prepend('<div class="sorry-status-bar" data-status-bar-for="' + this + '"></div>');
-			});
-		}
+		// TODO: Can we abstract this out into a separate method?
+		$(pages.split(",")).each(function() {
+			// Check to see if a status bar locator is present.
+			if($('[data-status-bar-for="' + this + '"]').length === 0) {
+				// We don't have a container / locator for our status bar
+				// so we need to inject one into the DOM near the opening
+				// body tag.
+				var div_tag = $('<div />', {
+					// Set the class on the new tag.
+					'class': 'sorry-status-bar',
+					// Copy the reference to the status page.
+					'data-status-bar-for': this,
+					// Copy the other data attributes.
+					// TODO: Can we dynamically copy all of them?
+					'data-filter-type': script_tag.data("filter-type"),
+					'data-filter-components': script_tag.data("filter-components"),
+				// Attach it to the body.
+				}).prependTo('body');
+			}
+		});
 	};
 
 	// Data-Api
