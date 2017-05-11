@@ -213,12 +213,17 @@
 			// Include additional resources in the request.
 			['brand', 'notices', 'notices.updates'], {
 			// Pass filters to the API.
-			// Only get current and future notices.
-			notice_timeline_state: ['present', 'future'],
-			// Filter by type from the data-filter-type attribute.
-			notice_type: self.options.filterType,
-			// Only show notices affecting components from the data-filter-components attribute.
-			notice_component: self.options.filterComponents
+			'notices': {
+				// We only need future and present notices.
+				'timeline_state_in': ['future', 'present'],
+				// Filter for the type as set in the data-attribute.
+				'type_in': (self.options.filterType || '').split(','),
+				// Filer by affected components. We do this by checking
+				// the component on the notice, it's ancestors and descendants.
+				//
+				// It's a bit clunky but it works.
+				'components_id_or_components_descendant_hierarchies_descendant_id_or_components_ancestor_hierarchies_ancestor_id_in': (self.options.filterComponents || '').toString().split(',')
+			}
 		// Handle the callback when we have the response.
 		}, function(response) {
 			// We now have the page data from the API and
