@@ -46722,9 +46722,13 @@ module.exports = {
 			// TODO: Make this configurable by the user.
 			"text": {
 				"states": {
-					"open": "Ongoing",
+					"investigating": "Investigating",
+					"identified": "Identified",
+					"recovering": "Recovering",
 					"scheduled": "Scheduled",
-					"underway": "Underway"
+					"underway": "Underway",
+					// Legacy: to be sunset at some point in the future.
+					"open": "Ongoing"
 				},
 				"links": {
 					"more": {
