@@ -64,7 +64,11 @@ module.exports = function(grunt) {
         options: {
           alias: {
             'sorry-api': './src/javascripts/lib/sorry-api' // Not available as its own NPM yet.
-          }
+          },
+          browserifyOptions: {
+            // Standalone, self contained bundle/package.
+            standalone: 'sorryStatusBar'
+          }          
         }
       }
     },
