@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       dev: {
         files: [
           // Upload this version of the plugin.
-          {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version %>/'},
+          {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version %>/', params: { CacheControl: 'public, max-age=31536000' }},
           // Also deploy a bleeding edge version on the major number.
           {expand: true, cwd: 'dist/', src: ['**'], dest: '<%= pkg.name %>/<%= pkg.version.split(".")[0] %>.latest/'},
           // And also a bleeding edge minor release.
