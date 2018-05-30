@@ -41,6 +41,9 @@
 	raven.config('https://fe8e83188d1d452d9f56e445a82102b6@app.getsentry.com/74508', {
 		// Only track errors in the status bar itself.
 		whitelistUrls: [ /status\-bar\.min\.js/ ],
+		// Don't hijack the console methods etc as this can
+		// cause debugging issues for customers.
+		autoBreadcrumbs: false,
 		// Suppress errors in development environment.
 		instrument: (function(){
 			// Check if the environment is set on the script tag.
