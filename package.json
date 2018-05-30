@@ -31,7 +31,6 @@
     "handlebars": "^4.0.8",
     "handlebars-helpers": "^0.10.0",
     "jquery": "^3.3.1",
-    "jquery-ajax-transport-xdomainrequest": "^1.0.4",    
     "raven-js": "^3.14.2"
   }
 }
