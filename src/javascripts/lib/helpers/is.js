@@ -1,7 +1,6 @@
 'use strict';
 
 var util = require('handlebars-utils');
-var helpers = module.exports;
 
 /**
  * Block helper that renders a block if `a` is **equal to** `b`.
@@ -16,7 +15,7 @@ var helpers = module.exports;
  * @api public
  */
 
-helpers.is = function(a, b, options) {
+module.exports = function is(a, b, options) {
   if (arguments.length === 2) {
     options = b;
     b = options.hash.compare;

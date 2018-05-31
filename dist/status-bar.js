@@ -32400,8 +32400,15 @@ function hasOwnProperty(obj, prop) {
 },{"./support/isBuffer":75,"_process":64,"inherits":74}],77:[function(require,module,exports){
 'use strict';
 
-var util = require('handlebars-utils');
 var helpers = module.exports;
+
+helpers.is = require('./helpers/is');
+helpers.moment = require('helper-date');
+
+},{"./helpers/is":78,"helper-date":57}],78:[function(require,module,exports){
+'use strict';
+
+var util = require('handlebars-utils');
 
 /**
  * Block helper that renders a block if `a` is **equal to** `b`.
@@ -32416,7 +32423,7 @@ var helpers = module.exports;
  * @api public
  */
 
-helpers.is = function(a, b, options) {
+module.exports = function is(a, b, options) {
   if (arguments.length === 2) {
     options = b;
     b = options.hash.compare;
@@ -32424,21 +32431,7 @@ helpers.is = function(a, b, options) {
   return util.value(a == b, this, options);
 };
 
-},{"handlebars-utils":14}],78:[function(require,module,exports){
-'use strict';
-
-var helpers = module.exports;
-
-/**
- * Use [moment][] as a helper. See [helper-date][] for more details.
- *
- * @exposes helper-date as moment
- * @api public
- */
-
-helpers.moment = helpers.date = require('helper-date');
-
-},{"helper-date":57}],79:[function(require,module,exports){
+},{"handlebars-utils":14}],79:[function(require,module,exports){
 /*jshint multistr: true */
 // Wrap this as a jQuery plugin.
 (function(window, document, undefined) { "use strict";
@@ -32459,8 +32452,7 @@ helpers.moment = helpers.date = require('helper-date');
 	// Use handlebars for templating.
 	var handlebars = require('handlebars');
 	// Register some helpers for smarter templates.
-	handlebars.registerHelper(require('./lib/helpers/is'));
-	handlebars.registerHelper(require('./lib/helpers/moment'));
+	handlebars.registerHelper(require('./lib/helpers'));
 
 	/*
 	 *
@@ -32872,7 +32864,7 @@ helpers.moment = helpers.date = require('helper-date');
 	});
 
 })(window, document);
-},{"./lib/helpers/is":77,"./lib/helpers/moment":78,"./vendor/onloadCSS":80,"handlebars":45,"jquery":59,"raven-js":68,"sorry-api":"sorry-api"}],80:[function(require,module,exports){
+},{"./lib/helpers":77,"./vendor/onloadCSS":80,"handlebars":45,"jquery":59,"raven-js":68,"sorry-api":"sorry-api"}],80:[function(require,module,exports){
 (function (global){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */

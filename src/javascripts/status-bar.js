@@ -18,8 +18,7 @@
 	// Use handlebars for templating.
 	var handlebars = require('handlebars');
 	// Register some helpers for smarter templates.
-	handlebars.registerHelper(require('./lib/helpers/is'));
-	handlebars.registerHelper(require('./lib/helpers/moment'));
+	handlebars.registerHelper(require('./lib/helpers'));
 
 	/*
 	 *
