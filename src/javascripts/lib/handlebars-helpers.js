@@ -2,5 +2,5 @@
 
 var helpers = module.exports;
 
-helpers.is = require('./helpers/is');
+helpers.is = require('./handlebars-helpers/is');
 helpers.moment = require('helper-date');

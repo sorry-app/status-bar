@@ -32402,10 +32402,10 @@ function hasOwnProperty(obj, prop) {
 
 var helpers = module.exports;
 
-helpers.is = require('./helpers/is');
+helpers.is = require('./handlebars-helpers/is');
 helpers.moment = require('helper-date');
 
-},{"./helpers/is":78,"helper-date":57}],78:[function(require,module,exports){
+},{"./handlebars-helpers/is":78,"helper-date":57}],78:[function(require,module,exports){
 'use strict';
 
 var util = require('handlebars-utils');
@@ -32452,7 +32452,7 @@ module.exports = function is(a, b, options) {
 	// Use handlebars for templating.
 	var handlebars = require('handlebars');
 	// Register some helpers for smarter templates.
-	handlebars.registerHelper(require('./lib/helpers'));
+	handlebars.registerHelper(require('./lib/handlebars-helpers'));
 
 	/*
 	 *
@@ -32864,7 +32864,7 @@ module.exports = function is(a, b, options) {
 	});
 
 })(window, document);
-},{"./lib/helpers":77,"./vendor/onloadCSS":80,"handlebars":45,"jquery":59,"raven-js":68,"sorry-api":"sorry-api"}],80:[function(require,module,exports){
+},{"./lib/handlebars-helpers":77,"./vendor/onloadCSS":80,"handlebars":45,"jquery":59,"raven-js":68,"sorry-api":"sorry-api"}],80:[function(require,module,exports){
 (function (global){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
