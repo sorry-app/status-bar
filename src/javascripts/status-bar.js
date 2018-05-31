@@ -14,20 +14,11 @@
 	var api = require('sorry-api');
 	// Patching for <link> onload event support.
 	var onloadCSS = require('./vendor/onloadCSS'); // Callbacks when file loads.
+	
 	// Use handlebars for templating.
 	var handlebars = require('handlebars');
-
-	/*
-	 * We include handlebars-helpers package in the bundle as it has
-	 * lot of useful resources, but it's also fairly chunky.
-	 *
-	 * So we're requiring and registering each helper on it's own as
-	 * we use them, rather than including all 100+
-	 */
-	// Smarter if statements.
-	handlebars.registerHelper(require('handlebars-helpers/lib/comparison'));
-	// Date/time formatting for planned notices.
-	handlebars.registerHelper(require('handlebars-helpers/lib/date'));
+	// Register some helpers for smarter templates.
+	handlebars.registerHelper(require('./lib/handlebars-helpers'));
 
 	/*
 	 *
