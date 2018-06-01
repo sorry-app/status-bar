@@ -6,7 +6,7 @@
 (function(window, document, undefined) { "use strict";
 
     /* Generic error message. */
-    var error_msg = 'Third-party library error, stack track should NOT show as from status-bar.js'
+    var error_msg = 'Third-party library error, stack trace should NOT show as from status-bar.js'
 
     /*
      * Raise a warning/error to ensure that the
