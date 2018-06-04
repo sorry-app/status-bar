@@ -288,7 +288,6 @@ button.sorry-status-notice-close {
   .sorry-status-notice-content {
     margin: 0 auto;
     padding-right: 0;
-    max-width: 90%;
     line-height: inherit;
 
     text-align: center;
