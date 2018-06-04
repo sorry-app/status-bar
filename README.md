@@ -26,6 +26,14 @@ By default the plugin will add the bar to the top of your page. To choose a spec
 <div class="sorry-status-bar" data-status-bar-for="xxxxxxx"></div>
 ```
 
+## Prevent Readers from Dismissing Notices
+
+If you'd rather notices **always** be displayed, rather than allowing your audience to dismiss those they've read you can add an additional data attribute to the script tag, which will remove the `x` icon from the notice.
+
+```
+<script ... data-dismissible="false" />
+```
+
 ## Filtering the Notices
 
 Sometimes you'll not want to display all open notices using the plugin, you'll want to limit it to perhaps only display 'planned' notices, or only those notices affecting a particular component of your service.

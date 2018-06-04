@@ -74,8 +74,11 @@
 		self.template = '\
 		{{!-- A container for each notice, classed with its type, state, etc. --}}\
 		<div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">\
-			{{!-- The close button / icon to dismiss each notice. --}}\
-			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
+			{{!-- Optional dismiss link based on config options. --}}\
+			{{#if options.dismissible }}\
+				{{!-- The close button / icon to dismiss each notice. --}}\
+				<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
+			{{/if}}\
 			\
 			{{!-- The details for each notice, and a read-more link. --}}\
 			<div class="sorry-status-notice-content">\
@@ -107,15 +110,21 @@
 		// Prevent the default click behaviour.
 		e.preventDefault();
 
-		// Remember the ID which we are dismissing by putting it in the array
-		self.parent.dismissed[self.attributes.id] = new Date();
+		// See if dismissal is allowed.
+		if(self.parent.options.dismissible) {
+			// Remember the ID which we are dismissing by putting it in the array
+			self.parent.dismissed[self.attributes.id] = new Date();
 
-		// Put that array in a serialized form in to local storage.
-		window.localStorage.setItem('sorry-status-bar', JSON.stringify(self.parent.dismissed));
+			// Put that array in a serialized form in to local storage.
+			window.localStorage.setItem('sorry-status-bar', JSON.stringify(self.parent.dismissed));
 
-		// Remove the parent from the DOM.
-		// TODO: This should be animated.
-		self.$elem.remove();
+			// Remove the parent from the DOM.
+			// TODO: This should be animated.
+			self.$elem.remove();
+		} else {
+			// Dismissal is disabled, raise an error.
+			throw new Error('Notice dismissal is currently disabled.');
+		}
 	};
 
 	StatusNotice.prototype.buildFrag = function() {
@@ -153,6 +162,11 @@
 						"text": "More"
 					}
 				}
+			},
+			// Merge in optional plugin options.
+			"options": {
+				// Such as if it's dismissible.
+				"dismissible": self.parent.options.dismissible
 			}
 		});
 	};
@@ -191,7 +205,10 @@
 		self.$elem = $(elem);
 
 		// Store the options into the instance.
-		self.options = options;
+		self.options = $.extend({
+			// Dismissible by default.
+			dismissible: true
+		}, options);
 
 		// Create an instance of the API.
 		self.api = new api.SorryAPI();
@@ -402,6 +419,7 @@
 					// TODO: Can we dynamically copy all of them?
 					'data-filter-type': script_tag.data("filter-type"),
 					'data-filter-components': script_tag.data("filter-components"),
+					'data-dismissible': script_tag.data("dismissible")
 				// Attach it to the body.
 				}).prependTo('body');
 			}
