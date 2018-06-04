@@ -28913,8 +28913,11 @@ module.exports = function is(a, b, options) {
 		self.template = '\
 		{{!-- A container for each notice, classed with its type, state, etc. --}}\
 		<div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">\
-			{{!-- The close button / icon to dismiss each notice. --}}\
-			<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
+			{{!-- Optional dismiss link based on config options. --}}\
+			{{#if options.dismissible }}\
+				{{!-- The close button / icon to dismiss each notice. --}}\
+				<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true"><i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i></button>\
+			{{/if}}\
 			\
 			{{!-- The details for each notice, and a read-more link. --}}\
 			<div class="sorry-status-notice-content">\
@@ -28992,6 +28995,11 @@ module.exports = function is(a, b, options) {
 						"text": "More"
 					}
 				}
+			},
+			// Merge in optional plugin options.
+			"options": {
+				// Such as if it's dismissible.
+				"dismissible": self.parent.options.dismissible
 			}
 		});
 	};
@@ -29034,8 +29042,6 @@ module.exports = function is(a, b, options) {
 			// Dismissible by default.
 			dismissible: true
 		}, options);
-
-		console.log(self.options);
 
 		// Create an instance of the API.
 		self.api = new api.SorryAPI();
