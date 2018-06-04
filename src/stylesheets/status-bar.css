@@ -154,12 +154,6 @@
 .sorry-status-notice-header 
 .sorry-status-notice-icon { margin-right: 5px; }
 
-.sorry-status-notice-content {
-  padding-right: 24px;
-
-  color: #333;
-}
-
 /*
  * Notice Content
  *
@@ -167,7 +161,20 @@
  * from the status page, could be any length.
 */
 
-.sorry-status-notice-text { margin-bottom: 16px; }
+.sorry-status-notice-content {
+  padding-right: 24px;
+
+  color: #333;
+}
+
+.sorry-status-notice-text {
+  margin-bottom: 16px; 
+
+  /* Truncate the text */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /*
  * Notice Schedule
@@ -277,6 +284,13 @@ button.sorry-status-notice-close {
     text-overflow: ellipsis;
     vertical-align: middle;
     padding-right: 14px;
+  }
+
+  .sorry-status-notice-text {
+    // Remove truncation in favour of
+    // of that applied to .sorry-status-notice-details.
+    white-space: initial;
+    overflow: initial;
   }
 
   .sorry-status-notice-header,
