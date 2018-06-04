@@ -191,7 +191,10 @@
 		self.$elem = $(elem);
 
 		// Store the options into the instance.
-		self.options = options;
+		self.options = $.extend({
+			// Dismissible by default.
+			dismissible: true
+		}, options);
 
 		// Create an instance of the API.
 		self.api = new api.SorryAPI();
@@ -402,6 +405,7 @@
 					// TODO: Can we dynamically copy all of them?
 					'data-filter-type': script_tag.data("filter-type"),
 					'data-filter-components': script_tag.data("filter-components"),
+					'data-dismissible': script_tag.data("dismissible")
 				// Attach it to the body.
 				}).prependTo('body');
 			}
