@@ -89,7 +89,7 @@
 						{{!-- Optional scheduled date for scheduled notices --}}\
 						{{#is notice.state "scheduled"}}<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time>{{/is}}\
 						{{!-- Subject for the notice. --}}\
-						<strong>{{ notice.subject }}</strong>\
+						<strong class="sorry-status-notice-subject">{{notice.subject}}:</strong>\
 						{{!-- The description of the update to be displayed. --}}\
 						{{update.content}}\
 					</p>\
