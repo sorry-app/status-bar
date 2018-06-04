@@ -29,6 +29,18 @@
   font-style: normal;
 }
 
+/* Semibold */
+@font-face {
+  font-family: 'sorry-status-bar-open-sans';
+  src:  url("./fonts/Semibold/OpenSans-Semibold.eot?v=1.1.0");
+  src:  url("./fonts/Semibold/OpenSans-Semibold.eot?#iefix&v=1.1.0") format("embedded-opentype"),
+        url("./fonts/Semibold/OpenSans-Semibold.woff?v=1.1.0") format("woff"), 
+        url("./fonts/Semibold/OpenSans-Semibold.ttf?v=1.1.0") format("truetype"), 
+        url("./fonts/Semibold/OpenSans-Semibold.svg?v=1.1.0#Semibold") format("svg");
+  font-weight: 500;
+  font-style: normal;
+}
+
 /* Bold */
 @font-face {
   font-family: 'sorry-status-bar-open-sans';
@@ -176,6 +188,12 @@
   text-overflow: ellipsis;
 }
 
+
+.sorry-status-notice-subject {
+  font-weight: 500;
+  margin-right: 5px;
+}
+
 /*
  * Notice Schedule
  *
@@ -270,7 +288,6 @@ button.sorry-status-notice-close {
   .sorry-status-notice-content {
     margin: 0 auto;
     padding-right: 0;
-    max-width: 90%;
     line-height: inherit;
 
     text-align: center;
@@ -284,13 +301,6 @@ button.sorry-status-notice-close {
     text-overflow: ellipsis;
     vertical-align: middle;
     padding-right: 14px;
-  }
-
-  .sorry-status-notice-text {
-    // Remove truncation in favour of
-    // of that applied to .sorry-status-notice-details.
-    white-space: initial;
-    overflow: initial;
   }
 
   .sorry-status-notice-header,
