@@ -28949,15 +28949,21 @@ module.exports = function is(a, b, options) {
 		// Prevent the default click behaviour.
 		e.preventDefault();
 
-		// Remember the ID which we are dismissing by putting it in the array
-		self.parent.dismissed[self.attributes.id] = new Date();
+		// See if dismissal is allowed.
+		if(self.parent.options.dismissible) {
+			// Remember the ID which we are dismissing by putting it in the array
+			self.parent.dismissed[self.attributes.id] = new Date();
 
-		// Put that array in a serialized form in to local storage.
-		window.localStorage.setItem('sorry-status-bar', JSON.stringify(self.parent.dismissed));
+			// Put that array in a serialized form in to local storage.
+			window.localStorage.setItem('sorry-status-bar', JSON.stringify(self.parent.dismissed));
 
-		// Remove the parent from the DOM.
-		// TODO: This should be animated.
-		self.$elem.remove();
+			// Remove the parent from the DOM.
+			// TODO: This should be animated.
+			self.$elem.remove();
+		} else {
+			// Dismissal is disabled, raise an error.
+			throw new Error('Notice dismissal is currently disabled.');
+		}
 	};
 
 	StatusNotice.prototype.buildFrag = function() {
