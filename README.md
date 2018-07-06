@@ -52,31 +52,30 @@ We have two `data-attributes=""` which you can include on the `<script />` tag t
 
 ## Displaying as a Subscriber
 
-If you have personal details about your user, it's possible to configure the plugin to register them as a subscriber. The user will then be listed in your account and you'll be able to target status notices to them, instead of just posting generic site-wide notices.
+If you have personal details about your user, it's possible to configure the plugin to see open notices through their eyes, registering them as a subscriber in your account, and only displaying notices they want to see.
 
 To do this you need to define their details like so, **before you include the status-bar.js**.
 
 ```html
 <script>
-	window.SorryAPIOptions = {
-		subscriber: {
-			email: "robrawlins@gmail.com",
-			first_name: "Robert",
-			last_name: "Rawlins",
-			nickname: "Rob",
-			company: "Sorry™",
-			location_attributes: {
-				city: "Chichester",
-				state: "West Sussex",
-				coutry: "United Kingdom"
-			},
-			tag_list: "Founder,Developer,Technologist"
-		}
-	}
+    window.SorryAPIOptions = {
+        subscriber: {
+            email: "robrawlins@gmail.com"
+            first_name: "Robert",
+            last_name: "Rawlins",
+            nickname: "Rob",
+            company: "Sorry™",
+            component_ids: [1, 2, 3, 4]
+        }
+    }
 </script>
 ```
 
-Whenever the status-bar loads it'll now register the user as a subscriber, and filter any notices it get's in return to only list those which are applicable to this subscriber.
+### What data can I pass?
+
+As a minimum you'll need to provider the subscribers email address, but you can also pass a bunch of other personal data to help you identify them, and even choose which components they're subscribed too. (Established plan only)
+
+[Read the subscriber API documentation about all the attributes you can pass.](https://docs.sorryapp.com/api/v1/reference/pages/subscribers/index.html#the-subscriber-object)
 
 ## Keep Up To Date
 
@@ -84,7 +83,7 @@ If you want to always have the latest version of the plugin, we offer a source w
 
 Instead of the sources above, use these paths for the latest versions:
 
-	//code.sorryapp.com/status-bar/4.latest/status-bar.min.js
+    //code.sorryapp.com/status-bar/4.latest/status-bar.min.js
 
 Whilst minor/patch releases should not break backwards compatibility, it's still worth noting that there is always a risk involved in auto-updates like this - so use at your own peril.
 
@@ -94,21 +93,21 @@ If you want to custom style your widget, you only need create your own CSS. To h
 
 ```html
 <div class="sorry-status-notice sorry-status-notice-{{notice.type}} sorry-status-notice-{{notice.state}}" id="sorry-status-notice-{{notice.id}}" role="alert">
-	<button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">
-		<i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i>
-	</button>
+    <button type="button" class="sorry-status-notice-close" data-dismiss="status-notice" aria-hidden="true">
+        <i class="sorry-status-notice-icon sorry-status-notice-icon-times-circle"></i>
+    </button>
 
-	<div class="sorry-status-notice-content">
-		<div class="sorry-status-notice-details">
-			<h4 class="sorry-status-notice-header">
-				<i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}
-			</h4>
-			<p class="sorry-status-notice-text">
-				<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time> {{update.content}}
-			</p>
-		</div>
-		<a class="sorry-status-notice-link" href="{{notice.link}}" target="_blank" title="{{text.links.more.title}}">{{text.links.more.text}} &#8594;</a>
-	</div>
+    <div class="sorry-status-notice-content">
+        <div class="sorry-status-notice-details">
+            <h4 class="sorry-status-notice-header">
+                <i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}
+            </h4>
+            <p class="sorry-status-notice-text">
+                <time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time> {{update.content}}
+            </p>
+        </div>
+        <a class="sorry-status-notice-link" href="{{notice.link}}" target="_blank" title="{{text.links.more.title}}">{{text.links.more.text}} &#8594;</a>
+    </div>
 </div>
 ```
 
