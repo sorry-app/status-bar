@@ -88,7 +88,8 @@ module.exports = function(grunt) {
     release: {
       options: {
         npm: false, // Don't deploy to NPM as we don't want to release like that.
-        tagName: '<%= version %>'
+        tagName: '<%= version %>',
+        afterBump: ['default'] // Recompile JS with new banners.
       }
     },    
 
