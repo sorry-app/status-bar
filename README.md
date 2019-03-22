@@ -46,7 +46,7 @@ We have two `data-attributes=""` which you can include on the `<script />` tag t
 
 #### Filter by Affected Component
 
-`<script ... data-filter-component="999" />` will ensure notices will only be displayed if they directly affect this particular component. If this components related parents, or one it's children are affected by a notice, the notice will also be displayed. Pass multiple components as a comma separated list.
+`<script ... data-filter-components="999" />` will ensure notices will only be displayed if they directly affect this particular component. If this components related parents, or one it's children are affected by a notice, the notice will also be displayed. Pass multiple components as a comma separated list.
 
 **To find the ID of a component, browse to the 'components' section in the Sorry&#8482; UI, choose to edit the given component and you'll find it's ID in the URL.**
 
