@@ -402,13 +402,13 @@
 		var script_tag = $($('script[src$="status-bar.min.js"]')[0]);
 		// Determine any pages assigned to the script tag.
 		// Default to no pages if we don't find any.
-		var pages = script_tag.data("for").toString();
+		var pages = script_tag.data("for");
 
 		// See if any 'for' pages defined.
 		if (typeof pages !== 'undefined') {
 			// Loop over all pages assigned on the including script tag.
 			// TODO: Can we abstract this out into a separate method?
-			$(pages.split(",")).each(function() {
+			$(pages.toString().split(",")).each(function() {
 				// Check to see if a status bar locator is present.
 				if($('[data-status-bar-for="' + this + '"]').length === 0) {
 					// We don't have a container / locator for our status bar
