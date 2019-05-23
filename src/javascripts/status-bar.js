@@ -234,7 +234,7 @@
 				// We only need future and present notices.
 				'timeline_state_in': ['future', 'present'],
 				// Filter for the type as set in the data-attribute.
-				'type_in': (self.options.filterType || '').split(','),
+				'type_in': (self.options.filterType || '').toString().split(','),
 				// Filer by affected components. We do this by checking
 				// the component on the notice, it's ancestors and descendants.
 				//
@@ -367,7 +367,7 @@
 
 		// Now we have our scripts, we can get the full source and strip
 		// out the path directory, which we can use to find matching CSS.
-		return scripttag.src.split('?')[0].split('/').slice(0, -1).join('/') + '/';
+		return scripttag.src.split('?')[0].toString().split('/').slice(0, -1).join('/') + '/';
 	};
 
 	// jQuery Plugin Definition.
@@ -402,7 +402,7 @@
 		var script_tag = $($('script[src$="status-bar.min.js"]')[0]);
 		// Determine any pages assigned to the script tag.
 		// Default to no pages if we don't find any.
-		var pages = script_tag.data("for");
+		var pages = script_tag.data("for").toString();
 
 		// See if any 'for' pages defined.
 		if (typeof pages !== 'undefined') {
