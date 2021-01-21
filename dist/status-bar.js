@@ -30604,6 +30604,25 @@ module.exports = function is(a, b, options) {
 	// Register some helpers for smarter templates.
 	handlebars.registerHelper(require('./lib/handlebars-helpers'));
 
+    // Define the content in the diffent locales.
+    var locales = {
+        "en": {
+            "states": {
+                "investigating": "Investigating",
+                "identified": "Identified",
+                "recovering": "Recovering",
+                "scheduled": "Scheduled",
+                "underway": "Underway",
+            },
+            "links": {
+                "more": {
+                    "title": "Visit our Status Page for more information.",
+                    "text": "More"
+                }
+            }
+        }
+    };
+
 	/*
 	 *
 	 * Raven.js error logging allows us to better track what errors
@@ -30732,21 +30751,7 @@ module.exports = function is(a, b, options) {
 			// multiple lingual support.
 			//
 			// TODO: Make this configurable by the user.
-			"text": {
-				"states": {
-					"investigating": "Investigating",
-					"identified": "Identified",
-					"recovering": "Recovering",
-					"scheduled": "Scheduled",
-					"underway": "Underway",
-				},
-				"links": {
-					"more": {
-						"title": "Visit our Status Page for more information.",
-						"text": "More"
-					}
-				}
-			},
+			"text": locales[self.parent.locale],
 			// Merge in optional plugin options.
 			"options": {
 				// Such as if it's dismissible.
