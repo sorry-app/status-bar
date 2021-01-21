@@ -30732,23 +30732,7 @@ module.exports = function is(a, b, options) {
 			// multiple lingual support.
 			//
 			// TODO: Make this configurable by the user.
-			"text": {
-				"states": {
-					"investigating": "Investigating",
-					"identified": "Identified",
-					"recovering": "Recovering",
-					"scheduled": "Scheduled",
-					"underway": "Underway",
-					// Legacy: to be sunset at some point in the future.
-					"open": "Ongoing"
-				},
-				"links": {
-					"more": {
-						"title": "Visit our Status Page for more information.",
-						"text": "More"
-					}
-				}
-			},
+			"text": self.parent.getContent(),
 			// Merge in optional plugin options.
 			"options": {
 				// Such as if it's dismissible.
@@ -30801,6 +30785,9 @@ module.exports = function is(a, b, options) {
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
+
+        // Define the content in the diffent locales.
+        self.locales = require('../locales/all.json');
 	};
 
 	StatusBar.prototype.init = function() {
@@ -30829,6 +30816,9 @@ module.exports = function is(a, b, options) {
 		}, function(response) {
 			// We now have the page data from the API and
 			// can render the status notices.
+
+            // Store the pages locale for content lookup.
+            self.locale = response.response.locale;
 
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?
@@ -30954,6 +30944,14 @@ module.exports = function is(a, b, options) {
 		return scripttag.src.split('?')[0].toString().split('/').slice(0, -1).join('/') + '/';
 	};
 
+    StatusBar.prototype.getContent = function() {
+        // Reference self again.
+        var self = this;
+
+        // Looup content from the hash.
+        return self.locales[self.locale];
+    };
+
 	// jQuery Plugin Definition.
 
 	// Reference the noflict version.
@@ -31037,7 +31035,7 @@ module.exports = function is(a, b, options) {
 	});
 
 })(window, document);
-},{"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
+},{"../locales/all.json":73,"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
 (function (global){(function (){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
@@ -31081,6 +31079,280 @@ module.exports = function is(a, b, options) {
 	}
 }( typeof global !== "undefined" ? global : this ));	
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],73:[function(require,module,exports){
+module.exports={
+    "cs": {
+        "states": {
+            "investigating": "Zkoumání",
+            "identified": "Identifikování",
+            "recovering": "Zotavování",
+            "underway": "V plném proudu",
+            "scheduled": "Naplánováno"
+        },
+        "links": {
+            "more": {
+                "title": "Další informace najdete na naší stavové stránce.",
+                "text": "Více"
+            }
+        }
+    },
+    "da": {
+        "states": {
+            "investigating": "Undersøgelse",
+            "identified": "Identificerede",
+            "recovering": "Udbedres",
+            "underway": "Undervejs",
+            "scheduled": "Planlagt"
+        },
+        "links": {
+            "more": {
+                "title": "Besøg vores statusside for mere information.",
+                "text": "Mere"
+            }
+        }
+    },
+    "de": {
+        "states": {
+            "investigating": "Untersuchen",
+            "identified": "Identifiziert",
+            "recovering": "Wiederherstellung",
+            "underway": "in Bearbeitung",
+            "scheduled": "Geplant"
+        },
+        "links": {
+            "more": {
+                "title": "Besuchen Sie unsere Statusseite für weitere Informationen.",
+                "text": "Mehr"
+            }
+        }
+    },
+    "el": {
+        "states": {
+            "investigating": "Διερεύνηση",
+            "identified": "Αναγνωρισθείς",
+            "recovering": "Ανάκτηση",
+            "underway": "σε εξέλιξη",
+            "scheduled": "Προγραμματισμένος"
+        },
+        "links": {
+            "more": {
+                "title": "Επισκεφθείτε τη σελίδα κατάστασης για περισσότερες πληροφορίες.",
+                "text": "Περισσότερο"
+            }
+        }
+    },
+    "en": {
+        "states": {
+            "investigating": "Investigating",
+            "identified": "Identified",
+            "recovering": "Recovering",
+            "scheduled": "Scheduled",
+            "underway": "Underway"
+        },
+        "links": {
+            "more": {
+                "title": "Visit our Status Page for more information.",
+                "text": "More"
+            }
+        }
+    },
+    "es": {
+        "states": {
+            "investigating": "Investigando",
+            "identified": "Identificado",
+            "recovering": "Recuperante",
+            "underway": "En curso",
+            "scheduled": "Programado"
+        },
+        "links": {
+            "more": {
+                "title": "Visite nuestra página de estado para obtener más información.",
+                "text": "Más"
+            }
+        }
+    },
+    "et": {
+        "states": {
+            "investigating": "Uurimisel",
+            "identified": "Tuvastatud",
+            "recovering": "Taastamisel",
+            "underway": "Käimasolev",
+            "scheduled": "Planeeritud"
+        },
+        "links": {
+            "more": {
+                "title": "Lisateabe saamiseks külastage meie olekulehte.",
+                "text": "Veel"
+            }
+        }
+    },
+    "fi": {
+        "states": {
+            "investigating": "Tutkitaan",
+            "identified": "Tunnistettu",
+            "recovering": "Palautetaan",
+            "underway": "Käynnissä",
+            "scheduled": "Suunniteltu"
+        },
+        "links": {
+            "more": {
+                "title": "Käy tilasivullamme saadaksesi lisätietoja.",
+                "text": "Lisää"
+            }
+        }
+    },
+    "fr": {
+        "states": {
+            "investigating": "Enquête",
+            "identified": "Identifié",
+            "recovering": "Récupération",
+            "underway": "En cours",
+            "scheduled": "Prévu"
+        },
+        "links": {
+            "more": {
+                "title": "Visitez notre page d'état pour plus d'informations.",
+                "text": "Plus"
+            }
+        }
+    },
+    "hu": {
+        "states": {
+            "investigating": "Vizsgálat folyamatban",
+            "identified": "Azonosítva",
+            "recovering": "Visszaállítás",
+            "underway": "Folyamatban",
+            "scheduled": "Időzítve"
+        },
+        "links": {
+            "more": {
+                "title": "További információért látogasson el az Állapot oldalunkra.",
+                "text": "Több"
+            }
+        }
+    },
+    "lt": {
+        "states": {
+            "investigating": "Tiriama problema",
+            "identified": "Problema identifikuota",
+            "recovering": "Problema sprendžiama",
+            "underway": "Vyksta atnaujinimas",
+            "scheduled": "Suplanuotas sistemos atnaujinimas"
+        },
+        "links": {
+            "more": {
+                "title": "Norėdami gauti daugiau informacijos, apsilankykite mūsų būsenos puslapyje.",
+                "text": "Daugiau"
+            }
+        }
+    },
+    "nb": {
+        "states": {
+            "investigating": "Undersøker",
+            "identified": "Identifisert",
+            "recovering": "Gjennoppretter",
+            "underway": "Underveis",
+            "scheduled": "Planlagt"
+        },
+        "links": {
+            "more": {
+                "title": "Besøk vår statusside for mer informasjon.",
+                "text": "Mer"
+            }
+        }
+    },
+    "nl": {
+        "states": {
+            "investigating": "In onderzoek",
+            "identified": "Geïdentificeerd",
+            "recovering": "Herstellende",
+            "underway": "Bezig",
+            "scheduled": "Gepland"
+        },
+        "links": {
+            "more": {
+                "title": "Bezoek onze statuspagina voor meer informatie.",
+                "text": "Meer"
+            }
+        }
+    },
+    "pl": {
+        "states": {
+            "investigating": "Sprawdzanie",
+            "identified": "Zidentyfikowany",
+            "recovering": "Przywracanie",
+            "underway": "W toku",
+            "scheduled": "Zaplanowana"
+        },
+        "links": {
+            "more": {
+                "title": "Odwiedź naszą stronę stanu, aby uzyskać więcej informacji.",
+                "text": "Więcej"
+            }
+        }
+    },
+    "pt-BR": {
+        "states": {
+            "investigating": "Em investigação",
+            "identified": "Identificado",
+            "recovering": "Em recuperação",
+            "underway": "Em andamento",
+            "scheduled": "Programado"
+        },
+        "links": {
+            "more": {
+                "title": "Visite nossa página de status para mais informações.",
+                "text": "Mais"
+            }
+        }
+    },
+    "ru": {
+        "states": {
+            "investigating": "Расследуем",
+            "identified": "Идентифицировано",
+            "recovering": "Восстановление",
+            "underway": "В процессе",
+            "scheduled": "Запланировано"
+        },
+        "links": {
+            "more": {
+                "title": "Посетите нашу страницу статуса для получения дополнительной информации.",
+                "text": "Больше"
+            }
+        }
+    },
+    "sk": {
+        "states": {
+            "investigating": "Prešetrujeme",
+            "identified": "Rozpoznaný",
+            "recovering": "V procese obnovy",
+            "underway": "Prebiehajúci",
+            "scheduled": "Plánovaný"
+        },
+        "links": {
+            "more": {
+                "title": "Ďalšie informácie nájdete na našej stavovej stránke.",
+                "text": "Viac"
+            }
+        }
+    },
+    "sv": {
+        "states": {
+            "investigating": "Undersöks",
+            "identified": "Identifierat",
+            "recovering": "Åtgärdas",
+            "underway": "På gång",
+            "scheduled": "Planerad"
+        },
+        "links": {
+            "more": {
+                "title": "Besök vår statussida för mer information.",
+                "text": "Mer"
+            }
+        }
+    }
+}
+
 },{}],"sorry-api":[function(require,module,exports){
 (function (global){(function (){
 /*jshint multistr: true */
@@ -31116,7 +31388,7 @@ module.exports = function is(a, b, options) {
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: 'https://ro-api.sorryapp.com',
+		host: 'https://ro-api.sorryapp.com', // IMPORTANT: Must be schemless for cross-browser AJAX support.
 		version: 1
 	};
 

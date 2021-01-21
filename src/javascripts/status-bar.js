@@ -148,23 +148,7 @@
 			// multiple lingual support.
 			//
 			// TODO: Make this configurable by the user.
-			"text": {
-				"states": {
-					"investigating": "Investigating",
-					"identified": "Identified",
-					"recovering": "Recovering",
-					"scheduled": "Scheduled",
-					"underway": "Underway",
-					// Legacy: to be sunset at some point in the future.
-					"open": "Ongoing"
-				},
-				"links": {
-					"more": {
-						"title": "Visit our Status Page for more information.",
-						"text": "More"
-					}
-				}
-			},
+			"text": self.parent.getContent(),
 			// Merge in optional plugin options.
 			"options": {
 				// Such as if it's dismissible.
@@ -217,6 +201,9 @@
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
+
+        // Define the content in the diffent locales.
+        self.locales = require('../locales/all.json');
 	};
 
 	StatusBar.prototype.init = function() {
@@ -245,6 +232,9 @@
 		}, function(response) {
 			// We now have the page data from the API and
 			// can render the status notices.
+
+            // Store the pages locale for content lookup.
+            self.locale = response.response.locale;
 
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?
@@ -369,6 +359,14 @@
 		// out the path directory, which we can use to find matching CSS.
 		return scripttag.src.split('?')[0].toString().split('/').slice(0, -1).join('/') + '/';
 	};
+
+    StatusBar.prototype.getContent = function() {
+        // Reference self again.
+        var self = this;
+
+        // Looup content from the hash.
+        return self.locales[self.locale];
+    };
 
 	// jQuery Plugin Definition.
 
