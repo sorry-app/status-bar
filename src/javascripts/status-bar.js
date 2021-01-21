@@ -155,8 +155,6 @@
 					"recovering": "Recovering",
 					"scheduled": "Scheduled",
 					"underway": "Underway",
-					// Legacy: to be sunset at some point in the future.
-					"open": "Ongoing"
 				},
 				"links": {
 					"more": {
