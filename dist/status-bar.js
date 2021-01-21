@@ -30739,8 +30739,6 @@ module.exports = function is(a, b, options) {
 					"recovering": "Recovering",
 					"scheduled": "Scheduled",
 					"underway": "Underway",
-					// Legacy: to be sunset at some point in the future.
-					"open": "Ongoing"
 				},
 				"links": {
 					"more": {
@@ -30829,6 +30827,9 @@ module.exports = function is(a, b, options) {
 		}, function(response) {
 			// We now have the page data from the API and
 			// can render the status notices.
+
+            // Store the pages locale for content lookup.
+            self.locale = response.response.locale;
 
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?

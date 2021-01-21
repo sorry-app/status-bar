@@ -244,6 +244,9 @@
 			// We now have the page data from the API and
 			// can render the status notices.
 
+            // Store the pages locale for content lookup.
+            self.locale = response.response.locale;
+
 			// Load in the supporting css assets.
 			// TODO: Combine CSS import and styling?
 			self.loadcss(function() {
