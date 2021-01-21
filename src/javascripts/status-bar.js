@@ -203,7 +203,7 @@
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
 
         // Define the content in the diffent locales.
-        self.locales = require('../locales.json');
+        self.locales = require('../locales/all.json');
 	};
 
 	StatusBar.prototype.init = function() {

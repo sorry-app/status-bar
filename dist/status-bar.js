@@ -30787,7 +30787,7 @@ module.exports = function is(a, b, options) {
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
 
         // Define the content in the diffent locales.
-        self.locales = require('../locales.json');
+        self.locales = require('../locales/all.json');
 	};
 
 	StatusBar.prototype.init = function() {
@@ -31035,7 +31035,7 @@ module.exports = function is(a, b, options) {
 	});
 
 })(window, document);
-},{"../locales.json":73,"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
+},{"../locales/all.json":73,"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
 (function (global){(function (){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
@@ -31388,7 +31388,7 @@ module.exports={
 	};
 
 	SorryAPI.DEFAULTS = {
-		host: 'https://ro-api.sorryapp.com',
+		host: 'https://ro-api.sorryapp.com', // IMPORTANT: Must be schemless for cross-browser AJAX support.
 		version: 1
 	};
 
