@@ -31185,6 +31185,22 @@ module.exports={
                 "text": "Veel"
             }
         }
+    },
+    "fi": {
+        "states": {
+            "investigating": "Tutkitaan",
+            "identified": "Tunnistettu",
+            "recovering": "Palautetaan",
+            "open": "Avoin",
+            "underway": "Käynnissä",
+            "scheduled": "Suunniteltu"
+        },
+        "links": {
+            "more": {
+                "title": "Käy tilasivullamme saadaksesi lisätietoja.",
+                "text": "Lisää"
+            }
+        }
     }
 }
 
