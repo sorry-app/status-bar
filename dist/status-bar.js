@@ -31131,7 +31131,6 @@ module.exports={
             "investigating": "Διερεύνηση",
             "identified": "Αναγνωρισθείς",
             "recovering": "Ανάκτηση",
-            "open": "Σε εξέλιξη",
             "underway": "σε εξέλιξη",
             "scheduled": "Προγραμματισμένος"
         },
@@ -31154,6 +31153,21 @@ module.exports={
             "more": {
                 "title": "Visit our Status Page for more information.",
                 "text": "More"
+            }
+        }
+    },
+    "es": {
+        "states": {
+            "investigating": "Investigando",
+            "identified": "Identificado",
+            "recovering": "Recuperante",
+            "underway": "En curso",
+            "scheduled": "Programado"
+        },
+        "links": {
+            "more": {
+                "title": "Visite nuestra página de estado para obtener más información.",
+                "text": "Más"
             }
         }
     }
