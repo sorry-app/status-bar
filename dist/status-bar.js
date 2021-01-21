@@ -31320,6 +31320,21 @@ module.exports={
                 "text": "Больше"
             }
         }
+    },
+    "sk": {
+        "states": {
+            "investigating": "Prešetrujeme",
+            "identified": "Rozpoznaný",
+            "recovering": "V procese obnovy",
+            "underway": "Prebiehajúci",
+            "scheduled": "Plánovaný"
+        },
+        "links": {
+            "more": {
+                "title": "Ďalšie informácie nájdete na našej stavovej stránke.",
+                "text": "Viac"
+            }
+        }
     }
 }
 
