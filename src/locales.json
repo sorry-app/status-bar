@@ -65,7 +65,7 @@
             "identified": "Identified",
             "recovering": "Recovering",
             "scheduled": "Scheduled",
-            "underway": "Underway",
+            "underway": "Underway"
         },
         "links": {
             "more": {
@@ -254,7 +254,7 @@
             }
         }
     },
-    "sk": {
+    "sv": {
         "states": {
             "investigating": "Undersöks",
             "identified": "Identifierat",

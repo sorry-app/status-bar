@@ -31147,7 +31147,7 @@ module.exports={
             "identified": "Identified",
             "recovering": "Recovering",
             "scheduled": "Scheduled",
-            "underway": "Underway",
+            "underway": "Underway"
         },
         "links": {
             "more": {
@@ -31336,7 +31336,7 @@ module.exports={
             }
         }
     },
-    "sk": {
+    "sv": {
         "states": {
             "investigating": "Undersöks",
             "identified": "Identifierat",
