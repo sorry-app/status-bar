@@ -31335,6 +31335,21 @@ module.exports={
                 "text": "Viac"
             }
         }
+    },
+    "sk": {
+        "states": {
+            "investigating": "Undersöks",
+            "identified": "Identifierat",
+            "recovering": "Åtgärdas",
+            "underway": "På gång",
+            "scheduled": "Planerad"
+        },
+        "links": {
+            "more": {
+                "title": "Besök vår statussida för mer information.",
+                "text": "Mer"
+            }
+        }
     }
 }
 
