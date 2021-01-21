@@ -31290,6 +31290,21 @@ module.exports={
                 "text": "Więcej"
             }
         }
+    },
+    "pt-BR": {
+        "states": {
+            "investigating": "Em investigação",
+            "identified": "Identificado",
+            "recovering": "Em recuperação",
+            "underway": "Em andamento",
+            "scheduled": "Programado"
+        },
+        "links": {
+            "more": {
+                "title": "Visite nossa página de status para mais informações.",
+                "text": "Mais"
+            }
+        }
     }
 }
 
