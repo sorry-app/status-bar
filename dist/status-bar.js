@@ -31260,6 +31260,21 @@ module.exports={
                 "text": "Mer"
             }
         }
+    },
+    "nl": {
+        "states": {
+            "investigating": "In onderzoek",
+            "identified": "Geïdentificeerd",
+            "recovering": "Herstellende",
+            "underway": "Bezig",
+            "scheduled": "Gepland"
+        },
+        "links": {
+            "more": {
+                "title": "Bezoek onze statuspagina voor meer informatie.",
+                "text": "Meer"
+            }
+        }
     }
 }
 
