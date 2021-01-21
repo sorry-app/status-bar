@@ -31245,6 +31245,21 @@ module.exports={
                 "text": "Daugiau"
             }
         }
+    },
+    "nb": {
+        "states": {
+            "investigating": "Undersøker",
+            "identified": "Identifisert",
+            "recovering": "Gjennoppretter",
+            "underway": "Underveis",
+            "scheduled": "Planlagt"
+        },
+        "links": {
+            "more": {
+                "title": "Besøk vår statusside for mer informasjon.",
+                "text": "Mer"
+            }
+        }
     }
 }
 
