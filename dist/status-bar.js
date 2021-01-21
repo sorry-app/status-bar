@@ -31126,6 +31126,22 @@ module.exports={
             }
         }
     },
+    "et": {
+        "states": {
+            "investigating": "Διερεύνηση",
+            "identified": "Αναγνωρισθείς",
+            "recovering": "Ανάκτηση",
+            "open": "Σε εξέλιξη",
+            "underway": "σε εξέλιξη",
+            "scheduled": "Προγραμματισμένος"
+        },
+        "links": {
+            "more": {
+                "title": "Lisateabe saamiseks külastage meie olekulehte.",
+                "text": "Veel"
+            }
+        }
+    },
     "en": {
         "states": {
             "investigating": "Investigating",
