@@ -31275,6 +31275,21 @@ module.exports={
                 "text": "Meer"
             }
         }
+    },
+    "pl": {
+        "states": {
+            "investigating": "Sprawdzanie",
+            "identified": "Zidentyfikowany",
+            "recovering": "Przywracanie",
+            "underway": "W toku",
+            "scheduled": "Zaplanowana"
+        },
+        "links": {
+            "more": {
+                "title": "Odwiedź naszą stronę stanu, aby uzyskać więcej informacji.",
+                "text": "Więcej"
+            }
+        }
     }
 }
 
