@@ -31086,7 +31086,6 @@ module.exports={
             "investigating": "Zkoumání",
             "identified": "Identifikování",
             "recovering": "Zotavování",
-            "open": "Probíhající",
             "underway": "V plném proudu",
             "scheduled": "Naplánováno"
         },
@@ -31094,6 +31093,21 @@ module.exports={
             "more": {
                 "title": "Další informace najdete na naší stavové stránce.",
                 "text": "Více"
+            }
+        }
+    },
+    "da": {
+        "states": {
+            "investigating": "Undersøgelse",
+            "identified": "Identificerede",
+            "recovering": "Udbedres",
+            "underway": "Undervejs",
+            "scheduled": "Planlagt"
+        },
+        "links": {
+            "more": {
+                "title": "Besøg vores statusside for mere information.",
+                "text": "Mere"
             }
         }
     },
