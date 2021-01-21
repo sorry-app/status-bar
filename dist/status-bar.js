@@ -31111,6 +31111,21 @@ module.exports={
             }
         }
     },
+    "de": {
+        "states": {
+            "investigating": "Untersuchen",
+            "identified": "Identifiziert",
+            "recovering": "Wiederherstellung",
+            "underway": "in Bearbeitung",
+            "scheduled": "Geplant"
+        },
+        "links": {
+            "more": {
+                "title": "Besuchen Sie unsere Statusseite für weitere Informationen.",
+                "text": "Mehr"
+            }
+        }
+    },
     "en": {
         "states": {
             "investigating": "Investigating",
