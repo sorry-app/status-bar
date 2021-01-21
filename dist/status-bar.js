@@ -31126,7 +31126,7 @@ module.exports={
             }
         }
     },
-    "et": {
+    "el": {
         "states": {
             "investigating": "Διερεύνηση",
             "identified": "Αναγνωρισθείς",
@@ -31136,8 +31136,8 @@ module.exports={
         },
         "links": {
             "more": {
-                "title": "Lisateabe saamiseks külastage meie olekulehte.",
-                "text": "Veel"
+                "title": "Επισκεφθείτε τη σελίδα κατάστασης για περισσότερες πληροφορίες.",
+                "text": "Περισσότερο"
             }
         }
     },
@@ -31168,6 +31168,21 @@ module.exports={
             "more": {
                 "title": "Visite nuestra página de estado para obtener más información.",
                 "text": "Más"
+            }
+        }
+    },
+    "et": {
+        "states": {
+            "investigating": "Uurimisel",
+            "identified": "Tuvastatud",
+            "recovering": "Taastamisel",
+            "underway": "Käimasolev",
+            "scheduled": "Planeeritud"
+        },
+        "links": {
+            "more": {
+                "title": "Lisateabe saamiseks külastage meie olekulehte.",
+                "text": "Veel"
             }
         }
     }
