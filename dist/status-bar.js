@@ -31191,7 +31191,6 @@ module.exports={
             "investigating": "Tutkitaan",
             "identified": "Tunnistettu",
             "recovering": "Palautetaan",
-            "open": "Avoin",
             "underway": "Käynnissä",
             "scheduled": "Suunniteltu"
         },
@@ -31199,6 +31198,21 @@ module.exports={
             "more": {
                 "title": "Käy tilasivullamme saadaksesi lisätietoja.",
                 "text": "Lisää"
+            }
+        }
+    },
+    "fr": {
+        "states": {
+            "investigating": "Enquête",
+            "identified": "Identifié",
+            "recovering": "Récupération",
+            "underway": "En cours",
+            "scheduled": "Prévu"
+        },
+        "links": {
+            "more": {
+                "title": "Visitez notre page d'état pour plus d'informations.",
+                "text": "Plus"
             }
         }
     }
