@@ -148,5 +148,20 @@
                 "text": "Több"
             }
         }
+    },
+    "lt": {
+        "states": {
+            "investigating": "Tiriama problema",
+            "identified": "Problema identifikuota",
+            "recovering": "Problema sprendžiama",
+            "underway": "Vyksta atnaujinimas",
+            "scheduled": "Suplanuotas sistemos atnaujinimas"
+        },
+        "links": {
+            "more": {
+                "title": "Norėdami gauti daugiau informacijos, apsilankykite mūsų būsenos puslapyje.",
+                "text": "Daugiau"
+            }
+        }
     }
 }
