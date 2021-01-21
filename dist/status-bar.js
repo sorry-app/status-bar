@@ -31081,6 +31081,22 @@ module.exports = function is(a, b, options) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],73:[function(require,module,exports){
 module.exports={
+    "cs": {
+        "states": {
+            "investigating": "Zkoumání",
+            "identified": "Identifikování",
+            "recovering": "Zotavování",
+            "open": "Probíhající",
+            "underway": "V plném proudu",
+            "scheduled": "Naplánováno"
+        },
+        "links": {
+            "more": {
+                "title": "Další informace najdete na naší stavové stránce.",
+                "text": "Více"
+            }
+        }
+    },
     "en": {
         "states": {
             "investigating": "Investigating",

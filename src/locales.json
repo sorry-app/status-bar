@@ -1,4 +1,20 @@
 {
+    "cs": {
+        "states": {
+            "investigating": "Zkoumání",
+            "identified": "Identifikování",
+            "recovering": "Zotavování",
+            "open": "Probíhající",
+            "underway": "V plném proudu",
+            "scheduled": "Naplánováno"
+        },
+        "links": {
+            "more": {
+                "title": "Další informace najdete na naší stavové stránce.",
+                "text": "Více"
+            }
+        }
+    },
     "en": {
         "states": {
             "investigating": "Investigating",
