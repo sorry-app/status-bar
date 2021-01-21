@@ -31215,6 +31215,21 @@ module.exports={
                 "text": "Plus"
             }
         }
+    },
+    "hu": {
+        "states": {
+            "investigating": "Vizsgálat folyamatban",
+            "identified": "Azonosítva",
+            "recovering": "Visszaállítás",
+            "underway": "Folyamatban",
+            "scheduled": "Időzítve"
+        },
+        "links": {
+            "more": {
+                "title": "További információért látogasson el az Állapot oldalunkra.",
+                "text": "Több"
+            }
+        }
     }
 }
 
