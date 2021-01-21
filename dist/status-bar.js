@@ -30751,7 +30751,7 @@ module.exports = function is(a, b, options) {
 			// multiple lingual support.
 			//
 			// TODO: Make this configurable by the user.
-			"text": locales[self.parent.locale],
+			"text": self.parent.getContent(),
 			// Merge in optional plugin options.
 			"options": {
 				// Such as if it's dismissible.
@@ -30959,6 +30959,14 @@ module.exports = function is(a, b, options) {
 		// out the path directory, which we can use to find matching CSS.
 		return scripttag.src.split('?')[0].toString().split('/').slice(0, -1).join('/') + '/';
 	};
+
+    StatusBar.prototype.getContent = function() {
+        // Reference self again.
+        var self = this;
+
+        // Looup content from the hash.
+        return locales[self.locale];
+    };
 
 	// jQuery Plugin Definition.
 
