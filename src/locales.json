@@ -1,0 +1,17 @@
+{
+    "en": {
+        "states": {
+            "investigating": "Investigating",
+            "identified": "Identified",
+            "recovering": "Recovering",
+            "scheduled": "Scheduled",
+            "underway": "Underway",
+        },
+        "links": {
+            "more": {
+                "title": "Visit our Status Page for more information.",
+                "text": "More"
+            }
+        }
+    }
+}

@@ -30787,23 +30787,7 @@ module.exports = function is(a, b, options) {
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
 
         // Define the content in the diffent locales.
-        self.locales = {
-            "en": {
-                "states": {
-                    "investigating": "Investigating",
-                    "identified": "Identified",
-                    "recovering": "Recovering",
-                    "scheduled": "Scheduled",
-                    "underway": "Underway",
-                },
-                "links": {
-                    "more": {
-                        "title": "Visit our Status Page for more information.",
-                        "text": "More"
-                    }
-                }
-            }
-        };
+        self.locales = require('../locales.json');
 	};
 
 	StatusBar.prototype.init = function() {
@@ -31051,7 +31035,7 @@ module.exports = function is(a, b, options) {
 	});
 
 })(window, document);
-},{"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
+},{"../locales.json":73,"./lib/handlebars-helpers":69,"./vendor/onloadCSS":72,"handlebars":36,"jquery":41,"raven-js":48,"sorry-api":"sorry-api"}],72:[function(require,module,exports){
 (function (global){(function (){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
@@ -31095,6 +31079,25 @@ module.exports = function is(a, b, options) {
 	}
 }( typeof global !== "undefined" ? global : this ));	
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],73:[function(require,module,exports){
+module.exports={
+    "en": {
+        "states": {
+            "investigating": "Investigating",
+            "identified": "Identified",
+            "recovering": "Recovering",
+            "scheduled": "Scheduled",
+            "underway": "Underway",
+        },
+        "links": {
+            "more": {
+                "title": "Visit our Status Page for more information.",
+                "text": "More"
+            }
+        }
+    }
+}
+
 },{}],"sorry-api":[function(require,module,exports){
 (function (global){(function (){
 /*jshint multistr: true */

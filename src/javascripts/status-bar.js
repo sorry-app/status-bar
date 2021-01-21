@@ -203,23 +203,7 @@
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
 
         // Define the content in the diffent locales.
-        self.locales = {
-            "en": {
-                "states": {
-                    "investigating": "Investigating",
-                    "identified": "Identified",
-                    "recovering": "Recovering",
-                    "scheduled": "Scheduled",
-                    "underway": "Underway",
-                },
-                "links": {
-                    "more": {
-                        "title": "Visit our Status Page for more information.",
-                        "text": "More"
-                    }
-                }
-            }
-        };
+        self.locales = require('../locales.json');
 	};
 
 	StatusBar.prototype.init = function() {
