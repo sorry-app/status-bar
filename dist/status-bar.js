@@ -30604,25 +30604,6 @@ module.exports = function is(a, b, options) {
 	// Register some helpers for smarter templates.
 	handlebars.registerHelper(require('./lib/handlebars-helpers'));
 
-    // Define the content in the diffent locales.
-    var locales = {
-        "en": {
-            "states": {
-                "investigating": "Investigating",
-                "identified": "Identified",
-                "recovering": "Recovering",
-                "scheduled": "Scheduled",
-                "underway": "Underway",
-            },
-            "links": {
-                "more": {
-                    "title": "Visit our Status Page for more information.",
-                    "text": "More"
-                }
-            }
-        }
-    };
-
 	/*
 	 *
 	 * Raven.js error logging allows us to better track what errors
@@ -30804,6 +30785,25 @@ module.exports = function is(a, b, options) {
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
+
+        // Define the content in the diffent locales.
+        self.locales = {
+            "en": {
+                "states": {
+                    "investigating": "Investigating",
+                    "identified": "Identified",
+                    "recovering": "Recovering",
+                    "scheduled": "Scheduled",
+                    "underway": "Underway",
+                },
+                "links": {
+                    "more": {
+                        "title": "Visit our Status Page for more information.",
+                        "text": "More"
+                    }
+                }
+            }
+        };
 	};
 
 	StatusBar.prototype.init = function() {
@@ -30965,7 +30965,7 @@ module.exports = function is(a, b, options) {
         var self = this;
 
         // Looup content from the hash.
-        return locales[self.locale];
+        return self.locales[self.locale];
     };
 
 	// jQuery Plugin Definition.
