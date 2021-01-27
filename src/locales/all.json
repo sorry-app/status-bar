@@ -1,4 +1,19 @@
 {
+    "bg": {
+        "states": {
+            "investigating": "Разследваме",
+            "identified": "Установено",
+            "recovering": "Възстановяване",
+            "underway": "Тече в момента",
+            "scheduled": "Планирано"
+        },
+        "links": {
+            "more": {
+                "title": "Посетете нашата страница за състояние за повече информация.",
+                "text": "Прочетете още"
+            }
+        }
+    },
     "cs": {
         "states": {
             "investigating": "Zkoumání",
