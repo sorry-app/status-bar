@@ -31081,6 +31081,21 @@ module.exports = function is(a, b, options) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],73:[function(require,module,exports){
 module.exports={
+    "bg": {
+        "states": {
+            "investigating": "Разследваме",
+            "identified": "Установено",
+            "recovering": "Възстановяване",
+            "underway": "Тече в момента",
+            "scheduled": "Планирано"
+        },
+        "links": {
+            "more": {
+                "title": "Посетете нашата страница за състояние за повече информация.",
+                "text": "Прочетете още"
+            }
+        }
+    },
     "cs": {
         "states": {
             "investigating": "Zkoumání",
@@ -31303,6 +31318,21 @@ module.exports={
             "more": {
                 "title": "Visite nossa página de status para mais informações.",
                 "text": "Mais"
+            }
+        }
+    },
+    "ro": {
+        "states": {
+            "investigating": "Se investighează",
+            "identified": "Identificat",
+            "recovering": "Se recuperează",
+            "underway": "În curs de desfășurare",
+            "scheduled": "Programat"
+        },
+        "links": {
+            "more": {
+                "title": "Vizitați pagina noastră de stare pentru mai multe informații.",
+                "text": "Citeste mai mult"
             }
         }
     },
