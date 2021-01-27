@@ -239,6 +239,21 @@
             }
         }
     },
+    "ro": {
+        "states": {
+            "investigating": "Se investighează",
+            "identified": "Identificat",
+            "recovering": "Se recuperează",
+            "underway": "În curs de desfășurare",
+            "scheduled": "Programat"
+        },
+        "links": {
+            "more": {
+                "title": "Vizitați pagina noastră de stare pentru mai multe informații.",
+                "text": "Citeste mai mult"
+            }
+        }
+    },
     "ru": {
         "states": {
             "investigating": "Расследуем",
