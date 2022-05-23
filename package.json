@@ -25,7 +25,8 @@
     "grunt-contrib-uglify": "^3.3.0",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-invalidate-cloudfront": "^1.0.0",
-    "grunt-release": "~0.14.0"
+    "grunt-release": "~0.14.0",
+    "patch-package": "^6.4.7"
   },
   "dependencies": {
     "handlebars": "^4.0.8",
