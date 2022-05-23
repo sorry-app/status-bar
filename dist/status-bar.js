@@ -8743,9 +8743,6 @@ module.exports = function momentHelper(str, pattern, options) {
     return moment().format(str);
   }
 
-  console.log(str);
-  console.log(moment.utc(str));
-
   return moment.utc(str).format(pattern);
 };
 
