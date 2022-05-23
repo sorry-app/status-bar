@@ -30695,7 +30695,7 @@ module.exports = function is(a, b, options) {
 					<h4 class="sorry-status-notice-header"><i class="sorry-status-notice-icon sorry-status-notice-icon-bullhorn"></i> {{lookup text.states notice.state}}</h4>\
 					<p class="sorry-status-notice-text">\
 						{{!-- Optional scheduled date for scheduled notices --}}\
-						{{#is notice.state "scheduled"}}<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma"}}</time>{{/is}}\
+						{{#is notice.state "scheduled"}}<time datetime="{{notice.begins_at}}" class="sorry-status-notice-schedule">{{moment notice.begins_at format="MMM Do, h:mma z"}}</time>{{/is}}\
 						{{!-- Subject for the notice. --}}\
 						<strong class="sorry-status-notice-subject">{{notice.subject}}:</strong>\
 						{{!-- The description of the update to be displayed. --}}\
