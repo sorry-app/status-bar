@@ -183,4 +183,4 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ## Copyright
 
-Copyright & 2017 Sorry&#8482;. See [LICENSE](LICENSE) for details.
+Copyright &copy; 2017 Sorry&#8482;. See [LICENSE](LICENSE) for details.
