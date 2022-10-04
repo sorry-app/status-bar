@@ -8724,7 +8724,7 @@ module.exports = function momentHelper(str, pattern, options) {
       opts.hash = extend({}, opts.hash, opts.context);
     }
 
-    var date = moment.utc(str);
+    var date = moment(str);
     for (var key in opts.hash) {
       if (date[key]) {
         return date[key](opts.hash[key]);
@@ -8735,7 +8735,7 @@ module.exports = function momentHelper(str, pattern, options) {
   }
 
   if (typeOf(str) === 'object' && typeof pattern === 'string') {
-    return moment.utc(str).format(pattern);
+    return moment(str).format(pattern);
   }
 
   // if only a string is passed, assume it's a date pattern ('YYYY')
@@ -8743,7 +8743,7 @@ module.exports = function momentHelper(str, pattern, options) {
     return moment().format(str);
   }
 
-  return moment.utc(str).format(pattern);
+  return moment(str).format(pattern);
 };
 
 },{"extend-shallow":2,"kind-of":49,"moment":54}],49:[function(require,module,exports){
