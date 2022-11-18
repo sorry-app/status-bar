@@ -171,7 +171,9 @@
 		}, options);
 
 		// Create an instance of the API.
-		self.api = new api.SorryAPI();
+		self.api = new api.SorryAPI(
+            self.options
+        );
 
 		// Reference the dismissed items, if none in local storage then assume new array.
 		self.dismissed = JSON.parse(window.localStorage.getItem('sorry-status-bar')) || {};
@@ -395,7 +397,8 @@
 						// TODO: Can we dynamically copy all of them?
 						'data-filter-type': script_tag.data("filter-type"),
 						'data-filter-components': script_tag.data("filter-components"),
-						'data-dismissible': script_tag.data("dismissible")
+						'data-dismissible': script_tag.data("dismissible"),
+                        'data-host': script_tag.data("host")
 					// Attach it to the body.
 					}).prependTo('body');
 				}
