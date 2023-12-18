@@ -409,7 +409,7 @@
 	// Data-Api
 
 	// Instantiate the plugin on window load.
-	$(window).bind('load', function () {
+	$(window).bind('load sorry-load', function () {
 		// Preload the statusbar DOM elements.
 		$.fn.statusBar.setup();
 
