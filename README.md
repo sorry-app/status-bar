@@ -1,3 +1,5 @@
+> [!CAUTION]
+> The plugin has now been retired, and replaced with the [Sorry™ Status Badge](https://www.sorryapp.com/integrations/status-badge)
 # Sorry&#8482; Status Bar Plugin [![GitHub tag](https://img.shields.io/github/tag/sorry-app/status-bar.svg)]()
 
 In an effort to help extend your voice beyond the status page, we’ve put together this Status Bar plugin. 
