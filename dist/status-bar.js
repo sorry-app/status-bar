@@ -26699,7 +26699,7 @@ module.exports = function is(a, b, options) {
 				// the component on the notice, it's ancestors and descendants.
 				//
 				// It's a bit clunky but it works.
-				'components_id_or_components_descendant_hierarchies_descendant_id_or_components_ancestor_hierarchies_ancestor_id_in': (self.options.filterComponents || '').toString().split(',')
+				'components_id_in': (self.options.filterComponents || '').toString().split(',')
 			}
 		// Handle the callback when we have the response.
 		}, function(response) {
@@ -26925,6 +26925,7 @@ module.exports = function is(a, b, options) {
 	});
 
 })(window, document);
+
 },{"../locales/all.json":65,"./lib/handlebars-helpers":61,"./vendor/onloadCSS":64,"handlebars":36,"jquery":52,"sorry-api":"sorry-api"}],64:[function(require,module,exports){
 (function (global){(function (){
 /*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */

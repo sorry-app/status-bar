@@ -202,7 +202,7 @@
 				// the component on the notice, it's ancestors and descendants.
 				//
 				// It's a bit clunky but it works.
-				'components_id_or_components_descendant_hierarchies_descendant_id_or_components_ancestor_hierarchies_ancestor_id_in': (self.options.filterComponents || '').toString().split(',')
+				'components_id_in': (self.options.filterComponents || '').toString().split(',')
 			}
 		// Handle the callback when we have the response.
 		}, function(response) {
